@@ -1,11 +1,10 @@
-package com.test.rainbox
+package com.test.rainbowDefense
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.android.synthetic.main.activity_shop.*
 
 class setting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

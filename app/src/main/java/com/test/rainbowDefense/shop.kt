@@ -1,4 +1,4 @@
-package com.test.rainbox
+package com.test.rainbowDefense
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

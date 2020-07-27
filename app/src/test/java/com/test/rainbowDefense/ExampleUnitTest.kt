@@ -1,4 +1,4 @@
-package com.test.rainbox
+package com.test.rainbowDefense
 
 import org.junit.Test
 

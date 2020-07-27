@@ -1,10 +1,9 @@
-package com.test.rainbox
+package com.test.rainbowDefense
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_loby.*
 
 class loby : AppCompatActivity() {
@@ -22,6 +21,7 @@ class loby : AppCompatActivity() {
         val intent_shop = Intent(this, shop::class.java)
         val intent_reinforce = Intent(this, reinforce::class.java)
         val intent_setting = Intent(this, setting::class.java)
+        val intent_battle = Intent(this, battle::class.java)
 
         btn_loby_shop.setOnClickListener { view ->
             startActivity(intent_shop)
@@ -31,6 +31,9 @@ class loby : AppCompatActivity() {
         }
         btn_loby_setting.setOnClickListener { view ->
             startActivity(intent_setting)
+        }
+        btn_loby_battle.setOnClickListener {
+            startActivity(intent_battle)
         }
     }
 }

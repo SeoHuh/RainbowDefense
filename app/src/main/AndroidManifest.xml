@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.test.rainbox">
+    package="com.test.rainbowDefense">
 
     <application
         android:allowBackup="true"
@@ -10,29 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".setting"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:name="com.test.rainbowDefense.setting"
+            android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".reinforce"
+            android:name="com.test.rainbowDefense.reinforce"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".shop"
+            android:name="com.test.rainbowDefense.shop"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".loby"
+            android:name="com.test.rainbowDefense.loby"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".logo"
+            android:name="com.test.rainbowDefense.logo"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".intro"
+            android:name="com.test.rainbowDefense.intro"
             android:screenOrientation="sensorLandscape" />
+        <activity android:name=".battle"
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>
