@@ -7,20 +7,13 @@
     tools:context=".setting">
 
     <Button
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        />
-    <Button
         android:id="@+id/btn_setting_back"
-        android:text="뒤로가기"
-        android:textSize="15sp"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:text="뒤로가기"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

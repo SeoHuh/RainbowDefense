@@ -6,17 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".shop">
 
-    <Button
-        android:id="@+id/btn_shop_back"
-        android:text="뒤로가기"
-        android:textSize="15sp"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_shop_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="뒤로가기"
+        android:textSize="15sp"
+        android:layout_margin="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
