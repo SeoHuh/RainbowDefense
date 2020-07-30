@@ -1,6 +1,8 @@
 package com.test.rainbowDefense
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.os.Handler
 import android.view.MotionEvent
@@ -34,12 +36,51 @@ class GameManager(val content: Context, val v: CanvasView) {
     val mountainDrawable = v.resources.getDrawable(R.drawable.mountains, content.theme)
     val treesDrawable = v.resources.getDrawable(R.drawable.trees, content.theme)
 
+    val effectBitmaps = arrayListOf<Bitmap>();
+    val effectId = arrayListOf(
+        R.drawable.blueish_flame_0001,
+        R.drawable.blueish_flame_0002,
+        R.drawable.blueish_flame_0003,
+        R.drawable.blueish_flame_0004,
+        R.drawable.blueish_flame_0005,
+        R.drawable.blueish_flame_0006,
+        R.drawable.blueish_flame_0007,
+        R.drawable.blueish_flame_0008,
+        R.drawable.blueish_flame_0009,
+        R.drawable.blueish_flame_0010,
+        R.drawable.blueish_flame_0011,
+        R.drawable.blueish_flame_0012,
+        R.drawable.blueish_flame_0013,
+        R.drawable.blueish_flame_0014,
+        R.drawable.blueish_flame_0015,
+        R.drawable.blueish_flame_0016,
+        R.drawable.blueish_flame_0017,
+        R.drawable.blueish_flame_0018,
+        R.drawable.blueish_flame_0019,
+        R.drawable.blueish_flame_0020,
+        R.drawable.blueish_flame_0021,
+        R.drawable.blueish_flame_0022,
+        R.drawable.blueish_flame_0023,
+        R.drawable.blueish_flame_0024,
+        R.drawable.blueish_flame_0025,
+        R.drawable.blueish_flame_0026,
+        R.drawable.blueish_flame_0027,
+        R.drawable.blueish_flame_0028,
+        R.drawable.blueish_flame_0029,
+        R.drawable.blueish_flame_0030)
+
+
     // 초기화
     init {
         v.cursor = Shape(touchX.toInt(),touchY.toInt(),12*3,19*3,cursorDrawable)
         v.background = Shape(0,0,displayWidth,displayHeight,backgroundDrawable)
         v.mountain = Shape(0,0,displayWidth,displayHeight,mountainDrawable)
         v.trees = Shape(0,0,displayWidth,displayHeight,treesDrawable)
+
+        effectId.forEach{
+            val bitmap = BitmapFactory.decodeResource(v.resources,it)
+            effectBitmaps.add(Bitmap.createScaledBitmap(bitmap,200,200,false))
+        }
 
         v.setOnTouchListener { v, event ->
             val x = event.x
@@ -70,6 +111,7 @@ class GameManager(val content: Context, val v: CanvasView) {
             waveCheck()
             checkProjectile(v.projectile_array)
             checkCollision(v.monster_array, v.projectile_array)
+            checkEffect(v.effect_array)
             v.monster_array.forEach{it.move()}
             v.projectile_array.forEach{it.move()}
             v.invalidate()
@@ -157,6 +199,7 @@ class GameManager(val content: Context, val v: CanvasView) {
                 val condition2: Boolean =
                     monster[n].y < projectile[m].y + projectile[m].height && monster[n].y + monster[n].height > projectile[m].y
                 if (condition1 && condition2) {
+                    makeEffect(monster[n].x+monster[n].width/2,monster[n].y+monster[n].height/2)
                     monster.removeAt(n)
                     projectile.removeAt(m)
                     m = 0
@@ -169,4 +212,22 @@ class GameManager(val content: Context, val v: CanvasView) {
         }
     }
 
+    fun makeEffect(x:Int,y:Int){
+        v.effect_array.add(Effect(x-100,y-100,200,200,effectBitmaps,30,10))
+    }
+    fun checkEffect(effect: ArrayList<Effect>) {
+        var n: Int = 0
+        while (n < effect.size) {
+            effect[n].time += 1000/ping
+            if (effect[n].time>=effect[n].lifetime) {
+                effect.removeAt(n)
+                n--
+            }
+            else {
+                effect[n].bitmap_index = effect[n].time / effect[n].duration
+            }
+            n++
+        }
+
+    }
 }

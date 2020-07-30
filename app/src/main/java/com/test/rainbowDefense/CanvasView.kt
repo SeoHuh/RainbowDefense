@@ -16,6 +16,7 @@ class CanvasView @JvmOverloads constructor(
     // 그려야할 객체들
     var projectile_array = arrayListOf<Projectile>()
     var monster_array = arrayListOf<Monster>()
+    var effect_array = arrayListOf<Effect>()
     var cursor: Shape? = null
     var background: Shape? = null
     var mountain: Shape? = null
@@ -38,6 +39,7 @@ class CanvasView @JvmOverloads constructor(
         trees?.draw(canvas)
         monster_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
+        effect_array.forEach {it.draw(canvas)}
         cursor?.draw(canvas)
     }
 

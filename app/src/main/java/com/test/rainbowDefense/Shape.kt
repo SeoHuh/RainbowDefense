@@ -31,7 +31,7 @@ open class Shape (
         canvas?.drawBitmap(bitmap,x.toFloat(),y.toFloat(),paint)
     }
 
-    fun move(){     // 한번 이동
+    open fun move(){     // 한번 이동
         x += vx
         y += vy
         lifetime--
