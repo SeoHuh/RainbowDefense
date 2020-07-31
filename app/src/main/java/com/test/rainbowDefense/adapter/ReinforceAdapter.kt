@@ -26,8 +26,6 @@ class ReinforceAdapter(private val myDataset: Array<String>) :
         val textView = LayoutInflater.from(parent.context)
             .inflate(R.layout.reinforce_view, parent, false) as TextView
         // set the view's size, margins, paddings and layout parameters
-        textView.setTextSize(10f)
-        TODO()
         return MyViewHolder(textView)
     }
 

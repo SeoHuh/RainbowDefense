@@ -33,7 +33,18 @@ class reinforce : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val myDataset = arrayOf("현명","문성","진우","진수","태웅","소연")
+        val myDataset = arrayOf(
+            "Red, 1lv, 화염마법사",
+            "Orange, 1lv, 번개마법사",
+            "Yellow, 1lv, 광부",
+            "Green, 1lv, 드루이드",
+            "Blue, 1lv, 얼음마법사",
+            "indigo, 1lv, 흑마법사",
+            "purple, 1lv, 독",
+            "기타 건물 등등",
+            "기타 업그레이드",
+            "그 외 강화 목록")
+
         viewManager = LinearLayoutManager(this)
         viewAdapter = ReinforceAdapter(myDataset)
 
