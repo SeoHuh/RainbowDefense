@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.test.rainbowDefense.setting"
+            android:name=".setting"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name="com.test.rainbowDefense.reinforce"
+            android:name=".reinforce"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.test.rainbowDefense.shop"
+            android:name=".shop"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.test.rainbowDefense.loby"
+            android:name=".loby"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.test.rainbowDefense.logo"
+            android:name=".logo"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.test.rainbowDefense.intro"
+            android:name=".intro"
             android:screenOrientation="sensorLandscape" />
         <activity android:name=".battle"
             android:screenOrientation="sensorLandscape"/>
