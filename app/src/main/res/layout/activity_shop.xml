@@ -6,104 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".shop">
 
-    <LinearLayout
-        android:layout_margin="15dp"
-        android:layout_width="0dp"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shop_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+       android:layout_margin="16dp"/>
 
     <Button
         android:id="@+id/btn_shop_back"

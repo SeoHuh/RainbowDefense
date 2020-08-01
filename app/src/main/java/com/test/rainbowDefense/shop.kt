@@ -4,9 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.test.rainbowDefense.adapter.ReinforceAdapter
 import kotlinx.android.synthetic.main.activity_shop.*
+import androidx.recyclerview.widget.GridLayoutManager
+import com.test.rainbowDefense.adapter.ShopAdapter
 
 class shop : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
@@ -19,8 +29,33 @@ class shop : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, loby::class.java)
 
-        btn_shop_back.setOnClickListener{view ->
+        btn_shop_back.setOnClickListener { view ->
             startActivity(intent)
         }
+
+        val myDataset = arrayOf(
+            R.drawable.cloud,
+            R.drawable.castle,
+            R.drawable.coalawhite,
+            R.drawable.cursor1,
+            R.drawable.monster_1,
+            R.drawable.monster_1
+        )
+        viewManager = GridLayoutManager(this, 5)
+        viewAdapter = ShopAdapter(myDataset)
+
+        recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview).apply {
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            setHasFixedSize(true)
+
+            // use a linear layout manager
+            layoutManager = viewManager
+
+            // specify an viewAdapter (see also next example)
+            adapter = viewAdapter
+
+        }
+
     }
 }
