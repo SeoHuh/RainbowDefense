@@ -29,17 +29,18 @@ class shop : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, loby::class.java)
 
+
         btn_shop_back.setOnClickListener { view ->
             startActivity(intent)
         }
 
         val myDataset = arrayOf(
-            R.drawable.cloud,
-            R.drawable.castle,
-            R.drawable.coalawhite,
-            R.drawable.cursor1,
-            R.drawable.monster_1,
-            R.drawable.monster_1
+            MyUnit(0,R.drawable.boss1, 0, "사고싶지"),
+            MyUnit(0,R.drawable.boss2, 0, "안살거야?"),
+            MyUnit(0,R.drawable.boss3, 0, "사고싶지"),
+            MyUnit(0,R.drawable.boss4, 0, "사고싶지"),
+            MyUnit(0,R.drawable.boss5, 0, "사고싶지"),
+            MyUnit(0,R.drawable.boss6, 0, "사게될거야")
         )
         viewManager = GridLayoutManager(this, 5)
         viewAdapter = ShopAdapter(myDataset)

@@ -42,30 +42,21 @@ class reinforce : AppCompatActivity() {
         val indigo_color = Color.rgb(0,26,240)
         val purple_color = Color.rgb(151,86,244)
 
-
-        val red_circle = resources.getDrawable(R.drawable.red_circle, this.theme)
-        val orange_circle = resources.getDrawable(R.drawable.orange_circle, this.theme)
-        val yellow_circle = resources.getDrawable(R.drawable.yellow_circle, this.theme)
-        val green_circle = resources.getDrawable(R.drawable.green_circle, this.theme)
-        val blue_circle = resources.getDrawable(R.drawable.blue_circle, this.theme)
-        val indigo_circle = resources.getDrawable(R.drawable.indigo_circle, this.theme)
-        val purple_circle = resources.getDrawable(R.drawable.purple_circle, this.theme)
-
         val myDataset = arrayOf(
-            MyUnit(red_color,red_circle, 1, "Fire Wizard"),
-            MyUnit(red_color,red_circle, 1, "Fire Dancer"),
-            MyUnit(orange_color,orange_circle, 1, "Thunder Wizard"),
-            MyUnit(orange_color,orange_circle, 1, "Orange"),
-            MyUnit(yellow_color,yellow_circle, 1, "Miner"),
-            MyUnit(yellow_color,yellow_circle, 1, "Gold Bank"),
-            MyUnit(green_color,green_circle, 1, "Druid"),
-            MyUnit(green_color,green_circle, 1, "Bind"),
-            MyUnit(blue_color,blue_circle, 1, "Ice Wizard"),
-            MyUnit(blue_color,blue_circle, 1, "Ice Trap"),
-            MyUnit(indigo_color,indigo_circle, 1, "Dark Wizard"),
-            MyUnit(indigo_color,indigo_circle, 1, "Skeleton"),
-            MyUnit(purple_color,purple_circle, 1, "Poison"),
-            MyUnit(purple_color,purple_circle, 1, "Weakness")
+            MyUnit(red_color,R.drawable.red_circle, 1, "Fire Wizard"),
+            MyUnit(red_color,R.drawable.red_circle, 1, "Fire Dancer"),
+            MyUnit(orange_color,R.drawable.orange_circle, 1, "Thunder Wizard"),
+            MyUnit(orange_color,R.drawable.orange_circle, 1, "Orange"),
+            MyUnit(yellow_color,R.drawable.yellow_circle, 1, "Miner"),
+            MyUnit(yellow_color,R.drawable.yellow_circle, 1, "Gold Bank"),
+            MyUnit(green_color,R.drawable.green_circle, 1, "Druid"),
+            MyUnit(green_color,R.drawable.green_circle, 1, "Bind"),
+            MyUnit(blue_color,R.drawable.blue_circle, 1, "Ice Wizard"),
+            MyUnit(blue_color,R.drawable.blue_circle, 1, "Ice Trap"),
+            MyUnit(indigo_color,R.drawable.indigo_circle, 1, "Dark Wizard"),
+            MyUnit(indigo_color,R.drawable.indigo_circle, 1, "Skeleton"),
+            MyUnit(purple_color,R.drawable.purple_circle, 1, "Poison"),
+            MyUnit(purple_color,R.drawable.purple_circle, 1, "Weakness")
         )
 
         viewManager = LinearLayoutManager(this)

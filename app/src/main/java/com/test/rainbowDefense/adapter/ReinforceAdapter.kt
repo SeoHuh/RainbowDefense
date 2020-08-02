@@ -38,7 +38,7 @@ class ReinforceAdapter(private val myDataset: Array<MyUnit>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.id.setImageDrawable(myDataset[position].drawable)
+        holder.id.setImageResource(myDataset[position].resourceId)
         holder.level.setTextColor(myDataset[position].color)
         holder.name.setTextColor(myDataset[position].color)
 
