@@ -6,6 +6,130 @@
     android:layout_height="match_parent"
     tools:context=".setting">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/sky"
+        android:id="@+id/setting_popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintWidth_percent="0.6">
+
+        //music
+        <LinearLayout
+            android:id="@+id/setting_musicset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
+
+            <ImageView
+                android:id="@+id/img_music"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/boss1"
+                android:text="vibrate" />
+
+
+            <SeekBar
+                android:id="@+id/seekbar_music"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:max="100"
+                android:thumb="@drawable/red_circle" />
+
+
+        </LinearLayout>
+
+
+        //effectsound
+        <LinearLayout
+            android:id="@+id/setting_effectset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_musicset">
+
+            <ImageView
+                android:id="@+id/img_effectsound"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/boss1"
+                android:text="mute" />
+
+            <SeekBar
+                android:id="@+id/seekbar_effect"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:max="100"
+                android:thumb="@drawable/purple_circle" />
+
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_effectset">
+
+            <Button
+                android:text="mute"
+                android:id="@+id/btn_mute"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:text="진동"
+                android:id="@+id/btn_vibrate"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_mute"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/btn_mute"
+                app:layout_constraintTop_toTopOf="@+id/btn_mute"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:text="쿠폰"
+                android:id="@+id/btn_coupon"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
         android:id="@+id/btn_setting_back"
         android:layout_width="100dp"
@@ -16,4 +140,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

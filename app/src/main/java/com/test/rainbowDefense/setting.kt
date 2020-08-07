@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class setting : AppCompatActivity() {
@@ -18,10 +19,41 @@ class setting : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
+        var music_vol = 50
+        var effect_vol = 50
+
+        seekbar_music.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar, i : Int, b : Boolean){
+                 music_vol = i
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+        })
+        seekbar_effect.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar, i : Int, b : Boolean){
+                effect_vol = i
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+        })
+
+
+
+
         val intent = Intent(this, loby::class.java)
 
         btn_setting_back.setOnClickListener { view ->
             startActivity(intent)
         }
+
+
     }
 }
