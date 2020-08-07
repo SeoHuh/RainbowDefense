@@ -30,11 +30,11 @@ class shop : AppCompatActivity() {
         val intent = Intent(this, loby::class.java)
 
 
-        btn_shop_back.setOnClickListener { view ->
+        btn_shop_back.setOnClickListener {
             startActivity(intent)
         }
 
-        val myDataset = arrayOf(
+        val myDataSet = arrayOf(
             MyUnit(0,R.drawable.boss1, 0, "사고싶지"),
             MyUnit(0,R.drawable.boss2, 0, "안살거야?"),
             MyUnit(0,R.drawable.boss3, 0, "사고싶지"),
@@ -43,7 +43,7 @@ class shop : AppCompatActivity() {
             MyUnit(0,R.drawable.boss6, 0, "사게될거야")
         )
         viewManager = GridLayoutManager(this, 5)
-        viewAdapter = ShopAdapter(myDataset)
+        viewAdapter = ShopAdapter(myDataSet)
 
         recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview).apply {
             // use this setting to improve performance if you know that changes
