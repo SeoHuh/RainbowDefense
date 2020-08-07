@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,26 @@ import com.test.rainbowDefense.database.UnitEntity
 class ReinforceAdapter internal constructor(context: Context) :
     RecyclerView.Adapter<ReinforceAdapter.MyViewHolder>() {
 
+    private var itemClickListener :OnItemClickListener? = null
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.itemClickListener = listener
+    }
+
     private var units = emptyList<UnitEntity>()
 
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view){
         val id = view.findViewById<ImageView>(R.id.circle_image)
         val level = view.findViewById<TextView>(R.id.level_text)
         val name = view.findViewById<TextView>(R.id.name_text)
+        init {
+            view.setOnClickListener{
+                val pos = adapterPosition
+                Log.d("디버깅", "클릭됨$pos ")
+                if(pos != RecyclerView.NO_POSITION){
+                    itemClickListener?.onItemClick(view,pos)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -53,3 +68,6 @@ class ReinforceAdapter internal constructor(context: Context) :
     }
 }
 
+interface OnItemClickListener {
+    fun onItemClick(v: View, pos: Int)
+}

@@ -1,10 +1,7 @@
 package com.test.rainbowDefense.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface UnitDao {
@@ -19,4 +16,7 @@ interface UnitDao {
 
     @Query("DELETE FROM unit_table")
     suspend fun deleteAll()
+
+    @Update(onConflict = OnConflictStrategy.ABORT)
+    suspend fun update(unit: UnitEntity)
 }

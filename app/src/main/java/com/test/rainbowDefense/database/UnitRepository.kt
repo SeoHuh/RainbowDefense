@@ -9,4 +9,8 @@ class UnitRepository(private val unitDao: UnitDao) {
     suspend fun insert(unit: UnitEntity) {
         unitDao.insert(unit)
     }
+
+    suspend fun update(unit: UnitEntity) {
+        unitDao.update(unit)
+    }
 }

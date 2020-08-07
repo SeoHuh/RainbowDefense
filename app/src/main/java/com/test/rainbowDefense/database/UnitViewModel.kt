@@ -20,4 +20,7 @@ class UnitViewModel(application: Application) :AndroidViewModel(application) {
     fun insert(unit:UnitEntity) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(unit)
     }
+    fun update(unit:UnitEntity) = viewModelScope.launch(Dispatchers.IO){
+        repository.update(unit)
+    }
 }

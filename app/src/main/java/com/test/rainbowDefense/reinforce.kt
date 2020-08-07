@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ReinforceAdapter
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitRoomDatabase
@@ -42,11 +43,13 @@ class reinforce : AppCompatActivity() {
 
         val viewManager = LinearLayoutManager(this)
         val viewAdapter = ReinforceAdapter(this)
-        val db = Room.databaseBuilder(
-            applicationContext,
-            UnitRoomDatabase::class.java,
-            "unit_database"
-        )
+
+        viewAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(v: View, pos: Int) {
+                val unit: UnitEntity = unitViewModel.allUnits.value!!.get(pos)
+                unitViewModel.update(unit.apply{level++})
+            }
+        })
 
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
         unitViewModel.allUnits.observe(this, Observer { units ->

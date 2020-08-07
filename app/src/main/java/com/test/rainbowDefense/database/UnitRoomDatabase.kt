@@ -17,6 +17,28 @@ public abstract class UnitRoomDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
 
+    companion object {
+        @Volatile
+        private var INSTANCE: UnitRoomDatabase? = null
+
+        fun getDatabase(
+            context: Context,
+            scope: CoroutineScope
+        ): UnitRoomDatabase {
+
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    UnitRoomDatabase::class.java,
+                    "unit_database"
+                )
+                    .addCallback(UnitDatabaseCallback(scope))
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
     private class UnitDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
@@ -70,35 +92,6 @@ public abstract class UnitRoomDatabase : RoomDatabase() {
             unitDao.insert(unit)
             unit = UnitEntity(14, purple_color, R.drawable.purple_circle, 1, "Weakness")
             unitDao.insert(unit)
-        }
-    }
-
-
-    companion object {
-        @Volatile
-        private var INSTANCE: UnitRoomDatabase? = null
-
-        fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
-        ): UnitRoomDatabase {
-
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                Log.d("디버깅", "데이터베이스 존재")
-                return tempInstance
-            }
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    UnitRoomDatabase::class.java,
-                    "unit_database"
-                )
-                    .addCallback(UnitDatabaseCallback(scope))
-                    .build()
-                INSTANCE = instance
-                instance
-            }
         }
     }
 }
