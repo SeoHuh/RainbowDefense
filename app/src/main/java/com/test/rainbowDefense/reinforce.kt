@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ReinforceAdapter
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitRoomDatabase
@@ -20,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_reinforce.*
 
 class reinforce : AppCompatActivity() {
 
-    private val newWordActivityRequestCode = 1
     private lateinit var unitViewModel: UnitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,26 +31,24 @@ class reinforce : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-
         val intent = Intent(this, loby::class.java)
 
         btn_reinforce_back.setOnClickListener{view ->
             startActivity(intent)
         }
 
-
         val viewManager = LinearLayoutManager(this)
         val viewAdapter = ReinforceAdapter(this)
 
         viewAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
-                val unit: UnitEntity = unitViewModel.allUnits.value!!.get(pos)
+                val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
                 unitViewModel.update(unit.apply{level++})
             }
         })
 
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
-        unitViewModel.allUnits.observe(this, Observer { units ->
+        unitViewModel.haveUnits.observe(this, Observer { units ->
             units?.let { viewAdapter.setUnits(it) }
             Log.d("디버깅", "옵저버 실행")
         })
@@ -63,6 +59,5 @@ class reinforce : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
     }
 }

@@ -3,19 +3,22 @@ package com.test.rainbowDefense
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.adapter.ReinforceAdapter
 import kotlinx.android.synthetic.main.activity_shop.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.test.rainbowDefense.adapter.ShopAdapter
+import com.test.rainbowDefense.database.UnitEntity
+import com.test.rainbowDefense.database.UnitViewModel
 
 class shop : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var unitViewModel: UnitViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,34 +32,31 @@ class shop : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, loby::class.java)
 
-
         btn_shop_back.setOnClickListener {
             startActivity(intent)
         }
 
-        val myDataSet = arrayOf(
-            MyUnit(0,R.drawable.boss1, 0, "사고싶지"),
-            MyUnit(0,R.drawable.boss2, 0, "안살거야?"),
-            MyUnit(0,R.drawable.boss3, 0, "사고싶지"),
-            MyUnit(0,R.drawable.boss4, 0, "사고싶지"),
-            MyUnit(0,R.drawable.boss5, 0, "사고싶지"),
-            MyUnit(0,R.drawable.boss6, 0, "사게될거야")
-        )
-        viewManager = GridLayoutManager(this, 5)
-        viewAdapter = ShopAdapter(myDataSet)
+        val viewManager = GridLayoutManager(this, 5)
+        val viewAdapter = ShopAdapter(this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview).apply {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
+        viewAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(v: View, pos: Int) {
+                val unit: UnitEntity = unitViewModel.notHaveUnits.value!!.get(pos)
+                unitViewModel.update(unit.apply{type=1})
+            }
+        })
+
+        unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
+        unitViewModel.notHaveUnits.observe(this, Observer { units ->
+            units?.let { viewAdapter.setUnits(it) }
+            Log.d("디버깅", "옵저버 실행")
+        })
+
+        val recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview)
+        recyclerView.apply{
             setHasFixedSize(true)
-
-            // use a linear layout manager
             layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
             adapter = viewAdapter
-
         }
-
     }
 }

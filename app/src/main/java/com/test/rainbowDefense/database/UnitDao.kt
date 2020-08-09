@@ -5,10 +5,17 @@ import androidx.room.*
 
 @Dao
 interface UnitDao {
+
     @Query("SELECT * FROM unit_table")
     fun getAll(): LiveData<List<UnitEntity>>
 
-    @Query("SELECT * from unit_table ORDER BY id ASC")
+    @Query("SELECT * FROM unit_table WHERE type=1 ORDER BY id ASC")
+    fun getHave(): LiveData<List<UnitEntity>>
+
+    @Query("SELECT * FROM unit_table WHERE type=2")
+    fun getNotHave(): LiveData<List<UnitEntity>>
+
+    @Query("SELECT * FROM unit_table ORDER BY id ASC")
     fun getAlphabetizedWords(): LiveData<List<UnitEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

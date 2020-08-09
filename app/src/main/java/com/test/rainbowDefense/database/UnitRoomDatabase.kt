@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [UnitEntity::class], version = 2, exportSchema = false)
+@Database(entities = [UnitEntity::class], version = 3, exportSchema = false)
 public abstract class UnitRoomDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
@@ -33,6 +33,7 @@ public abstract class UnitRoomDatabase : RoomDatabase() {
                     "unit_database"
                 )
                     .addCallback(UnitDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
@@ -64,34 +65,49 @@ public abstract class UnitRoomDatabase : RoomDatabase() {
             val indigo_color = Color.rgb(0, 26, 240)
             val purple_color = Color.rgb(151, 86, 244)
 
-            var unit = UnitEntity(1, red_color, R.drawable.red_circle, 1, "Fire Wizard")
+            var unit = UnitEntity(101, red_color, R.drawable.red_circle, 1, "Fire Wizard",1)
             unitDao.insert(unit)
-            unit = UnitEntity(2, red_color, R.drawable.red_circle, 1, "Fire Dancer")
+            unit = UnitEntity(102, red_color, R.drawable.red_circle, 1, "Fire Dancer",1)
             unitDao.insert(unit)
-            unit = UnitEntity(3, orange_color, R.drawable.orange_circle, 1, "Thunder Wizard")
+            unit = UnitEntity(201, orange_color, R.drawable.orange_circle, 1, "Thunder Wizard",1)
             unitDao.insert(unit)
-            unit = UnitEntity(4, orange_color, R.drawable.orange_circle, 1, "Orange")
+            unit = UnitEntity(202, orange_color, R.drawable.orange_circle, 1, "Orange",1)
             unitDao.insert(unit)
-            unit = UnitEntity(5, yellow_color, R.drawable.yellow_circle, 1, "Miner")
+            unit = UnitEntity(301, yellow_color, R.drawable.yellow_circle, 1, "Miner",1)
             unitDao.insert(unit)
-            unit = UnitEntity(6, yellow_color, R.drawable.yellow_circle, 1, "Gold Bank")
+            unit = UnitEntity(302, yellow_color, R.drawable.yellow_circle, 1, "Gold Bank",1)
             unitDao.insert(unit)
-            unit = UnitEntity(7, green_color, R.drawable.green_circle, 1, "Druid")
+            unit = UnitEntity(401, green_color, R.drawable.green_circle, 1, "Druid",1)
             unitDao.insert(unit)
-            unit = UnitEntity(8, green_color, R.drawable.green_circle, 1, "Bind")
+            unit = UnitEntity(402, green_color, R.drawable.green_circle, 1, "Bind",1)
             unitDao.insert(unit)
-            unit = UnitEntity(9, blue_color, R.drawable.blue_circle, 1, "Ice Wizard")
+            unit = UnitEntity(501, blue_color, R.drawable.blue_circle, 1, "Ice Wizard",1)
             unitDao.insert(unit)
-            unit = UnitEntity(10, blue_color, R.drawable.blue_circle, 1, "Ice Trap")
+            unit = UnitEntity(502, blue_color, R.drawable.blue_circle, 1, "Ice Trap",1)
             unitDao.insert(unit)
-            unit = UnitEntity(11, indigo_color, R.drawable.indigo_circle, 1, "Dark Wizard")
+            unit = UnitEntity(601, indigo_color, R.drawable.indigo_circle, 1, "Dark Wizard",1)
             unitDao.insert(unit)
-            unit = UnitEntity(12, indigo_color, R.drawable.indigo_circle, 1, "Skeleton")
+            unit = UnitEntity(602, indigo_color, R.drawable.indigo_circle, 1, "Skeleton",1)
             unitDao.insert(unit)
-            unit = UnitEntity(13, purple_color, R.drawable.purple_circle, 1, "Poison")
+            unit = UnitEntity(701, purple_color, R.drawable.purple_circle, 1, "Poison",1)
             unitDao.insert(unit)
-            unit = UnitEntity(14, purple_color, R.drawable.purple_circle, 1, "Weakness")
+            unit = UnitEntity(702, purple_color, R.drawable.purple_circle, 1, "Weakness",1)
             unitDao.insert(unit)
+            unit = UnitEntity(103, red_color, R.drawable.red_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(203, orange_color, R.drawable.orange_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(303, yellow_color, R.drawable.yellow_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(403, green_color, R.drawable.green_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(503, blue_color, R.drawable.blue_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(603, indigo_color, R.drawable.indigo_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+            unit = UnitEntity(703, purple_color, R.drawable.purple_circle, 1, "Noname",2)
+            unitDao.insert(unit)
+
         }
     }
 }

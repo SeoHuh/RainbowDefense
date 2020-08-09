@@ -9,13 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.MyUnit
+import com.test.rainbowDefense.OnItemClickListener
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
 
 class ReinforceAdapter internal constructor(context: Context) :
     RecyclerView.Adapter<ReinforceAdapter.MyViewHolder>() {
 
-    private var itemClickListener :OnItemClickListener? = null
+    private var itemClickListener : OnItemClickListener? = null
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.itemClickListener = listener
     }
@@ -68,6 +69,3 @@ class ReinforceAdapter internal constructor(context: Context) :
     }
 }
 
-interface OnItemClickListener {
-    fun onItemClick(v: View, pos: Int)
-}
