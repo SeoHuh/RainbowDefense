@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class setting : AppCompatActivity() {
+class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
@@ -48,7 +48,7 @@ class setting : AppCompatActivity() {
 
 
 
-        val intent = Intent(this, loby::class.java)
+        val intent = Intent(this, LobyActivity::class.java)
 
         btn_setting_back.setOnClickListener { view ->
             startActivity(intent)

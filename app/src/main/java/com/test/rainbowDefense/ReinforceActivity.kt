@@ -1,7 +1,6 @@
 package com.test.rainbowDefense
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,14 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
+import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ReinforceAdapter
 import com.test.rainbowDefense.database.UnitEntity
-import com.test.rainbowDefense.database.UnitRoomDatabase
 import com.test.rainbowDefense.database.UnitViewModel
 import kotlinx.android.synthetic.main.activity_reinforce.*
 
-class reinforce : AppCompatActivity() {
+class ReinforceActivity : AppCompatActivity() {
 
     private lateinit var unitViewModel: UnitViewModel
 
@@ -31,7 +29,7 @@ class reinforce : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-        val intent = Intent(this, loby::class.java)
+        val intent = Intent(this, LobyActivity::class.java)
 
         btn_reinforce_back.setOnClickListener{view ->
             startActivity(intent)
@@ -40,7 +38,8 @@ class reinforce : AppCompatActivity() {
         val viewManager = LinearLayoutManager(this)
         val viewAdapter = ReinforceAdapter(this)
 
-        viewAdapter.setOnItemClickListener(object : OnItemClickListener {
+        viewAdapter.setOnItemClickListener(object :
+            OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
                 unitViewModel.update(unit.apply{level++})

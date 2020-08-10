@@ -2,12 +2,11 @@ package com.test.rainbowDefense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.WindowManager
+import com.test.rainbowDefense.battle.GameManager
 import kotlinx.android.synthetic.main.activity_battle.*
 
-class battle : AppCompatActivity() {
+class BattleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,8 @@ class battle : AppCompatActivity() {
     // 화면이 뜨고 난 뒤에 게임매니저 생성, 실행
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        var gameManager = GameManager(this,canvas)
+        var gameManager =
+            GameManager(this, canvas)
         gameManager.run()
     }
 }

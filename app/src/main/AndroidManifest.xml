@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".setting"
+            android:name=".SettingActivity"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".reinforce"
+            android:name=".ReinforceActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".shop"
+            android:name=".ShopActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".loby"
+            android:name=".LobyActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".logo"
+            android:name=".LogoActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,9 +30,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".intro"
+            android:name=".IntroActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".battle"
+        <activity android:name=".BattleActivity"
             android:screenOrientation="sensorLandscape"/>
     </application>
 

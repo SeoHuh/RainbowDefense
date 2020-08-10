@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_loby.*
 
-class loby : AppCompatActivity() {
+class LobyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loby)
@@ -18,10 +18,10 @@ class loby : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
-        val intent_shop = Intent(this, shop::class.java)
-        val intent_reinforce = Intent(this, reinforce::class.java)
-        val intent_setting = Intent(this, setting::class.java)
-        val intent_battle = Intent(this, battle::class.java)
+        val intent_shop = Intent(this, ShopActivity::class.java)
+        val intent_reinforce = Intent(this, ReinforceActivity::class.java)
+        val intent_setting = Intent(this, SettingActivity::class.java)
+        val intent_battle = Intent(this, BattleActivity::class.java)
 
         btn_loby_shop.setOnClickListener { view ->
             startActivity(intent_shop)

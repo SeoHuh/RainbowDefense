@@ -7,11 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.marginBottom
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.RecyclerView
-import com.test.rainbowDefense.MyUnit
-import com.test.rainbowDefense.OnItemClickListener
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
 
