@@ -7,23 +7,24 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [UnitEntity::class], version = 1, exportSchema = false)
-abstract class UnitRoomDatabase : RoomDatabase() {
+@Database(entities = [UnitEntity::class,StateEntity::class], version = 2, exportSchema = false)
+abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
+    abstract fun stateDao(): StateDao
 
     companion object {
         @Volatile
-        private var INSTANCE: UnitRoomDatabase? = null
+        private var INSTANCE: MyRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): UnitRoomDatabase {
+        ): MyRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UnitRoomDatabase::class.java,
+                    MyRoomDatabase::class.java,
                     "unit_database"
                 )
                     //.addCallback(UnitDatabaseCallback(context,scope))
