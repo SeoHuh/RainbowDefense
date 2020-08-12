@@ -1,14 +1,15 @@
-package com.test.rainbowDefense
+package com.test.rainbowDefense.battle
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Point
 import android.os.Handler
 import android.view.MotionEvent
-import android.view.WindowManager
+import com.test.rainbowDefense.R
 
 class GameManager(val content: Context, val v: CanvasView) {
+
+    var isRunning = false
 
     // 화면 크기 추출
     var displayWidth = v.width
@@ -67,15 +68,40 @@ class GameManager(val content: Context, val v: CanvasView) {
         R.drawable.blueish_flame_0027,
         R.drawable.blueish_flame_0028,
         R.drawable.blueish_flame_0029,
-        R.drawable.blueish_flame_0030)
+        R.drawable.blueish_flame_0030
+    )
 
 
     // 초기화
     init {
-        v.cursor = Shape(touchX.toInt(),touchY.toInt(),12*3,19*3,cursorDrawable)
-        v.background = Shape(0,0,displayWidth,displayHeight,backgroundDrawable)
-        v.mountain = Shape(0,0,displayWidth,displayHeight,mountainDrawable)
-        v.trees = Shape(0,0,displayWidth,displayHeight,treesDrawable)
+        v.cursor = Shape(
+            touchX.toInt(),
+            touchY.toInt(),
+            12 * 3,
+            19 * 3,
+            cursorDrawable
+        )
+        v.background = Shape(
+            0,
+            0,
+            displayWidth,
+            displayHeight,
+            backgroundDrawable
+        )
+        v.mountain = Shape(
+            0,
+            0,
+            displayWidth,
+            displayHeight,
+            mountainDrawable
+        )
+        v.trees = Shape(
+            0,
+            0,
+            displayWidth,
+            displayHeight,
+            treesDrawable
+        )
 
         effectId.forEach{
             val bitmap = BitmapFactory.decodeResource(v.resources,it)
@@ -103,8 +129,12 @@ class GameManager(val content: Context, val v: CanvasView) {
 
     // 1초에 120번 실행 ( 게임 진행 )
     fun run() {
-        handler?.postDelayed(thread, 1000/ping.toLong())
+        if (!isRunning) {
+            handler?.postDelayed(thread, 1000 / ping.toLong())
+            isRunning = true
+        }
     }
+
     inner class ThreadClass : Thread() {
         override fun run() {
             arrowCheck()
@@ -154,7 +184,15 @@ class GameManager(val content: Context, val v: CanvasView) {
     }
     fun arrowStart() {
         val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
-        v.projectile_array.add(Projectile(10, touchY.toInt(), 137, 17, arrawDrawable))
+        v.projectile_array.add(
+            Projectile(
+                10,
+                touchY.toInt(),
+                137,
+                17,
+                arrawDrawable
+            )
+        )
     }
     fun waveCheck() {
         if (waveCounter >= waveTime) {
@@ -167,15 +205,87 @@ class GameManager(val content: Context, val v: CanvasView) {
     fun waveStart() {
 
         val monsterDrawable = v.resources.getDrawable(R.drawable.monster_1, content.theme)
-        v.monster_array.add(Monster(2500, 200, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(2700, 500, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(2900, 700, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(3100, 300, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(3300, 600, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(3500, 800, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(3700, 100, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(3900, 400, 1452 / 10, 1148 / 10, monsterDrawable))
-        v.monster_array.add(Monster(4100, 600, 1452 / 10, 1148 / 10, monsterDrawable))
+        v.monster_array.add(
+            Monster(
+                2500,
+                200,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                2700,
+                500,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                2900,
+                700,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                3100,
+                300,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                3300,
+                600,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                3500,
+                800,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                3700,
+                100,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                3900,
+                400,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
+        v.monster_array.add(
+            Monster(
+                4100,
+                600,
+                1452 / 10,
+                1148 / 10,
+                monsterDrawable
+            )
+        )
     }
 
     // 투사체 수명 체크, 충돌 체크
@@ -213,7 +323,17 @@ class GameManager(val content: Context, val v: CanvasView) {
     }
 
     fun makeEffect(x:Int,y:Int){
-        v.effect_array.add(Effect(x-100,y-100,200,200,effectBitmaps,30,10))
+        v.effect_array.add(
+            Effect(
+                x - 100,
+                y - 100,
+                200,
+                200,
+                effectBitmaps,
+                30,
+                10
+            )
+        )
     }
     fun checkEffect(effect: ArrayList<Effect>) {
         var n: Int = 0

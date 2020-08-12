@@ -1,4 +1,4 @@
-package com.test.rainbowDefense
+package com.test.rainbowDefense.battle
 
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
