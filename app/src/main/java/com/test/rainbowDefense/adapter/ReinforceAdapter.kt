@@ -1,6 +1,8 @@
 package com.test.rainbowDefense.adapter
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,9 +53,11 @@ class ReinforceAdapter internal constructor(context: Context) :
 
         val current = units[position]
 
-        holder.id.setImageResource(current.resourceId)
-        holder.level.setTextColor(current.color)
-        holder.name.setTextColor(current.color)
+        val resId: Int =
+            holder.view.resources.getIdentifier(current.resourceId, "drawable", "com.test.rainbowDefense")
+        holder.id.setImageResource(resId)
+        holder.level.setTextColor(Color.parseColor(current.color))
+        holder.name.setTextColor(Color.parseColor(current.color))
 
         holder.level.text = (current.level.toString()+"Lv")
         holder.name.text = (current.name)

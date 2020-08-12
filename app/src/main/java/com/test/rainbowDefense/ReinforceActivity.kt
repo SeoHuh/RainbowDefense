@@ -46,7 +46,7 @@ class ReinforceActivity : AppCompatActivity() {
             }
         })
 
-        unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
+        unitViewModel = ViewModelProvider(this)[UnitViewModel::class.java]
         unitViewModel.haveUnits.observe(this, Observer { units ->
             units?.let { viewAdapter.setUnits(it) }
             Log.d("디버깅", "옵저버 실행")

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
 
-class ShopAdapter internal constructor(context: Context) :
+class ShopAdapter internal constructor(val context: Context) :
     RecyclerView.Adapter<ShopAdapter.MyViewHolder>() {
 
     private var itemClickListener : OnItemClickListener? = null
@@ -20,7 +20,6 @@ class ShopAdapter internal constructor(context: Context) :
     }
 
     private var units = emptyList<UnitEntity>()
-
 
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view){
         val imgView = view.findViewById<ImageView>(R.id.shop_image)
@@ -50,7 +49,9 @@ class ShopAdapter internal constructor(context: Context) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = units[position]
 
-        holder.imgView.setImageResource(current.resourceId)
+        val resId: Int =
+            holder.view.resources.getIdentifier(current.resourceId, "drawable", "com.test.rainbowDefense")
+        holder.imgView.setImageResource(resId)
         holder.textView.text = current.name
     }
 
