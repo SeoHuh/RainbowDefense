@@ -15,7 +15,7 @@ class UnitViewModel(application: Application) :AndroidViewModel(application) {
     val notHaveUnits: LiveData<List<UnitEntity>>
 
     init {
-        val unitDao = UnitRoomDatabase.getDatabase(application,viewModelScope).unitDao()
+        val unitDao = MyRoomDatabase.getDatabase(application,viewModelScope).unitDao()
         repository = UnitRepository(unitDao)
         allUnits = repository.allUnits
         haveUnits = repository.haveUnits
