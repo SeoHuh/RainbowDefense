@@ -94,14 +94,15 @@
             app:layout_constraintTop_toBottomOf="@id/setting_effectset">
 
             <Button
-                android:text="mute"
                 android:id="@+id/btn_mute"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
-                app:layout_constraintHorizontal_bias="0"
+                android:text="mute"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:text="진동"
@@ -120,7 +121,7 @@
                 android:id="@+id/btn_coupon"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
-                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintHorizontal_bias="0.95"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

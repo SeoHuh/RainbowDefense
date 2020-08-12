@@ -51,9 +51,14 @@ class setting : AppCompatActivity() {
         val intent = Intent(this, loby::class.java)
 
         btn_setting_back.setOnClickListener { view ->
-            startActivity(intent)
+            super.finish()
+            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top)
         }
 
 
+    }
+    override fun finish(){
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top)
     }
 }

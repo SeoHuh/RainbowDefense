@@ -22,6 +22,7 @@ class intro : AppCompatActivity() {
 
         btn_play.setOnClickListener {view ->
             startActivity(intent)
+
         }
     }
 }

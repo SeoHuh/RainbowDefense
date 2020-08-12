@@ -25,12 +25,15 @@ class loby : AppCompatActivity() {
 
         btn_loby_shop.setOnClickListener { view ->
             startActivity(intent_shop)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_loby_reinforce.setOnClickListener { view ->
             startActivity(intent_reinforce)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
         btn_loby_setting.setOnClickListener { view ->
             startActivity(intent_setting)
+            overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom)
         }
         btn_loby_battle.setOnClickListener {
             startActivity(intent_battle)
