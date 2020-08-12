@@ -31,8 +31,9 @@ class ReinforceActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, LobyActivity::class.java)
 
-        btn_reinforce_back.setOnClickListener{view ->
-            startActivity(intent)
+        btn_reinforce_back.setOnClickListener { view ->
+            super.finish()
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         val viewManager = LinearLayoutManager(this)
@@ -42,7 +43,7 @@ class ReinforceActivity : AppCompatActivity() {
             OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
-                unitViewModel.update(unit.apply{level++})
+                unitViewModel.update(unit.apply { level++ })
             }
         })
 
@@ -58,5 +59,9 @@ class ReinforceActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+    }
+    override fun finish(){
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }

@@ -32,7 +32,8 @@ class ShopActivity : AppCompatActivity() {
         val intent = Intent(this, LobyActivity::class.java)
 
         btn_shop_back.setOnClickListener {
-            startActivity(intent)
+            super.finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
         val viewManager = GridLayoutManager(this, 5)
@@ -58,5 +59,9 @@ class ShopActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+    }
+    override fun finish(){
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
