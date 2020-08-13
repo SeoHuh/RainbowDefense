@@ -49,8 +49,8 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:max="100"
-                android:thumb="@drawable/red_circle" />
-
+                android:thumb="@drawable/thumb"
+                android:progress="50"/>
 
         </LinearLayout>
 
@@ -79,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:max="100"
-                android:thumb="@drawable/purple_circle" />
+                android:thumb="@drawable/thumb"
+                android:progress="50"/>
 
 
         </LinearLayout>
