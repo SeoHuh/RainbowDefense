@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [UnitEntity::class,StateEntity::class], version = 2, exportSchema = false)
+@Database(entities = [UnitEntity::class,StateEntity::class], version = 5, exportSchema = false)
 abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao
@@ -27,7 +27,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     MyRoomDatabase::class.java,
                     "unit_database"
                 )
-                    //.addCallback(UnitDatabaseCallback(context,scope))
                     .createFromAsset("database/rainbow.db")
                     .fallbackToDestructiveMigration()
                     .build()
