@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/battleback_1"
     tools:context=".LobyActivity">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="Stage :"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <TextView
@@ -27,6 +29,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <ImageView
@@ -41,6 +44,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1000"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
 
@@ -51,29 +55,20 @@
         android:id="@+id/btn_loby_setting"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="설정"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/house_d"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_loby_shop" />
 
     <Button
-        android:id="@+id/btn_loby_battle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="전투"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_loby_reinforce"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/btn_loby_reinforce"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="강화"
-        android:textSize="30sp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/house_b"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_loby_shop"
         app:layout_constraintStart_toEndOf="@+id/btn_loby_battle" />
@@ -82,11 +77,75 @@
         android:id="@+id/btn_loby_shop"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="상점"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/house_c"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_loby_setting"
         app:layout_constraintStart_toEndOf="@+id/btn_loby_reinforce" />
+
+    <Button
+        android:id="@+id/btn_loby_battle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/house_a"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_loby_reinforce"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="상점"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_loby_reinforce"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loby_battle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="전투"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_loby_battle"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loby_battle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="강화"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_loby_reinforce"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loby_reinforce"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="설정"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_loby_setting"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loby_battle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
