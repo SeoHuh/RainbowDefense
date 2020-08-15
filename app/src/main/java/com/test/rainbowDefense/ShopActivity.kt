@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -39,20 +40,24 @@ class ShopActivity : AppCompatActivity() {
         val viewManager = GridLayoutManager(this, 5)
         val viewAdapter = ShopAdapter(this)
 
+        //뷰 어뎁터에 클릭리스너 적용
         viewAdapter.setOnItemClickListener(object :
             OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.notHaveUnits.value!!.get(pos)
-                unitViewModel.update(unit.apply{type=1})
+                showDetail(unit)
+//                unitViewModel.update(unit.apply{type=1})
             }
         })
 
+        // 유닛 뷰모델 호출 후 관찰
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
         unitViewModel.notHaveUnits.observe(this, Observer { units ->
             units?.let { viewAdapter.setUnits(it) }
             Log.d("디버깅", "옵저버 실행")
         })
 
+        // 리사이클러뷰에 데이터 적용
         val recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview)
         recyclerView.apply{
             setHasFixedSize(true)
@@ -64,4 +69,23 @@ class ShopActivity : AppCompatActivity() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
+
+    fun showDetail(unit:UnitEntity) {
+        val newFragment = ShopDetailFragment(unit)
+        newFragment.show(supportFragmentManager,"mine")
+        newFragment.setOnlistner(object :
+            ShopDetailFragment.NoticeDialogListener {
+            override fun onDialogPositiveClick(dialog: DialogFragment) {
+                unitViewModel.update(unit.apply{type=1})
+            }
+
+            override fun onDialogNegativeClick(dialog: DialogFragment) {
+
+            }
+        })
+        val param = newFragment.dialog?.window?.attributes
+        param?.width = 300
+        param?.height = 200
+    }
+
 }
