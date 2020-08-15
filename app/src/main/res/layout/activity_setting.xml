@@ -44,6 +44,7 @@
 
 
             <SeekBar
+                android:progressDrawable="@drawable/rainbowseekbar"
                 android:id="@+id/seekbar_music"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -75,6 +76,7 @@
                 android:text="mute" />
 
             <SeekBar
+                android:progressDrawable="@drawable/rainbowseekbar"
                 android:id="@+id/seekbar_effect"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
