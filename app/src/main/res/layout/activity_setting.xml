@@ -97,10 +97,10 @@
             app:layout_constraintTop_toBottomOf="@id/setting_effectset">
 
             <Button
+                android:background="@drawable/sound"
                 android:id="@+id/btn_mute"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
-                android:text="mute"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
@@ -108,7 +108,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:text="진동"
+                android:background="@drawable/novibration"
                 android:id="@+id/btn_vibrate"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
