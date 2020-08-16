@@ -76,7 +76,7 @@ class ShopActivity : AppCompatActivity() {
         newFragment.setOnlistner(object :
             ShopDetailFragment.NoticeDialogListener {
             override fun onDialogPositiveClick(dialog: DialogFragment) {
-                unitViewModel.update(unit.apply{type=1})
+                unitViewModel.update(unit.apply{sellType=1})
             }
 
             override fun onDialogNegativeClick(dialog: DialogFragment) {
