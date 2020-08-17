@@ -23,6 +23,7 @@ class ShopActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
+
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -30,6 +31,7 @@ class ShopActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
         val intent = Intent(this, LobyActivity::class.java)
 
         btn_shop_back.setOnClickListener {
@@ -59,33 +61,41 @@ class ShopActivity : AppCompatActivity() {
 
         // 리사이클러뷰에 데이터 적용
         val recyclerView = findViewById<RecyclerView>(R.id.shop_recyclerview)
-        recyclerView.apply{
+        recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
     }
-    override fun finish(){
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
-    fun showDetail(unit:UnitEntity) {
+    fun showDetail(unit: UnitEntity) {
         val newFragment = ShopDetailFragment(unit)
-        newFragment.show(supportFragmentManager,"mine")
+        newFragment.show(supportFragmentManager, "mine")
         newFragment.setOnlistner(object :
             ShopDetailFragment.NoticeDialogListener {
             override fun onDialogPositiveClick(dialog: DialogFragment) {
-                unitViewModel.update(unit.apply{sellType=1})
+                unitViewModel.update(unit.apply { sellType = 1 })
             }
 
             override fun onDialogNegativeClick(dialog: DialogFragment) {
 
             }
         })
-        val param = newFragment.dialog?.window?.attributes
-        param?.width = 300
-        param?.height = 200
     }
-
 }

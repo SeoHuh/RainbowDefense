@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.test.rainbowDefense.battle.GameManager
 import com.test.rainbowDefense.database.StateEntity
 import com.test.rainbowDefense.database.StateViewModel
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitViewModel
+import kotlinx.android.synthetic.main.activity_battle.*
 import kotlinx.android.synthetic.main.activity_loby.*
 
 class LobyActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class LobyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loby)
+
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -56,9 +59,20 @@ class LobyActivity : AppCompatActivity() {
             }
             Log.d("디버깅", "State 변경확인")
         })
-        gold_text.setOnClickListener{
+        gold_text.setOnClickListener {
             val state: StateEntity = stateViewModel.state.value!!.get(0)
-            stateViewModel.update(state.apply{gold++})
+            stateViewModel.update(state.apply { gold++ })
         }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 }

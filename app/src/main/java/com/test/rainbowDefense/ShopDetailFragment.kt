@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.DialogFragment
 import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.database.UnitEntity
@@ -23,6 +24,8 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
@@ -43,7 +46,19 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
             }
 
             builder.setView(view)
-            builder.create()
+            builder.create().apply{
+                window?.decorView?.systemUiVisibility = (
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+            }
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
 }
+
+
+
