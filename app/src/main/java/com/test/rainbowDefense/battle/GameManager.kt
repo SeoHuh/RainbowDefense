@@ -5,38 +5,46 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.view.MotionEvent
+import android.widget.Toast
 import com.test.rainbowDefense.R
+import com.test.rainbowDefense.database.WaveEntity
 
-class GameManager(val content: Context, val v: CanvasView) {
+class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
 
+    // 실행중?
     var isRunning = false
 
-    // 화면 크기 추출
-    var displayWidth = v.width
-    var displayHeight = v.height
+    // 화면 크기 고정
+    val displayWidth = 1920
+    val displayHeight = 1080
+
+    // 전투화면 높이
+    val battleHeight = 840
+
+    // 메뉴(블록)화면 높이
+    val menuHeight = 240
+
+    // 상태창 높이
+    val statusHeight = 120
 
     // 핸들러 쓰레드
     var handler: Handler? = Handler()
     var thread = ThreadClass()
 
-    // 핑, 웨이브, 투사체
+    // 핑 (초당 프레임 수)
     val ping = 120
-    var waveTime: Int = 5 * ping
-    var waveCounter: Int = 0
-    var arrowTime: Int = (0.1 * ping).toInt()
-    var arrowCounter: Int = 0
 
     // 화면 좌표
     var touchX: Float = 100f
     var touchY: Float = 500f
     var isTouch: Boolean = false
 
-    // 리소스 Drawable
-    val cursorDrawable = v.resources.getDrawable(R.drawable.cursor1, content.theme)
-    val backgroundDrawable = v.resources.getDrawable(R.drawable.background, content.theme)
-    val mountainDrawable = v.resources.getDrawable(R.drawable.mountains, content.theme)
-    val treesDrawable = v.resources.getDrawable(R.drawable.trees, content.theme)
+    // 블록메뉴, 웨이브, 배경(상태포함) 인스턴스
+    val blockMenu = BlockMenu(content,v.block_array,0,battleHeight,displayWidth,menuHeight)
+    val waveManager = WaveManager(content,v,wave,ping,displayWidth,battleHeight)
+    val background = Background(displayWidth,battleHeight,statusHeight,v,content)
 
+    // 이펙트(애니메이션) 리소스 (추후 EffectManager 클래스로 옮길 예정)
     val effectBitmaps = arrayListOf<Bitmap>();
     val effectId = arrayListOf(
         R.drawable.blueish_flame_0001,
@@ -71,43 +79,17 @@ class GameManager(val content: Context, val v: CanvasView) {
         R.drawable.blueish_flame_0030
     )
 
+    // 화살 딜레이타임, 카운터 (추후 Arrow 클래스로 옮길 예정)
+    var arrowTime: Int = (0.1 * ping).toInt()
+    var arrowCounter: Int = 0
+
 
     // 초기화
     init {
-        v.cursor = Shape(
-            touchX.toInt(),
-            touchY.toInt(),
-            12 * 3,
-            19 * 3,
-            cursorDrawable
-        )
-        v.background = Shape(
-            0,
-            0,
-            displayWidth,
-            displayHeight,
-            backgroundDrawable
-        )
-        v.mountain = Shape(
-            0,
-            0,
-            displayWidth,
-            displayHeight,
-            mountainDrawable
-        )
-        v.trees = Shape(
-            0,
-            0,
-            displayWidth,
-            displayHeight,
-            treesDrawable
-        )
-
         effectId.forEach{
             val bitmap = BitmapFactory.decodeResource(v.resources,it)
             effectBitmaps.add(Bitmap.createScaledBitmap(bitmap,200,200,false))
         }
-
         v.setOnTouchListener { v, event ->
             val x = event.x
             val y = event.y
@@ -127,25 +109,27 @@ class GameManager(val content: Context, val v: CanvasView) {
         }
     }
 
-    // 1초에 120번 실행 ( 게임 진행 )
+    // 핸들러, 쓰레드 실행
     fun run() {
         if (!isRunning) {
             handler?.postDelayed(thread, 1000 / ping.toLong())
             isRunning = true
         }
     }
-
     inner class ThreadClass : Thread() {
         override fun run() {
-            arrowCheck()
-            waveCheck()
-            checkProjectile(v.projectile_array)
-            checkCollision(v.monster_array, v.projectile_array)
-            checkEffect(v.effect_array)
-            v.monster_array.forEach{it.move()}
-            v.projectile_array.forEach{it.move()}
-            v.invalidate()
-            handler?.postDelayed(this, 1000/ping.toLong())
+            if(isRunning) {
+                arrowCheck()
+                waveManager.waveCheck()
+                checkProjectile(v.projectile_array)
+                checkCollision(v.monster_array, v.projectile_array)
+                checkEffect(v.effect_array)
+                v.monster_array.forEach { it.move() }
+                v.projectile_array.forEach { it.move() }
+                v.invalidate()
+                winCheck()
+                handler?.postDelayed(this, 1000 / ping.toLong())
+            }
         }
     }
 
@@ -156,6 +140,7 @@ class GameManager(val content: Context, val v: CanvasView) {
         v.cursor?.x = x.toInt()
         v.cursor?.y = y.toInt()
         isTouch = true
+        checkTouch()
         v.invalidate()
     }
     private fun onMoveTouchEvent(x: Float, y: Float) {
@@ -172,6 +157,27 @@ class GameManager(val content: Context, val v: CanvasView) {
     private fun upTouchEvent() {
         isTouch = false
     }
+    fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
+        v.block_array.forEach{  // 블록 클릭시
+            val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
+            val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
+            if(condition1 && condition2 && it.isClickable) {
+                it.onClick()
+                Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
+                TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
+            }
+        }
+        v.monster_array.forEach{    // 몬스터 클릭시
+            val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
+            val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
+            if(condition1 && condition2) {
+                Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
+                TODO("몬스터 정보 작게 표시")
+            }
+        }
+        TODO("건물 또는 유닛 클릭시 정보 표시하는 코드")
+    }
+
 
     // 투사체, 웨이브 딜레이 체크
     fun arrowCheck() {
@@ -181,6 +187,7 @@ class GameManager(val content: Context, val v: CanvasView) {
         } else {
             arrowCounter++
         }
+        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
     fun arrowStart() {
         val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
@@ -193,99 +200,7 @@ class GameManager(val content: Context, val v: CanvasView) {
                 arrawDrawable
             )
         )
-    }
-    fun waveCheck() {
-        if (waveCounter >= waveTime) {
-            waveStart()
-            waveCounter = 0
-        } else {
-            waveCounter++
-        }
-    }
-    fun waveStart() {
-
-        val monsterDrawable = v.resources.getDrawable(R.drawable.monster_1, content.theme)
-        v.monster_array.add(
-            Monster(
-                2500,
-                200,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                2700,
-                500,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                2900,
-                700,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                3100,
-                300,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                3300,
-                600,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                3500,
-                800,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                3700,
-                100,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                3900,
-                400,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
-        v.monster_array.add(
-            Monster(
-                4100,
-                600,
-                1452 / 10,
-                1148 / 10,
-                monsterDrawable
-            )
-        )
+        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
 
     // 투사체 수명 체크, 충돌 체크
@@ -298,6 +213,7 @@ class GameManager(val content: Context, val v: CanvasView) {
             }
             n++
         }
+        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
     fun checkCollision(monster: ArrayList<Monster>, projectile: ArrayList<Projectile>) {
         var n: Int = 0
@@ -320,8 +236,10 @@ class GameManager(val content: Context, val v: CanvasView) {
             m = 0
             n++
         }
+        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
 
+    // 애니메이션 이펙트 생성, 체크
     fun makeEffect(x:Int,y:Int){
         v.effect_array.add(
             Effect(
@@ -334,6 +252,7 @@ class GameManager(val content: Context, val v: CanvasView) {
                 10
             )
         )
+        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
     }
     fun checkEffect(effect: ArrayList<Effect>) {
         var n: Int = 0
@@ -348,6 +267,28 @@ class GameManager(val content: Context, val v: CanvasView) {
             }
             n++
         }
+        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
+    }
+
+    // 승리, 패배 조건 확인
+    fun winCheck(){
+        if(v.status?.wave == v.status?.waveMax      // 웨이브 종료
+            && v.monster_array.isNullOrEmpty()) {   // 몬스터 모두 사망
+            win()
+            isRunning = false
+        }
+        else if(v.status!!.hp<=0){      // 체력이 0 이하로 내려갔을 때
+            lose()
+            isRunning = false
+        }
+    }
+    fun win() {
+        Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
+        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
+    }
+    fun lose() {
+        Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
+        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
 
     }
 }

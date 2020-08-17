@@ -5,16 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BattleActivity">
+    tools:context=".BattleActivity"
+    android:background="#000000">
 
 
     <com.test.rainbowDefense.battle.CanvasView
         android:id = "@+id/canvas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="1920px"
+        android:layout_height="1080px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
