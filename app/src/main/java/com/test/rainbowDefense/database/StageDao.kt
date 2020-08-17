@@ -10,7 +10,7 @@ import androidx.room.Update
 interface StageDao {
 
     @Query("SELECT * FROM stage_table")
-    fun get(): LiveData<List<StageEntity>>
+    fun get(): List<StageEntity>
 
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(stage: StageEntity)

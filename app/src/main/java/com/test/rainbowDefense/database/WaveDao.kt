@@ -10,7 +10,7 @@ import androidx.room.Update
 interface WaveDao {
 
     @Query("SELECT * FROM wave_table")
-    fun get(): LiveData<List<WaveEntity>>
+    fun get(): List<WaveEntity>
 
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(wave: WaveEntity)

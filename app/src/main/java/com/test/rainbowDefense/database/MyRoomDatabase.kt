@@ -22,8 +22,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private var INSTANCE: MyRoomDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
+            context: Context
+           // scope: CoroutineScope
         ): MyRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
