@@ -14,13 +14,13 @@ class CanvasView @JvmOverloads constructor(
     var mPaint : Paint = Paint()
 
     // 그려야할 객체들
+    var status: Status? = null
     var projectile_array = arrayListOf<Projectile>()
     var monster_array = arrayListOf<Monster>()
     var effect_array = arrayListOf<Effect>()
+    var block_array = arrayListOf<Block>()
     var cursor: Shape? = null
     var background: Shape? = null
-    var mountain: Shape? = null
-    var trees: Shape? = null
 
     // 초기화 (Paint 초기설정)
     init {
@@ -35,11 +35,11 @@ class CanvasView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         background?.draw(canvas)
-        mountain?.draw(canvas)
-        trees?.draw(canvas)
         monster_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
         effect_array.forEach {it.draw(canvas)}
+        status?.draw(canvas)
+        block_array.forEach {it.draw(canvas)}
         cursor?.draw(canvas)
     }
 

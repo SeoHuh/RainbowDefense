@@ -13,7 +13,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     val state: LiveData<List<StateEntity>>
 
     init {
-        val stateDao = MyRoomDatabase.getDatabase(application,viewModelScope).stateDao()
+        val stateDao = MyRoomDatabase.getDatabase(application).stateDao()
         repository = StateRepository(stateDao)
         state = repository.state
     }
