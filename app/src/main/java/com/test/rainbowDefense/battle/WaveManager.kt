@@ -98,7 +98,7 @@ class WaveManager(
                 )
             )
         }
-        TODO("일반, 에픽, 유니크, 보스 등급의 몬스터 Drawable 구하고, 몬스터 데이터베이스와 연동하기")
+//        TODO("일반, 에픽, 유니크, 보스 등급의 몬스터 Drawable 구하고, 몬스터 데이터베이스와 연동하기")
     }
     val random = Random()
     fun rand(from : Int, to : Int) : Int {

@@ -164,7 +164,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             if(condition1 && condition2 && it.isClickable) {
                 it.onClick()
                 Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
-                TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
+//                TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
             }
         }
         v.monster_array.forEach{    // 몬스터 클릭시
@@ -172,10 +172,10 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
             if(condition1 && condition2) {
                 Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
-                TODO("몬스터 정보 작게 표시")
+//                TODO("몬스터 정보 작게 표시")
             }
         }
-        TODO("건물 또는 유닛 클릭시 정보 표시하는 코드")
+//        TODO("건물 또는 유닛 클릭시 정보 표시하는 코드")
     }
 
 
@@ -187,7 +187,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
         } else {
             arrowCounter++
         }
-        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
+//        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
     fun arrowStart() {
         val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
@@ -200,7 +200,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
                 arrawDrawable
             )
         )
-        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
+//        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
 
     // 투사체 수명 체크, 충돌 체크
@@ -213,7 +213,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             }
             n++
         }
-        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
+//        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
     fun checkCollision(monster: ArrayList<Monster>, projectile: ArrayList<Projectile>) {
         var n: Int = 0
@@ -236,7 +236,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             m = 0
             n++
         }
-        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
+//        TODO("Arrow 클래스 생성, arrow 관련 함수를 분리 ")
     }
 
     // 애니메이션 이펙트 생성, 체크
@@ -252,7 +252,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
                 10
             )
         )
-        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
+//        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
     }
     fun checkEffect(effect: ArrayList<Effect>) {
         var n: Int = 0
@@ -267,7 +267,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             }
             n++
         }
-        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
+//        TODO("EffectManager 클래스 생성, Effect 관련 함수를 분리 ")
     }
 
     // 승리, 패배 조건 확인
@@ -284,11 +284,11 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
     }
     fun win() {
         Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
-        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
+//        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
     }
     fun lose() {
         Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
-        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
+//        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
 
     }
 }

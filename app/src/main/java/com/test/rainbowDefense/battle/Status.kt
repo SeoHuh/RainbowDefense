@@ -38,7 +38,6 @@ class Status (
         canvas?.drawText("Hp", x + 10f, height/2f+20f, textPaint)
         canvas?.drawRect(x + 150f, y + 10f, (x + 150f)+(400f*hpPercent), height - 20f, hpPaint)
         canvas?.drawRect(x + 150f, y + 10f, x + 550f, height - 20f, hpStrokePaint)
-
         canvas?.drawText("Stage:", x + 800f, height/2f+20f, textPaint)
         canvas?.drawText(stage.toString(), x + 1000f, height/2f+20f, textPaint)
         canvas?.drawText("Wave", x + 1100f, height/2f+20f, textPaint)

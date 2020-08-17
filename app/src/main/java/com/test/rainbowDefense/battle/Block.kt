@@ -26,7 +26,7 @@ class Block(
 
     fun onClick() {
         isClick = true
-        TODO("블록 클릭시 동작 정의, 스킬 블록의 경우 드래그시 스킬범위 표시되도록 구현")
+//        TODO("블록 클릭시 동작 정의, 스킬 블록의 경우 드래그시 스킬범위 표시되도록 구현")
     }
 
     override fun draw(canvas: Canvas?) {
