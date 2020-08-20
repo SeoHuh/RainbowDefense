@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 import java.util.*
@@ -9,6 +10,7 @@ class WaveManager(
     val content : Context,
     val v : CanvasView,
     wave : WaveEntity,
+    private val monsterManager: MonsterManager,
     ping : Int,
     displayWidth : Int,
     battleHeight : Int) {
@@ -47,61 +49,25 @@ class WaveManager(
             }
         }
     }
-    fun waveStart() {
-        val normalDrawable = v.resources.getDrawable(R.drawable.monster_1, content.theme)
-        val epicDrawable = v.resources.getDrawable(R.drawable.monster_1, content.theme)
-        val uniqueDrawable = v.resources.getDrawable(R.drawable.monster_1,content.theme)
-        val bossDrawable = v.resources.getDrawable(R.drawable.monster_1,content.theme)
-
+    private fun waveStart() {
 
         for(i in 1 until normalMonster) {
-            v.monster_array.add(
-                Monster(
-                    rand(minX,maxX),
-                    rand(minY,maxY),
-                    1452 / 10,
-                    1148 / 10,
-                    normalDrawable
-                )
-            )
+            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),1)
         }
         for(i in 1 until epicMonster) {
-            v.monster_array.add(
-                Monster(
-                    rand(minX,maxX),
-                    rand(minY,maxY),
-                    1452 / 10,
-                    1148 / 10,
-                    epicDrawable
-                )
-            )
+            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),2)
         }
         for(i in 1 until uniqueMonster) {
-            v.monster_array.add(
-                Monster(
-                    rand(minX,maxX),
-                    rand(minY,maxY),
-                    1452 / 10,
-                    1148 / 10,
-                    uniqueDrawable
-                )
-            )
+            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),3)
         }
         for(i in 1 until bossMonster) {
-            v.monster_array.add(
-                Monster(
-                    rand(minX,maxX),
-                    rand(minY,maxY),
-                    1452 / 10,
-                    1148 / 10,
-                    bossDrawable
-                )
-            )
+            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),4)
         }
 //        TODO("일반, 에픽, 유니크, 보스 등급의 몬스터 Drawable 구하고, 몬스터 데이터베이스와 연동하기")
     }
-    val random = Random()
-    fun rand(from : Int, to : Int) : Int {
+
+    private val random = Random()
+    private fun rand(from : Int, to : Int) : Int {
         return random.nextInt(to - from) + from
     }
 

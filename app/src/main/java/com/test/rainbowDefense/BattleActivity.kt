@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.test.rainbowDefense.battle.GameManager
-import com.test.rainbowDefense.database.MyRoomDatabase
-import com.test.rainbowDefense.database.StageEntity
-import com.test.rainbowDefense.database.WaveEntity
+import com.test.rainbowDefense.database.*
 import kotlinx.android.synthetic.main.activity_battle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +15,9 @@ class BattleActivity : AppCompatActivity() {
     private lateinit var gameManager: GameManager
     private lateinit var stage : StageEntity
     private lateinit var wave: WaveEntity
-    var isCreated = false
+    private lateinit var monsterList: List<MonsterEntity>
+    private lateinit var unitList: List<UnitEntity>
+    private var isCreated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +37,16 @@ class BattleActivity : AppCompatActivity() {
             stage = db.stageDao().get()[stageNum - 1]
            // wave = db.waveDao().get()[stage.waveDifficulty - 1]
             wave = db.waveDao().get()[2]
+            monsterList = db.monsterDao().get()
+            unitList = db.unitDao().getHaveList()
         }
-
     }
 
     // 화면이 뜨고 난 뒤에 게임매니저 생성, 실행
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if(!isCreated) {
-            gameManager = GameManager(this, canvas, wave)
+            gameManager = GameManager(this, canvas, stage, wave, monsterList, unitList)
             isCreated = true
         }
         gameManager.run()

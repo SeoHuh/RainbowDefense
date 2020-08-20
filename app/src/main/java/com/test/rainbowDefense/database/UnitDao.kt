@@ -10,6 +10,9 @@ interface UnitDao {
     fun getAll(): LiveData<List<UnitEntity>>
 
     @Query("SELECT * FROM unit_table WHERE sellType=1 ORDER BY id ASC")
+    fun getHaveList(): List<UnitEntity>
+
+    @Query("SELECT * FROM unit_table WHERE sellType=1 ORDER BY id ASC")
     fun getHave(): LiveData<List<UnitEntity>>
 
     @Query("SELECT * FROM unit_table WHERE sellType=2")

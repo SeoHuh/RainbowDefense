@@ -1,7 +1,9 @@
 package com.test.rainbowDefense.database
 
+import android.graphics.drawable.Drawable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "monster_table")
@@ -14,6 +16,11 @@ class MonsterEntity(
     @ColumnInfo(name = "attackDamage") val attackDamage: Int,
     @ColumnInfo(name = "attackSpeed") val attackSpeed: Int,
     @ColumnInfo(name = "moveSpeed") val moveSpeed: Int,
-    @ColumnInfo(name = "rank") val rank: Int
-
-)
+    @ColumnInfo(name = "rank") val rank: Int,
+    @ColumnInfo(name = "width") val width: Int,
+    @ColumnInfo(name = "height") val height: Int,
+    @ColumnInfo(name = "attackRange") val attackRange: Int
+){
+    @Ignore
+    var drawable: Drawable? = null
+}

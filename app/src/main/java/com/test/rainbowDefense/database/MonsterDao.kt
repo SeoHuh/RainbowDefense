@@ -10,7 +10,7 @@ import androidx.room.Update
 interface MonsterDao {
 
     @Query("SELECT * FROM monster_table")
-    fun get(): LiveData<List<MonsterEntity>>
+    fun get(): List<MonsterEntity>
 
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(monster: MonsterEntity)

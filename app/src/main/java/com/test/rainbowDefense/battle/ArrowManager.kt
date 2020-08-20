@@ -10,9 +10,11 @@ class ArrowManager (
     val effectManager: EffectManager,
     ping : Int) {
 
-    // 화살 딜레이타임, 카운터 (추후 Arrow 클래스로 옮길 예정)
+    // 화살 딜레이타임, 카운터
     var delayTime: Int = (0.1 * ping).toInt()
     var arrowCounter: Int = 0
+    var attackDamage = 30
+
 
     // 투사체, 웨이브 딜레이 체크
     fun arrowCheck(isTouch:Boolean,x:Float,y:Float) {
@@ -32,7 +34,9 @@ class ArrowManager (
                 137,
                 17,
                 arrawDrawable
-            )
+            ).apply{
+                attackDamage = this@ArrowManager.attackDamage
+            }
         )
     }
 
@@ -52,24 +56,21 @@ class ArrowManager (
         val monster = v.monster_array
         val projectile = v.projectile_array
         var n: Int = 0
-        var m: Int = 0
-        while (n < monster.size) {
-            while (m < projectile.size) {
+        monster.forEach{
+            while (n < projectile.size) {
                 val condition1: Boolean =
-                    monster[n].x < projectile[m].x + projectile[m].width && monster[n].x + monster[n].width > projectile[m].x
+                    it.x < projectile[n].x + projectile[n].width && it.x + it.width > projectile[n].x
                 val condition2: Boolean =
-                    monster[n].y < projectile[m].y + projectile[m].height && monster[n].y + monster[n].height > projectile[m].y
+                    it.y < projectile[n].y + projectile[n].height && it.y + it.height > projectile[n].y
                 if (condition1 && condition2) {
-                    effectManager.makeEffect(monster[n].x+monster[n].width/2,monster[n].y+monster[n].height/2)
-                    monster.removeAt(n)
-                    projectile.removeAt(m)
-                    m = 0
-                    break
+                    effectManager.makeEffect(it.x+it.width/2,it.y+it.height/2)
+                    it.hp -= projectile[n].attackDamage // 몬스터 체력 감소
+                    projectile.removeAt(n)
+                    n--
                 }
-                m++
+                n++
             }
-            m = 0
-            n++
+            n = 0
         }
     }
     fun arrowMove() {

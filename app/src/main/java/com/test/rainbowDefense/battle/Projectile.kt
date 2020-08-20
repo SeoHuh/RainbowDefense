@@ -14,6 +14,7 @@ class Projectile(
     override var lifetime = 200
     override var vx = 1500/ping
 
+    var attackDamage = 0
     init {
 
     }

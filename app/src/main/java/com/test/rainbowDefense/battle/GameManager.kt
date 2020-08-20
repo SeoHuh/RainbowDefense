@@ -7,12 +7,25 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.widget.Toast
 import com.test.rainbowDefense.R
+import com.test.rainbowDefense.database.MonsterEntity
+import com.test.rainbowDefense.database.StageEntity
+import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.WaveEntity
 
-class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
+class GameManager(
+    val content: Context,
+    val v: CanvasView,
+    stage: StageEntity,
+    wave: WaveEntity,
+    monsterList: List<MonsterEntity>,
+    unitList: List<UnitEntity>) {
 
     // 실행중?
     var isRunning = false
+
+    // 핸들러 쓰레드
+    var handler: Handler? = Handler()
+    var thread = ThreadClass()
 
     // 화면 크기 고정
     private val displayWidth = 1920
@@ -27,10 +40,6 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
     // 상태창 높이
     private val statusHeight = 120
 
-    // 핸들러 쓰레드
-    var handler: Handler? = Handler()
-    var thread = ThreadClass()
-
     // 핑 (초당 프레임 수)
     val ping = 120
 
@@ -39,12 +48,15 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
     var touchY: Float = 500f
     var isTouch: Boolean = false
 
-    // 블록메뉴, 웨이브, 배경, 이펙트, 화살 인스턴스
-    val blockMenu = BlockMenu(content,v.block_array,0,battleHeight,displayWidth,menuHeight)
-    val waveManager = WaveManager(content,v,wave,ping,displayWidth,battleHeight)
-    val background = Background(displayWidth,battleHeight,statusHeight,v,content)
+    // 게임관련 각종 인스턴스
     private val effectManager = EffectManager(content,v,ping)
+    private val monsterManager = MonsterManager(content,v,effectManager,ping,monsterList)
     val arrowManager = ArrowManager(content,v,effectManager,ping)
+    val blockMenu = BlockMenu(content,v.block_array,0,battleHeight,displayWidth,menuHeight)
+    val waveManager = WaveManager(content,v,wave,monsterManager,ping,displayWidth,battleHeight)
+    val background = Background(displayWidth,battleHeight,statusHeight,v,content)
+
+
 
 
     // 초기화 ( 터치 이벤트 설정 )
@@ -82,8 +94,10 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
                 arrowManager.checkProjectile()
                 arrowManager.checkCollision()
                 effectManager.checkEffect()
-                v.monster_array.forEach { it.move() }
                 arrowManager.arrowMove()
+                monsterManager.monsterMove()
+                monsterManager.checkDead()
+                monsterManager.checkAttack()
                 waveManager.waveCheck()
                 v.invalidate()
                 winCheck()
@@ -116,7 +130,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
     private fun upTouchEvent() {
         isTouch = false
     }
-    fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
+    private fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
         v.block_array.forEach{  // 블록 클릭시
             val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
@@ -137,7 +151,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
     }
 
     // 승리, 패배 조건 확인
-    fun winCheck(){
+    private fun winCheck(){
         if(v.status?.wave == v.status?.waveMax      // 웨이브 종료
             && v.monster_array.isNullOrEmpty()) {   // 몬스터 모두 사망
             win()
@@ -148,12 +162,12 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             isRunning = false
         }
     }
-    fun win() {
+    private fun win() {
         Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
 //        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
     }
-    fun lose() {
-        Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
+    private fun lose() {
+        Toast.makeText(content,"패배!",Toast.LENGTH_SHORT).show()
 //        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
 
     }
