@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.database.UnitEntity
 import kotlinx.android.synthetic.main.shop_detail.view.*
@@ -24,7 +26,6 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
 
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -47,6 +48,8 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
 
             builder.setView(view)
             builder.create().apply{
+                window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
                 window?.decorView?.systemUiVisibility = (
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -58,6 +61,11 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    override fun show(manager: FragmentManager, tag: String?) {
+        super.show(manager, tag)
+
+        dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+    }
 }
 
 
