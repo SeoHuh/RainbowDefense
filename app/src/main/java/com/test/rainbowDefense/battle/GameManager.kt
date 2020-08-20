@@ -83,7 +83,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
                 arrowManager.checkCollision()
                 effectManager.checkEffect()
                 v.monster_array.forEach { it.move() }
-                v.projectile_array.forEach { it.move() }
+                arrowManager.arrowMove()
                 waveManager.waveCheck()
                 v.invalidate()
                 winCheck()
@@ -122,7 +122,7 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
             if(condition1 && condition2 && it.isClickable) {
                 it.onClick()
-                Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
+                Toast.makeText(content, "${it.text} 버튼이 클릭 되었습니다. ", Toast.LENGTH_SHORT).show()
 //                TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
             }
         }
@@ -130,7 +130,6 @@ class GameManager(val content: Context, val v: CanvasView, wave: WaveEntity) {
             val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
             if(condition1 && condition2) {
-                Toast.makeText(content, "$displayWidth , $displayHeight View 크기", Toast.LENGTH_SHORT).show()
 //                TODO("몬스터 정보 작게 표시")
             }
         }

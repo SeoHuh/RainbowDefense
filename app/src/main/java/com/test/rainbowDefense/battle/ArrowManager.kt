@@ -72,6 +72,9 @@ class ArrowManager (
             n++
         }
     }
+    fun arrowMove() {
+        v.projectile_array.forEach {it.move()}
+    }
 
 
 
