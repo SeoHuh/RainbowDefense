@@ -89,25 +89,30 @@ class GameManager(
     }
     inner class ThreadClass : Thread() {
         override fun run() {
-            if(isRunning) {
-                arrowManager.arrowCheck(isTouch,touchX,touchY)
-                arrowManager.checkProjectile()
-                arrowManager.checkCollision()
-                effectManager.checkEffect()
-                arrowManager.arrowMove()
-                monsterManager.monsterMove()
-                monsterManager.checkDead()
-                monsterManager.checkAttack()
-                waveManager.waveCheck()
-                v.invalidate()
-                winCheck()
-                handler?.postDelayed(this, 1000 / ping.toLong())
+            if(isRunning) { // 실행중인 경우
+                arrowManager.checkArrow(isTouch,touchX,touchY)      // Arrow 생성을 체크
+                arrowManager.checkProjectile()                      // Projectile 수명 체크
+                arrowManager.checkCollision()                       // Projectile 충돌 체크
+                effectManager.checkEffect()                         // Effect 수명 체크
+                arrowManager.arrowMove()                            // Arrow 속도만큼 1프레임 이동
+                monsterManager.monsterMove()                        // Monster 속도만큼 1프레임 이동
+                monsterManager.checkDead()                          // Monster 사망 체크
+                monsterManager.checkAttack()                        // Monster 공격 체크
+                waveManager.waveCheck()                             // Wave 생성 체크
+                v.invalidate()                                      // View 그리기
+                winCheck()                                          // 승리,패배 체크
+
+                handler?.postDelayed(this, 1000 / ping.toLong())    // 다음 프레임
             }
         }
     }
 
     // 터치 이벤트 관련
     private fun onStartTouchEvent(x: Float, y: Float) {
+        // 터치 시작시 좌표 변경
+        // 커서의 시작 좌표 변경
+        // isTouch 변수 true 설정
+        // 터치한 곳의 이벤트 실행
         touchX = x
         touchY = y
         v.cursor?.x = x.toInt()
@@ -117,6 +122,7 @@ class GameManager(
         v.invalidate()
     }
     private fun onMoveTouchEvent(x: Float, y: Float) {
+        // 터치 중 이동할때 좌표 변경
         val dx = Math.abs(x - touchX)
         val dy = Math.abs(y - touchY)
         if (dx >= CanvasView.TOLERANCE || dy >= CanvasView.TOLERANCE) {
@@ -128,18 +134,28 @@ class GameManager(
         v.invalidate()
     }
     private fun upTouchEvent() {
+        // 터치 끝날때, isTouch 변수 false 설정
         isTouch = false
     }
     private fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
-        v.block_array.forEach{  // 블록 클릭시
-            val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
-            val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
-            if(condition1 && condition2 && it.isClickable) {
-                it.onClick()
-                Toast.makeText(content, "${it.text} 버튼이 클릭 되었습니다. ", Toast.LENGTH_SHORT).show()
-//                TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
+        var isClicked = false
+        var index:Int = 0
+        run{
+            v.block_array.forEach {  // 블록 클릭시
+                val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
+                val condition2: Boolean = touchY >= it.y && touchY <= it.y + it.height
+                if (condition1 && condition2 && it.isClickable) {
+                    isClicked = true
+                    return@run
+//                  TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
+                }
+                index ++
             }
         }
+        if(isClicked){
+            v.block_array[index].onClick()
+        }
+
         v.monster_array.forEach{    // 몬스터 클릭시
             val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height

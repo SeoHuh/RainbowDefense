@@ -26,7 +26,7 @@ class MonsterManager (
         val list = monsterList.filter{it.rank == rank}
         var monster :MonsterEntity = monsterList[0]
         if(list.isNotEmpty()) {
-            monster = list[rand(0, list.size - 1)]
+            monster = list[rand(0, list.size)]
         }
         return monster
     }

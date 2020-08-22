@@ -17,15 +17,15 @@ class ArrowManager (
 
 
     // 투사체, 웨이브 딜레이 체크
-    fun arrowCheck(isTouch:Boolean,x:Float,y:Float) {
+    fun checkArrow(isTouch:Boolean,x:Float,y:Float) {
         if (isTouch && arrowCounter >= delayTime) {
-            arrowStart(x,y)
+            makeArrow(x,y)
             arrowCounter = 0
         } else {
             arrowCounter++
         }
     }
-    private fun arrowStart(x:Float,y:Float) {
+    private fun makeArrow(x:Float,y:Float) {
         val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
         v.projectile_array.add(
             Projectile(
