@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+    >
 
 
     <LinearLayout
@@ -54,7 +54,7 @@
                 android:id="@+id/btn_mute"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/sound"
+                android:background="@drawable/notmute"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
