@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.test.rainbowDefense.battle.GameManager
@@ -33,7 +34,6 @@ class LobyActivity : AppCompatActivity() {
 
         val intent_shop = Intent(this, ShopActivity::class.java)
         val intent_reinforce = Intent(this, ReinforceActivity::class.java)
-        val intent_setting = Intent(this, SettingActivity::class.java)
         val intent_battle = Intent(this, BattleActivity::class.java)
 
         btn_loby_shop.setOnClickListener { view ->
@@ -45,8 +45,7 @@ class LobyActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
         btn_loby_setting.setOnClickListener { view ->
-            startActivity(intent_setting)
-            overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom)
+            showSetting()
         }
         btn_loby_battle.setOnClickListener {
             startActivity(intent_battle)
@@ -74,5 +73,25 @@ class LobyActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    fun showSetting() {
+        val newFragment = SettingLobyDetailFragment()
+        newFragment.show(supportFragmentManager, "mine")
+        newFragment.setOnlistner(object :
+            SettingLobyDetailFragment.NoticeDialogListener {
+            override fun onExitClick(dialog: DialogFragment) {
+            }
+
+            override fun onMuteClick(dialog: DialogFragment) {
+            }
+
+            override fun onVibrateClick(dialog: DialogFragment) {
+
+            }
+
+            override fun onCouponClick(dialog: DialogFragment) {
+            }
+        })
     }
 }
