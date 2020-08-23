@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ShopAdapter
+import com.test.rainbowDefense.database.StateEntity
 import com.test.rainbowDefense.database.StateViewModel
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitViewModel
+import kotlinx.android.synthetic.main.activity_loby.*
 import kotlinx.android.synthetic.main.activity_shop.*
+import kotlinx.android.synthetic.main.activity_shop.gold_text
+import kotlinx.android.synthetic.main.activity_shop.stage_text
 
 class ShopActivity : AppCompatActivity() {
 
@@ -61,6 +65,19 @@ class ShopActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        stateViewModel = ViewModelProvider(this)[StateViewModel::class.java]
+        stateViewModel.state.observe(this, Observer { state ->
+            state?.let {
+                stage_text.text = it[0].stage.toString()
+                gold_text.text = it[0].gold.toString()
+            }
+            Log.d("디버깅", "State 변경확인")
+        })
+        gold_text.setOnClickListener {
+            val state: StateEntity = stateViewModel.state.value!!.get(0)
+            stateViewModel.update(state.apply { gold+=10 })
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -79,7 +96,14 @@ class ShopActivity : AppCompatActivity() {
         newFragment.setOnlistner(object :
             ShopDetailFragment.NoticeDialogListener {
             override fun onDialogPositiveClick(dialog: DialogFragment) {
-                unitViewModel.update(unit.apply { sellType = 1 })
+                val state: StateEntity = stateViewModel.state.value!!.get(0)
+                if(unit.priceShop<=state.gold){
+                    stateViewModel.update(state.apply { gold -= unit.priceShop })
+                    unitViewModel.update(unit.apply {
+                        sellType = 1
+                        price = priceBias + priceMag * level
+                    })
+                }
             }
             override fun onDialogNegativeClick(dialog: DialogFragment) {
 

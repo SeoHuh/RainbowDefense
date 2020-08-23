@@ -40,6 +40,31 @@
         app:layout_constraintStart_toEndOf="@+id/level"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/price_string"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="Price :"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+         />
+
+    <TextView
+        android:paddingStart="10dp"
+        android:id="@+id/unit_price"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="test_price"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/price_string"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="80dp"

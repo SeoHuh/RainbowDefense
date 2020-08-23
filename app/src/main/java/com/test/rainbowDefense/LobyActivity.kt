@@ -60,7 +60,7 @@ class LobyActivity : AppCompatActivity() {
         })
         gold_text.setOnClickListener {
             val state: StateEntity = stateViewModel.state.value!!.get(0)
-            stateViewModel.update(state.apply { gold++ })
+            stateViewModel.update(state.apply { gold+=10 })
         }
     }
 

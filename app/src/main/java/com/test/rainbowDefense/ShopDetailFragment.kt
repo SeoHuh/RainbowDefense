@@ -37,6 +37,7 @@ class ShopDetailFragment(val unit: UnitEntity) : DialogFragment() {
             view.image.setImageResource(resId)
             view.name.text = unit.name
             view.level.text = (unit.level.toString() + "Lv")
+            view.unit_price.text = unit.priceShop.toString()
             view.button.setOnClickListener{
                 listener?.onDialogPositiveClick(this)
                 dialog?.cancel()
