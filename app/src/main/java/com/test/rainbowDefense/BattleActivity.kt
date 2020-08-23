@@ -49,7 +49,12 @@ class BattleActivity : AppCompatActivity() {
             gameManager = GameManager(this, canvas, stage, wave, monsterList, unitList)
             isCreated = true
         }
-        gameManager.run()
+        if(hasFocus) {
+            gameManager.run()
+        }
+        else{
+            gameManager.isRunning = false
+        }
     }
 
     override fun onPause() {

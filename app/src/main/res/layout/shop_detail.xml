@@ -1,92 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/sky">
+    android:background="#00ffffff">
 
-    <ImageView
-        android:layout_marginStart="50dp"
-        android:id="@+id/image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/red_circle"
-        app:layout_constraintEnd_toStartOf="@+id/level"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/level"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_margin="10dp"
-        android:text="abcdefg"
-        app:layout_constraintEnd_toStartOf="@+id/name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_marginEnd="50dp"
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_margin="10dp"
-        android:text="tasdf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/level"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_margin="10dp"
-        android:id="@+id/price_string"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:text="Price :"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image"
-         />
-
-    <TextView
-        android:paddingStart="10dp"
-        android:id="@+id/unit_price"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="test_price"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/price_string"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:text="구매"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"/>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:text="취소"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/shop_detail_background"
+        android:layout_width="500dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/castle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/unit_level"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="100Lv"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.15" />
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/unit_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="test name"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/unit_level"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/unit_level"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.25" />
+
+        <TextView
+            android:id="@+id/hp_string"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Hp :"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/unit_level"
+            app:layout_constraintTop_toBottomOf="@+id/unit_level"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.15" />
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/unit_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="test hp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/hp_string"
+            app:layout_constraintTop_toBottomOf="@+id/unit_name" />
+
+        <TextView
+            android:id="@+id/damage_string"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Atk :"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/hp_string"
+            app:layout_constraintTop_toBottomOf="@+id/hp_string"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.15" />
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/unit_damage"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="test atk"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/damage_string"
+            app:layout_constraintTop_toBottomOf="@+id/unit_hp" />
+
+        <TextView
+            android:id="@+id/price_string"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Price :"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/damage_string"
+            app:layout_constraintTop_toBottomOf="@+id/damage_string"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.15" />
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/unit_price"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="test price"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/price_string"
+            app:layout_constraintTop_toBottomOf="@+id/unit_damage" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:text="구매"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.92" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:text="취소"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.92" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
