@@ -9,14 +9,176 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/castle"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.35" />
+
+
+    <TextView
+        android:textSize="20sp"
+        android:text="100Lv"
+        android:id="@+id/unit_level"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <TextView
+        android:text="test name"
+        android:textSize="20sp"
+        android:id="@+id/unit_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/unit_level"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/hp_string"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Hp :"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/unit_level"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <TextView
+        android:id="@+id/unit_hp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="test hp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hp_string"
+        app:layout_constraintTop_toBottomOf="@+id/unit_name" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/unit_hp_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="+10"
+        android:textColor="#00ff33"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/unit_damage"
+        app:layout_constraintTop_toBottomOf="@+id/unit_name" />
+
+    <TextView
+        android:id="@+id/damage_string"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Atk :"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/hp_string"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <TextView
+        android:id="@+id/unit_damage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="test atk"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hp_string"
+        app:layout_constraintTop_toBottomOf="@+id/unit_hp" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/unit_damage_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="#00ff33"
+        android:text="+10"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/unit_damage"
+        app:layout_constraintTop_toBottomOf="@+id/unit_hp_increase" />
+
+    <TextView
+        android:id="@+id/price_string"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Price :"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/damage_string"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <TextView
+        android:id="@+id/unit_price"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="test price"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hp_string"
+        app:layout_constraintTop_toBottomOf="@+id/unit_damage" />
+
+
+    <Button
+        android:id="@+id/buy_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:text="Buy"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_reinforce_back"
+        app:layout_constraintEnd_toStartOf="@+id/recycler_view"
+        app:layout_constraintStart_toEndOf="@+id/btn_reinforce_back"
+        app:layout_constraintTop_toTopOf="@+id/btn_reinforce_back" />
 
     <LinearLayout
         android:layout_width="270dp"

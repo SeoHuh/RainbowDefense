@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ShopAdapter
+import com.test.rainbowDefense.database.StateViewModel
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitViewModel
 import kotlinx.android.synthetic.main.activity_shop.*
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_shop.*
 class ShopActivity : AppCompatActivity() {
 
     private lateinit var unitViewModel: UnitViewModel
+    private lateinit var stateViewModel: StateViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

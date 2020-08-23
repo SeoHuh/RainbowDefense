@@ -33,7 +33,7 @@ class BlockMenu(
     private fun clearMenu() {
         block_array.removeAll(block_array)
         blockX = x + 10
-        block_array.add(    // 블록 메뉴 UI 창
+        block_array.add(    // 블록 메뉴 UI 창+
             Block(
                 x,
                 y,

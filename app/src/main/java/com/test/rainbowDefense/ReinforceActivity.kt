@@ -1,6 +1,7 @@
 package com.test.rainbowDefense
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,15 +12,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.rainbowDefense.adapter.OnItemClickListener
 import com.test.rainbowDefense.adapter.ReinforceAdapter
+import com.test.rainbowDefense.database.StateEntity
+import com.test.rainbowDefense.database.StateViewModel
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitViewModel
+import kotlinx.android.synthetic.main.activity_loby.*
 import kotlinx.android.synthetic.main.activity_reinforce.*
+import kotlinx.android.synthetic.main.activity_reinforce.gold_text
+import kotlinx.android.synthetic.main.activity_reinforce.stage_text
 
 class ReinforceActivity : AppCompatActivity() {
 
     private lateinit var unitViewModel: UnitViewModel
+    private lateinit var stateViewModel: StateViewModel
+    private lateinit var selectUnit: UnitEntity
+
+    private var isSelect = false
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reinforce)
         window.decorView.systemUiVisibility = (
@@ -43,7 +56,9 @@ class ReinforceActivity : AppCompatActivity() {
             OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
-                unitViewModel.update(unit.apply { level++ })
+                selectUnit = unit
+                setUnit(selectUnit)
+                isSelect = true
             }
         })
 
@@ -59,6 +74,48 @@ class ReinforceActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        stateViewModel = ViewModelProvider(this)[StateViewModel::class.java]
+        stateViewModel.state.observe(this, Observer { state ->
+            state?.let {
+                stage_text.text = it[0].stage.toString()
+                gold_text.text = it[0].gold.toString()
+            }
+            Log.d("디버깅", "State 변경확인")
+        })
+        gold_text.setOnClickListener {
+            val state: StateEntity = stateViewModel.state.value!!.get(0)
+            stateViewModel.update(state.apply { gold+=10 })
+        }
+        buy_button.setOnClickListener{
+            if(isSelect) {
+                val state: StateEntity = stateViewModel.state.value!!.get(0)
+                if (selectUnit.price <= state.gold) {
+                    stateViewModel.update(state.apply { gold -= selectUnit.price })
+                    unitViewModel.update(selectUnit.apply {
+                        level++
+                        hp += hpMag
+                        attackDamage += attackDamageMag
+                        price = priceBias + priceMag * level
+                    })
+                    setUnit(selectUnit)
+                }
+            }
+        }
+
+    }
+    fun setUnit(unit:UnitEntity){
+        val color = Color.parseColor(unit.color)
+        unit.price = unit.priceBias + unit.priceMag * unit.level
+        unit_level.setTextColor(color)
+        unit_level.text = (unit.level.toString() + "Lv")
+        unit_name.setTextColor(color)
+        unit_name.text = unit.name
+        unit_hp.text = unit.hp.toString()
+        unit_hp_increase.text = ("+" + unit.hpMag.toString())
+        unit_damage.text = unit.attackDamage.toString()
+        unit_damage_increase.text = ("+" + unit.attackDamageMag.toString())
+        unit_price.text = unit.price.toString()
     }
     override fun finish(){
         super.finish()
