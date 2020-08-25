@@ -1,13 +1,11 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
+
+// 배경 클래스
+// 커서, 배경 등 게임에 크게 영향을 끼치지 않는 부분을 따로 관리한다.
 
 class Background (
     val displayWidth : Int,

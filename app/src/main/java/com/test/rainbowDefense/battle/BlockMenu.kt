@@ -1,12 +1,20 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
+import com.test.rainbowDefense.database.UnitEntity
+
+// 블록 메뉴 ( 블록 매니저 )
+// 게임 유저의 UI 를 구현하는 부분, 게임 하단의 버튼메뉴를 관리한다.
 
 class BlockMenu(
     val content: Context,
-    val block_array :ArrayList<Block>,
+    val v: CanvasView,
+    val unitManager: UnitManager,
     val x : Int,
     val y : Int,
     val width: Int,
@@ -15,6 +23,10 @@ class BlockMenu(
     val menuDrawable = content.resources.getDrawable(R.drawable.menu_box, content.theme)
     val blockDrawable = content.resources.getDrawable(R.drawable.block_box, content.theme)
     val blockClickDrawable = content.resources.getDrawable(R.drawable.block_box, content.theme)
+    val cloudDrawable = content.resources.getDrawable(R.drawable.cloud, content.theme)
+    val manaDrawable = content.resources.getDrawable(R.drawable.blue_circle, content.theme)
+
+
 
     val blockPadding = 10
     var blockX = x + blockPadding
@@ -31,9 +43,9 @@ class BlockMenu(
 //        TODO("뒤로가기 버튼 블록마다 드로어블을 넣어줄 수 있도록 여러가지 비트맵을 가져온다.")
     }
     private fun clearMenu() {
-        block_array.removeAll(block_array)
+        v.block_array.removeAll(v.block_array)
         blockX = x + 10
-        block_array.add(    // 블록 메뉴 UI 창+
+        v.block_array.add(    // 블록 메뉴 UI 창+
             Block(
                 x,
                 y,
@@ -50,37 +62,42 @@ class BlockMenu(
     }
     private fun showMenu() {    // 초기 메뉴 (유닛, 건물, 스킬 메뉴)
         clearMenu()
-        addBlock("유닛") {showUnit()}
-        addBlock("건물") {showStructure()}
-        addBlock("스킬") {showSkill()}
+        addBlock("유닛",null,null,null) {showUnit()}
+        addBlock("건물",null,null,null) {showBuilding()}
+        addBlock("스킬",null,null,null) {showSkill()}
     }
 
     private fun showUnit() {
         clearMenu()
-        addBlock("이전") {showMenu()}
-        addBlock("유닛") {nothing()}
+        val unitList = unitManager.getUnit()
+        addBlock("이전",null,null,null) {showMenu()}
+        unitList.forEach{
+            addBlock("",it.drawable,it.cloud.toString(),cloudDrawable) {buyUnit(it)}
+        }
     }
-
-    private fun showStructure() {
+    private fun showBuilding() {
         clearMenu()
-        addBlock("이전") {showMenu()}
-        addBlock("건물") {nothing()}
-
+        val buildingList = unitManager.getBuilding()
+        addBlock("이전",null,null,null) {showMenu()}
+        buildingList.forEach{
+            addBlock("",it.drawable,it.cloud.toString(),cloudDrawable) {nothing()}
+        }
     }
-
     private fun showSkill() {
         clearMenu()
-        addBlock("이전") {showMenu()}
-        addBlock("스킬") {nothing()}
-
+        val skillList = unitManager.getSkill()
+        addBlock("이전",null,null,null) {showMenu()}
+        skillList.forEach{
+            addBlock("",it.drawable,it.cloud.toString(),manaDrawable) {nothing()}
+        }
     }
 
     private fun nextX() {
         blockX += blockWidth + blockPadding
     }
 
-    private fun addBlock(string:String,function: () -> Unit) {
-        block_array.add(
+    private fun addBlock(string:String, drawable: Drawable?, cost: String?, costDrawable: Drawable?, function: () -> Unit) {
+        v.block_array.add(
             Block(
                 blockX,
                 blockY,
@@ -90,6 +107,21 @@ class BlockMenu(
                 blockClickDrawable,
                 string
             ).apply{
+                drawable?.let{
+                    val bitmapDrawable: BitmapDrawable = it as BitmapDrawable
+                    var bitmap: Bitmap = bitmapDrawable.bitmap
+                    bitmap = Bitmap.createScaledBitmap(bitmap, blockWidth - blockPadding * 6, blockHeight - blockPadding * 6, false)
+                    innerBitmap = bitmap
+                }
+                cost?.let{
+                    costString = it
+                }
+                costDrawable?.let{
+                    val bitmapDrawable: BitmapDrawable = it as BitmapDrawable
+                    var bitmap: Bitmap = bitmapDrawable.bitmap
+                    bitmap = Bitmap.createScaledBitmap(bitmap, blockPadding * 7, blockPadding * 5, false)
+                    costBitmap = bitmap
+                }
                 setOnlistner(object:
                     Block.BlockListener{
                     override fun onClick() {
@@ -101,6 +133,12 @@ class BlockMenu(
         nextX()
     }
     private fun nothing(){}
-
-
+    private fun buyUnit(unit: UnitEntity){
+        if(unit.cloud<= v.status!!.cloud){
+            v.status?.apply {
+                cloud -= unit.cloud
+            }
+            unitManager.makeUnit(0,500,unit)
+        }
+    }
 }

@@ -4,6 +4,10 @@ import android.content.Context
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 
+// 화살 매니저
+// 투사체중 하나인 화살을 관리하며
+// 화살의 생성, 이동, 수명체크, 충돌체크 등을 모두 관리한다.
+
 class ArrowManager (
     val content : Context,
     val v : CanvasView,

@@ -6,6 +6,9 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 
+// 클릭 가능한 버튼 UI
+// 유닛 블록, 스킬 블록, 건물 블록등으로 클릭 가능한 블록 클래스이다.
+
 class Block(
     x: Int,
     y: Int,
@@ -31,10 +34,20 @@ class Block(
     var clickBitmap: Bitmap = clickBitmapDrawable.bitmap
     val textPaint = Paint()
     val textSize = width / 4f
+    var innerBitmap: Bitmap? = null
+    val padding = width / 22f
+    val costWidth = padding * 7f
+    val costHeight = padding * 5f
+    val costSize = padding * 3f
+    var costBitmap: Bitmap? = null
+    var costString: String? = null
+    val costPaint = Paint()
 
     init {
         textPaint.textSize = textSize
         textPaint.textAlign = Paint.Align.CENTER
+        costPaint.textSize = costSize
+        costPaint.textAlign = Paint.Align.CENTER
         clickBitmap = Bitmap.createScaledBitmap(clickBitmap, width, height, false)
     }
 
@@ -51,5 +64,15 @@ class Block(
             canvas?.drawBitmap(bitmap, x.toFloat(), y.toFloat(), paint)
         }
         canvas?.drawText(text, x + width / 2f, y + height / 2f + textSize / 2f, textPaint)
+
+        innerBitmap?.let{
+            canvas?.drawBitmap(it, x + 3 * padding, y + 3 * padding, paint)
+        }
+        costBitmap?.let{
+            canvas?.drawBitmap(it, x+width-costWidth,y+height-costHeight, paint)
+        }
+        costString?.let{
+            canvas?.drawText(it, x+width-costWidth/2f, y+height-costHeight/2f+costSize/2f,costPaint)
+        }
     }
 }

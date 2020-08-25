@@ -4,6 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
+// 사용자 상태 정의
+// 성 HP 상태, 웨이브, 스테이지, 자원 출력
+
 class Status (
     var x: Int,
     var y: Int,
@@ -20,7 +23,6 @@ class Status (
     var stage = 1
     var hpMax = 100
     var hp = 50
-
 
     init{
         //textPaint.isAntiAlias = true

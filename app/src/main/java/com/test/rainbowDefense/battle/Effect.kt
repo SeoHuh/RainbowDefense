@@ -8,6 +8,9 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.ContextCompat
 
+// 이펙트 객체
+// 비트맵 배열과 한 비트맵당 duration 을 갖는다.
+
 class Effect (
     var x: Int,
     var y: Int,

@@ -12,6 +12,9 @@ import com.test.rainbowDefense.database.StageEntity
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.WaveEntity
 
+// 게임 매니저 클래스
+// 게임 내부의 모든 요소를 종합해서 관리한다.
+
 class GameManager(
     val content: Context,
     val v: CanvasView,
@@ -50,9 +53,10 @@ class GameManager(
 
     // 게임관련 각종 인스턴스
     private val effectManager = EffectManager(content,v,ping)
+    private val unitManager = UnitManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,ping,monsterList)
     val arrowManager = ArrowManager(content,v,effectManager,ping)
-    val blockMenu = BlockMenu(content,v.block_array,0,battleHeight,displayWidth,menuHeight)
+    val blockMenu = BlockMenu(content,v,unitManager,0,battleHeight,displayWidth,menuHeight)
     val waveManager = WaveManager(content,v,wave,monsterManager,ping,displayWidth,battleHeight)
     val background = Background(displayWidth,battleHeight,statusHeight,v,content)
 
@@ -95,8 +99,11 @@ class GameManager(
                 arrowManager.checkCollision()                       // Projectile 충돌 체크
                 effectManager.checkEffect()                         // Effect 수명 체크
                 arrowManager.arrowMove()                            // Arrow 속도만큼 1프레임 이동
+                unitManager.unitMove()                              // Unit 속도만큼 1프레임 이동
                 monsterManager.monsterMove()                        // Monster 속도만큼 1프레임 이동
+                unitManager.checkDead()                             // Unit 사망 체크
                 monsterManager.checkDead()                          // Monster 사망 체크
+                unitManager.checkAttack()                           // Unit 공격 체크
                 monsterManager.checkAttack()                        // Monster 공격 체크
                 waveManager.waveCheck()                             // Wave 생성 체크
                 v.invalidate()                                      // View 그리기

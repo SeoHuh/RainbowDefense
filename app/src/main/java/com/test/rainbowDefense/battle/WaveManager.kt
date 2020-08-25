@@ -6,6 +6,10 @@ import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 import java.util.*
 
+// 웨이브 매니저
+// 웨이브 데이터를 가지고 있으며, 웨이브 시간을 체크하여 웨이브를 시작한다.
+//
+
 class WaveManager(
     val content : Context,
     val v : CanvasView,

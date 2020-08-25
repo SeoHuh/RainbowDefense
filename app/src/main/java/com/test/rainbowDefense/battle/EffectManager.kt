@@ -6,6 +6,10 @@ import android.graphics.BitmapFactory
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 
+// 이펙트 매니저
+// 애니메이션 효과를 위한 리소스를 전부 관리하고
+// 애니메이션 효과를 만들거나 처리한다.
+
 class EffectManager (
     val content : Context,
     val v : CanvasView,
@@ -52,7 +56,7 @@ class EffectManager (
         }
     }
 
-    // 애니메이션 이펙트 생성, 체크
+    // 애니메이션 이펙트 생성
     fun makeEffect(x:Int,y:Int){
         v.effect_array.add(
             Effect(
@@ -66,6 +70,8 @@ class EffectManager (
             )
         )
     }
+
+    // 애니메이션 이펙트 수명 체크
     fun checkEffect() {
         val effect = v.effect_array
         var n: Int = 0

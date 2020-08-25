@@ -1,5 +1,6 @@
 package com.test.rainbowDefense.database
 
+import android.graphics.drawable.Drawable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -16,6 +17,9 @@ class UnitEntity(
     @ColumnInfo(name = "priceBias") var priceBias: Int,
     @ColumnInfo(name = "priceMag") var priceMag: Int,
     @ColumnInfo(name = "priceShop") var priceShop: Int,
+    @ColumnInfo(name = "width") var width: Int,
+    @ColumnInfo(name = "height") var height: Int,
+    @ColumnInfo(name = "cloud") var cloud: Int,
     @ColumnInfo(name = "hp") var hp: Int,
     @ColumnInfo(name = "hpMag") var hpMag: Int,
     @ColumnInfo(name = "attackDamage") var attackDamage: Int,
@@ -25,7 +29,8 @@ class UnitEntity(
     @ColumnInfo(name = "moveSpeed") var moveSpeed: Int,
     @ColumnInfo(name = "type") var type: String
 
+
 ){
-    @Ignore
-    var price = priceBias + priceMag * level
+    @Ignore var price = priceBias + priceMag * level
+    @Ignore var drawable: Drawable? = null
 }

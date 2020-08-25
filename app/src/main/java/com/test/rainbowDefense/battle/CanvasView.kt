@@ -5,6 +5,10 @@ import android.graphics.*
 import android.view.View
 import android.util.AttributeSet
 
+// 캔버스 뷰 클래스
+// 게임내 다양한 객체들을 그리기 위한 커스텀 뷰
+// 그려야할 다양한 객체들을 미리 선언하고, 게임매니저 내부에서 객체를 추가해주면 후에 그리는 뷰이다.
+
 class CanvasView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : View(context, attrs, defStyleAttr) {
@@ -16,6 +20,7 @@ class CanvasView @JvmOverloads constructor(
     // 그려야할 객체들
     var status: Status? = null
     var projectile_array = arrayListOf<Projectile>()
+    var unit_array = arrayListOf<MyUnit>()
     var monster_array = arrayListOf<Monster>()
     var effect_array = arrayListOf<Effect>()
     var block_array = arrayListOf<Block>()
@@ -36,6 +41,7 @@ class CanvasView @JvmOverloads constructor(
         super.onDraw(canvas)
         background?.draw(canvas)
         monster_array.forEach{it.draw(canvas)}
+        unit_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
         effect_array.forEach {it.draw(canvas)}
         status?.draw(canvas)

@@ -4,6 +4,9 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 
+// 그릴 수 있는 객체
+// 좌표와 크기, 핑, 드로어블, 이동속도, 수명을 가진다.
+// 캔버스에 그리기 draw(), 한 프레임만큼 이동 move()
 
 open class Shape (
     var x: Int,

@@ -2,11 +2,10 @@ package com.test.rainbowDefense.battle
 
 import android.graphics.drawable.Drawable
 
-// 몬스터 객체 정의
-// Shape 객체를 상속받으며
-// 공격력, 공격속도, 공격범위, 체력, 보상 등이 있다.
+// 유닛 클래스
+// 아군 유닛으로 적군을 공격하고, 행동한다.
 
-class Monster (
+class MyUnit (
     x: Int,
     y: Int,
     width: Int,

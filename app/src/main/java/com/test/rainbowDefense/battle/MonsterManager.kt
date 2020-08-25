@@ -5,6 +5,15 @@ import android.util.Log
 import com.test.rainbowDefense.database.MonsterEntity
 import java.util.*
 
+// 몬스터 객체 매니저
+// 몬스터 데이터베이스를 가지고 와서 상황에 맞는 몬스터를 찾거나 randMonster(rank),
+// 게임 내의 몬스터 이동 moveMonster(),
+// 몬스터의 사망 처리 checkDead(),
+// 몬스터의 공격 처리 checkAttack(),
+// 몬스터의 생성 처리 makeMonster(x,y,rank)
+// 몬스터의 등급은 1 노말, 2 에픽, 3 유니크, 4 보스
+
+
 class MonsterManager (
     val content : Context,
     val v : CanvasView,
