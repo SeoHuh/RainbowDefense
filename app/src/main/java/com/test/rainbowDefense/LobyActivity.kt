@@ -76,21 +76,47 @@ class LobyActivity : AppCompatActivity() {
     }
 
     fun showSetting() {
-        val newFragment = SettingLobyDetailFragment()
+        val state = stateViewModel.state.value!!.get(0)
+        val newFragment = SettingLobyDetailFragment(state)
         newFragment.show(supportFragmentManager, "mine")
         newFragment.setOnlistner(object :
             SettingLobyDetailFragment.NoticeDialogListener {
             override fun onExitClick(dialog: DialogFragment) {
             }
 
-            override fun onMuteClick(dialog: DialogFragment) {
+            override fun onMuteClick(view: View) {
+                stateViewModel.update(state.apply {
+                    if (this.muteState == 0) {
+                        this.muteState = 1
+                        view.setBackgroundResource(R.drawable.mute)
+                    } else {
+                        this.muteState = 0
+                        view.setBackgroundResource(R.drawable.notmute)
+                    }
+                })
             }
 
-            override fun onVibrateClick(dialog: DialogFragment) {
-
+            override fun onVibrateClick(view: View) {
+                stateViewModel.update(state.apply {
+                    if (this.vibrateState == 0) {
+                        this.vibrateState = 1
+                        view.setBackgroundResource(R.drawable.vibration)
+                    } else {
+                        this.vibrateState = 0
+                        view.setBackgroundResource(R.drawable.novibration)
+                    }
+                })
             }
 
             override fun onCouponClick(dialog: DialogFragment) {
+            }
+
+            override fun musicProgressChanged(view: View, i: Int) {
+                stateViewModel.update(state.apply { musicVolume = i })
+            }
+
+            override fun effectProgressChanged(view: View, i: Int) {
+                stateViewModel.update(state.apply { effectVolume = i })
             }
         })
     }

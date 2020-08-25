@@ -4,10 +4,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.SeekBar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -21,10 +24,7 @@ import kotlinx.android.synthetic.main.setting_loby.*
 import kotlinx.android.synthetic.main.setting_loby.view.*
 import kotlinx.android.synthetic.main.shop_detail.view.*
 
-class SettingLobyDetailFragment() : DialogFragment() {
-
-    private lateinit var stateViewModel: StateViewModel
-    private lateinit var state : StateEntity
+class SettingLobyDetailFragment(val state:StateEntity) : DialogFragment() {
 
     private var listener: NoticeDialogListener? = null
     fun setOnlistner(listener: NoticeDialogListener) {
@@ -33,19 +33,11 @@ class SettingLobyDetailFragment() : DialogFragment() {
 
     interface NoticeDialogListener {
         fun onExitClick(dialog: DialogFragment)
-        fun onMuteClick(dialog: DialogFragment)
-        fun onVibrateClick(dialog: DialogFragment)
+        fun onMuteClick(view : View)
+        fun onVibrateClick(view: View)
         fun onCouponClick(dialog: DialogFragment)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        stateViewModel = ViewModelProvider(this)[StateViewModel::class.java]
-        stateViewModel.state.observe(this, Observer { state ->
-            state?.let {
-                this.state = stateViewModel.state.value!!.get(0)
-            }
-        })
+        fun musicProgressChanged(view: View, i: Int)
+        fun effectProgressChanged(view: View, i: Int)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -66,67 +58,49 @@ class SettingLobyDetailFragment() : DialogFragment() {
             view.seekbar_music.progress = state.musicVolume
             view.seekbar_effect.progress = state.effectVolume
 
-            view.btn_exit.setOnClickListener {
+            view.btn_exit.setOnClickListener {  // X 버튼
                 listener?.onExitClick(this)
                 dialog?.cancel()
             }
-            view.btn_mute.setOnClickListener {
-                listener?.onMuteClick(this)
-                stateViewModel.update(state.apply {
-                    if (this.muteState == 0) {
-                        this.muteState = 1
-                        it.setBackgroundResource(R.drawable.mute)
-                    } else {
-                        this.muteState = 0
-                        it.setBackgroundResource(R.drawable.notmute)
-                    }
-                })
+            view.btn_mute.setOnClickListener {  // 뮤트버튼 클릭
+                listener?.onMuteClick(it)
             }
-            view.btn_vibrate.setOnClickListener {
-                listener?.onVibrateClick(this)
-                stateViewModel.update(state.apply {
-                    if (this.vibrateState == 0) {
-                        this.vibrateState = 1
-                        it.setBackgroundResource(R.drawable.vibration)
-                    } else {
-                        this.vibrateState = 0
-                        it.setBackgroundResource(R.drawable.novibration)
-                    }
-                })
+            view.btn_vibrate.setOnClickListener {   // 진동 버튼 클릭
+                listener?.onVibrateClick(it)
             }
-
-            view.btn_coupon.setOnClickListener {
+            view.btn_coupon.setOnClickListener {    // 쿠폰 버튼 클릭
                 listener?.onCouponClick(this)
             }
 
-            view.seekbar_music.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            view.seekbar_music.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {    // 소리 조절 이벤트
                 override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    val state: StateEntity = stateViewModel.state.value!!.get(0)
-                    stateViewModel.update(state.apply { musicVolume = i })
+                    listener?.musicProgressChanged(seekBar,i)
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
                 }
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
                 }
             })
-            view.seekbar_effect.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            view.seekbar_effect.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {   // 진동조절 이벤트
                 override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    val state: StateEntity = stateViewModel.state.value!!.get(0)
-                    stateViewModel.update(state.apply { effectVolume = i })
+                    listener?.effectProgressChanged(seekBar,i)
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
                 }
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
                 }
             })
-
 
             builder.setView(view)
-            builder.create().apply {
-                window?.setFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                )
+            builder.create().apply{
+                // 상태바 생성 방지
+                window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+                // 배경이 검은색으로 되는것 방지
+                window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+                // 배경을 투명색으로 지정
+                window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                // Immersive_Sticky 모드 설정
                 window?.decorView?.systemUiVisibility = (
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

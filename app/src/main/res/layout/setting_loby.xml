@@ -9,19 +9,14 @@
 
     <LinearLayout
         android:id="@+id/setting_fromloby"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.6"
-        app:layout_constraintHeight_percent="0.7"
+        android:layout_width="1152px"
+        android:layout_height="756px"
         android:background="@drawable/sky"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
-        //exit
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -41,9 +36,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        /buttons
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/setting_buttons"
@@ -87,8 +79,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        //music
-
         <LinearLayout
             android:id="@+id/setting_musicset"
             android:layout_width="match_parent"
@@ -96,11 +86,11 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_margin="20dp"
+                android:scaleType="centerCrop"
                 android:id="@+id/img_music"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/boss1"
                 android:text="vibrate" />
 
@@ -118,8 +108,6 @@
         </LinearLayout>
 
 
-        //effectsound
-
         <LinearLayout
             android:id="@+id/setting_effectset"
             android:layout_width="match_parent"
@@ -127,14 +115,15 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_margin="20dp"
                 android:id="@+id/img_effectsound"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/boss1"
                 android:text="mute" />
 
             <SeekBar
+                android:layout_marginTop="10dp"
                 android:id="@+id/seekbar_effect"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
