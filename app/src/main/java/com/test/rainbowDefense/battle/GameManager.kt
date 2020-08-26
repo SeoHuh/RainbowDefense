@@ -103,7 +103,6 @@ class GameManager(
                 monsterManager.monsterMove()                        // Monster 속도만큼 1프레임 이동
                 unitManager.checkDead()                             // Unit 사망 체크
                 monsterManager.checkDead()                          // Monster 사망 체크
-                unitManager.checkAttack()                           // Unit 공격 체크
                 monsterManager.checkAttack()                        // Monster 공격 체크
                 waveManager.waveCheck()                             // Wave 생성 체크
                 v.invalidate()                                      // View 그리기

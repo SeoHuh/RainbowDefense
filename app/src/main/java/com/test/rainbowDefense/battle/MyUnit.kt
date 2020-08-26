@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.graphics.drawable.Drawable
+import kotlin.math.cos
 
 // 유닛 클래스
 // 아군 유닛으로 적군을 공격하고, 행동한다.
@@ -14,8 +15,10 @@ class MyUnit (
     : Shape(x,y,width,height,drawable!!){
 
     override var lifetime = 1000
-    override var vx = -700/ping
 
+    var viewRange = 1000
+    var time = 0
+    var attackDelay = ping
     var attackDamage = 0
     var attackSpeed = 0
     var attackRange = 0
@@ -23,7 +26,16 @@ class MyUnit (
     var reward = 0
 
 
+
     init {
 
+    }
+    override fun move(){
+        super.move()
+        time ++
+    }
+    fun stop() {
+        vx = 0f
+        vy = 0f
     }
 }

@@ -15,7 +15,7 @@ class Projectile(
     : Shape(x,y,width,height,drawable){
 
     override var lifetime = 200
-    override var vx = 1500/ping
+    override var vx = 1500f/ping
 
     var attackDamage = 0
     init {

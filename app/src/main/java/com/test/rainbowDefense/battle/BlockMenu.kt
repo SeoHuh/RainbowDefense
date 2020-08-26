@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
+import java.util.*
 
 // 블록 메뉴 ( 블록 매니저 )
 // 게임 유저의 UI 를 구현하는 부분, 게임 하단의 버튼메뉴를 관리한다.
@@ -138,7 +139,12 @@ class BlockMenu(
             v.status?.apply {
                 cloud -= unit.cloud
             }
-            unitManager.makeUnit(0,500,unit)
+            unitManager.makeUnit(rand(0,100),rand(100,800),unit)
         }
+    }
+
+    private val random = Random()
+    private fun rand(from: Int, to: Int): Int {
+        return random.nextInt(to - from) + from
     }
 }

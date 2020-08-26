@@ -15,7 +15,7 @@ class Monster (
     : Shape(x,y,width,height,drawable!!){
 
     override var lifetime = 1000
-    override var vx = -700/ping
+    override var vx = -700f/ping
 
     var attackDamage = 0
     var attackSpeed = 0

@@ -81,7 +81,7 @@ class MonsterManager (
                 monster.height,
                 monster.drawable
             ).apply{
-                vx = -monster.moveSpeed/ping
+                this.setVelocity(monster.moveSpeed/ping.toFloat(),Math.PI.toFloat())
                 attackDamage = monster.attackDamage
                 attackSpeed = monster.attackSpeed
                 attackRange = monster.attackRange
