@@ -16,6 +16,8 @@ class BlockMenu(
     val content: Context,
     val v: CanvasView,
     val unitManager: UnitManager,
+    val skillManager: SkillManager,
+    val buildingManager: BuildingManager,
     val x : Int,
     val y : Int,
     val width: Int,
@@ -26,8 +28,7 @@ class BlockMenu(
     val blockClickDrawable = content.resources.getDrawable(R.drawable.block_box, content.theme)
     val cloudDrawable = content.resources.getDrawable(R.drawable.cloud, content.theme)
     val manaDrawable = content.resources.getDrawable(R.drawable.blue_circle, content.theme)
-
-
+    val skillRangeDrawable = content.resources.getDrawable(R.drawable.blue_circle,content.theme)
 
     val blockPadding = 10
     var blockX = x + blockPadding
@@ -61,43 +62,44 @@ class BlockMenu(
         )
 
     }
-    private fun showMenu() {    // 초기 메뉴 (유닛, 건물, 스킬 메뉴)
+    private fun showMenu() : Boolean {    // 초기 메뉴 (유닛, 건물, 스킬 메뉴)
         clearMenu()
         addBlock("유닛",null,null,null) {showUnit()}
         addBlock("건물",null,null,null) {showBuilding()}
         addBlock("스킬",null,null,null) {showSkill()}
+        return false
     }
 
-    private fun showUnit() {
+    private fun showUnit() : Boolean {
         clearMenu()
-        val unitList = unitManager.getUnit()
+        val unitList = unitManager.unitList
         addBlock("이전",null,null,null) {showMenu()}
         unitList.forEach{
-            addBlock("",it.drawable,it.cloud.toString(),cloudDrawable) {buyUnit(it)}
+            addBlock("",it.drawable,it.cost.toString(),cloudDrawable) {buyUnit(it)}
         }
+        return false
     }
-    private fun showBuilding() {
+    private fun showBuilding() : Boolean {
         clearMenu()
-        val buildingList = unitManager.getBuilding()
+        val buildingList = buildingManager.buildingList
         addBlock("이전",null,null,null) {showMenu()}
         buildingList.forEach{
-            addBlock("",it.drawable,it.cloud.toString(),cloudDrawable) {nothing()}
+            addBlock("",it.drawable,it.cost.toString(),cloudDrawable) {buyBuilding(it)}
         }
+        return false
     }
-    private fun showSkill() {
+    private fun showSkill() : Boolean {
         clearMenu()
-        val skillList = unitManager.getSkill()
+        val skillList = skillManager.skillList
         addBlock("이전",null,null,null) {showMenu()}
         skillList.forEach{
-            addBlock("",it.drawable,it.cloud.toString(),manaDrawable) {nothing()}
+            addBlock("",it.drawable,it.cost.toString(),manaDrawable) {useSkill(it)}
         }
+        return false
     }
 
-    private fun nextX() {
-        blockX += blockWidth + blockPadding
-    }
-
-    private fun addBlock(string:String, drawable: Drawable?, cost: String?, costDrawable: Drawable?, function: () -> Unit) {
+    // 블록 추가 (문자, 유닛 아이콘, 비용텍스트, 비용 배경) {실행할 함수}
+    private fun addBlock(string:String, drawable: Drawable?, cost: String?, costDrawable: Drawable?, function: () -> Boolean) {
         v.block_array.add(
             Block(
                 blockX,
@@ -125,22 +127,45 @@ class BlockMenu(
                 }
                 setOnlistner(object:
                     Block.BlockListener{
-                    override fun onClick() {
-                        function.invoke()
+                    override fun onClick() :Boolean{
+                        return function.invoke()
                     }
                 })
             }
         )
         nextX()
     }
-    private fun nothing(){}
-    private fun buyUnit(unit: UnitEntity){
-        if(unit.cloud<= v.status!!.cloud){
+
+    // 블록 클릭시 실행할 함수들
+    private fun nothing(): Boolean{ return false }
+    private fun buyUnit(unit: UnitEntity): Boolean{
+        if(unit.cost<= v.status!!.cloud){   // 비용 충분할시 유닛 생성
             v.status?.apply {
-                cloud -= unit.cloud
+                cloud -= unit.cost
             }
             unitManager.makeUnit(rand(0,100),rand(100,800),unit)
+            return true
         }
+        return false
+    }
+    private fun useSkill(skill: UnitEntity): Boolean{
+        if(skill.cost<= v.status!!.cloud) {     // 비용 충분할 시 스킬 실행
+            skillManager.selectSkill(skill)
+            v.skillShape = Shape(0,0,skill.width,skill.height,skillRangeDrawable)
+            return true
+        }
+        return false
+    }
+    private fun buyBuilding(building: UnitEntity): Boolean{
+        if(building.cost<= v.status!!.cloud) {      // 비용 충분할 시 건물 생성
+            return true
+        }
+        return false
+    }
+
+
+    private fun nextX() {
+        blockX += blockWidth + blockPadding
     }
 
     private val random = Random()

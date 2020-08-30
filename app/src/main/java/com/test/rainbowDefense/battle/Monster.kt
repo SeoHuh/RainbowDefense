@@ -17,6 +17,7 @@ class Monster (
     override var lifetime = 1000
     override var vx = -700f/ping
 
+    var viewRange = 1000
     var attackDamage = 0
     var attackSpeed = 0
     var attackRange = 0
@@ -27,4 +28,10 @@ class Monster (
     init {
 
     }
+
+    fun stop() {
+        vx = 0f
+        vy = 0f
+    }
+
 }

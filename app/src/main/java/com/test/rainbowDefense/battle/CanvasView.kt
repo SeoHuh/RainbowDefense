@@ -19,6 +19,7 @@ class CanvasView @JvmOverloads constructor(
 
     // 그려야할 객체들
     var status: Status? = null
+    var skillShape: Shape? = null
     var projectile_array = arrayListOf<Projectile>()
     var unit_array = arrayListOf<MyUnit>()
     var monster_array = arrayListOf<Monster>()
@@ -44,6 +45,7 @@ class CanvasView @JvmOverloads constructor(
         unit_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
         effect_array.forEach {it.draw(canvas)}
+        skillShape?.draw(canvas)
         status?.draw(canvas)
         block_array.forEach {it.draw(canvas)}
         cursor?.draw(canvas)

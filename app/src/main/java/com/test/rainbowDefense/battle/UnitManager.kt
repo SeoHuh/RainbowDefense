@@ -14,7 +14,9 @@ class UnitManager (
     val v : CanvasView,
     val effectManager: EffectManager,
     ping : Int,
-    val unitList: List<UnitEntity>) {
+    unitEntityList: List<UnitEntity>) {
+
+    val unitList = unitEntityList.filter{it.type=="unit"}   // UnitEntity중에 스킬만 가져온다.
 
     init {
         unitList.forEach {
@@ -24,51 +26,13 @@ class UnitManager (
         }
     }
 
-    fun getUnit() = unitList.filter{it.type == "unit"}
-    fun getSkill() = unitList.filter{it.type == "skill"}
-    fun getBuilding() = unitList.filter{it.type == "building"}
-
     fun unitMove() {
         v.unit_array.forEach { unit ->
-            if(v.monster_array.isNotEmpty()) {
-                var closeMonster = v.monster_array[0]
-                var closeDistance : Double = 1.0
-                var closeAngle : Double = 0.0
-
-                v.monster_array.forEach {monster ->
-                    val closeDistanceX:Double = ((unit.x + unit.width / 2) - (closeMonster.x + closeMonster.width / 2)).toDouble()
-                    val closeDistanceY:Double = ((unit.y + unit.height / 2) - (closeMonster.y + closeMonster.height / 2)).toDouble()
-                    closeDistance = sqrt(Math.pow(closeDistanceX,2.0) + Math.pow(closeDistanceY,2.0))
-                    closeAngle = atan2(-closeDistanceY,-closeDistanceX)
-
-                    val monsterDistanceX:Double = ((unit.x + unit.width / 2) - (monster.x + monster.width / 2)).toDouble()
-                    val monsterDistanceY:Double = ((unit.y + unit.height / 2) - (monster.y + monster.height / 2)).toDouble()
-                    val monsterDistance = sqrt(Math.pow(monsterDistanceX,2.0) + Math.pow(monsterDistanceY,2.0))
-
-                    if(monsterDistance<= closeDistance){
-                        closeMonster = monster
-                    }
-                }
-                when {
-                    closeDistance<=unit.attackRange -> {    // 공격 범위 내부
-                        unit.stop()
-                        attack(unit,closeMonster)
-                    }
-                    closeDistance<=unit.viewRange -> {      // 시야 범위 내부
-                        unit.setVelocity(unit.speed, closeAngle.toFloat())
-                    }
-                    else -> {       // 그 외 범위
-                        unit.stop()
-                    }
-                }
-            }
-            else{
-                unit.stop()
-            }
+            unitAI(unit)    // 이동전에 유닛의 행동 지정
             unit.move()
         }
     }
-    fun checkDead() {
+    fun checkDead() {   // 유닛의 사망을 판정
         val arrayList = v.unit_array
         var n: Int = 0
         while (n < arrayList.size) {
@@ -79,14 +43,13 @@ class UnitManager (
             n++
         }
     }
-    fun attack(unit:MyUnit, monster: Monster) {
+    fun attack(unit:MyUnit, monster: Monster) {     // 몬스터를 공격
         if(unit.time>=unit.attackDelay){
             monster.hp -= unit.attackDamage
             unit.time = 0
         }
     }
-
-    fun makeUnit(x: Int, y: Int, unit:UnitEntity) {
+    fun makeUnit(x: Int, y: Int, unit:UnitEntity) {     // 유닛 인스턴스 생성
         Log.d("디버그", "makeUnit: ${unit.name}")
         v.unit_array.add(
             MyUnit(
@@ -103,6 +66,57 @@ class UnitManager (
                 hp = unit.hp
             }
         )
+    }
+
+    // 유닛의 AI, 가까운 몬스터 찾기, 몬스터와의 거리, 각도 측정
+    private fun unitAI(unit:MyUnit) {
+        if(v.monster_array.isNotEmpty()) {      // 몬스터가 있으면
+            val closeMonster = findCloseMonster(unit)
+            val closeDistance = findDistance(unit,closeMonster)
+            val closeAngle = findAngle(unit,closeMonster)
+
+            when {
+                closeDistance<=unit.attackRange -> {    // 공격 범위 내부일 경우 공격
+                    unit.stop()
+                    attack(unit,closeMonster)
+                }
+                closeDistance<=unit.viewRange -> {      // 시야 범위 내부일 경우 이동
+                    unit.setVelocity(unit.speed, closeAngle.toFloat())
+                }
+                else -> {       // 그 외 범위일 경우 정지
+                    unit.stop()
+                }
+            }
+        }
+        else{       // 몬스터가 없으면 정지
+            unit.stop()
+        }
+    }
+    private fun findCloseMonster(unit: MyUnit): Monster{
+        var closeMonster = v.monster_array[0]
+        var closeDistance = findDistance(unit,closeMonster)
+
+        v.monster_array.forEach {monster ->
+            val distance = findDistance(unit,monster)
+            if(distance <= closeDistance){
+                closeMonster = monster
+                closeDistance = distance
+            }
+        }
+
+        return closeMonster
+    }
+    private fun findDistance(unit: MyUnit,monster: Monster): Double{
+        val distanceX:Double = ((unit.x + unit.width / 2) - (monster.x + monster.width / 2)).toDouble()
+        val distanceY:Double = ((unit.y + unit.height / 2) - (monster.y + monster.height / 2)).toDouble()
+        val distance = sqrt(Math.pow(distanceX,2.0) + Math.pow(distanceY,2.0))
+        return distance
+    }
+    private fun findAngle(unit:MyUnit,monster:Monster): Double{
+        val distanceX:Double = ((unit.x + unit.width / 2) - (monster.x + monster.width / 2)).toDouble()
+        val distanceY:Double = ((unit.y + unit.height / 2) - (monster.y + monster.height / 2)).toDouble()
+        val angle = atan2(-distanceY,-distanceX)
+        return angle
     }
 
     private val random = Random()

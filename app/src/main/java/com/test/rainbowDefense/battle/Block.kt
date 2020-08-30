@@ -25,9 +25,10 @@ class Block(
     }
 
     interface BlockListener {
-        fun onClick()
+        fun onClick(): Boolean
     }
 
+    var type: String = "unit"
     var isClickable = true
     var isClick = false
     private val clickBitmapDrawable: BitmapDrawable = clickDrawable as BitmapDrawable
@@ -51,20 +52,25 @@ class Block(
         clickBitmap = Bitmap.createScaledBitmap(clickBitmap, width, height, false)
     }
 
-    fun onClick() {
+    fun onClick() : Boolean { // 실행 결과 반환
         isClick = true
-        listener?.onClick()
+        return listener!!.onClick()
 //        TODO("블록 클릭시 동작 정의, 스킬 블록의 경우 드래그시 스킬범위 표시되도록 구현")
     }
 
     override fun draw(canvas: Canvas?) {
+
+        // 블록 그리기
         if (isClick) {
             canvas?.drawBitmap(clickBitmap, x.toFloat(), y.toFloat(), paint)
         } else {
             canvas?.drawBitmap(bitmap, x.toFloat(), y.toFloat(), paint)
         }
+
+        // 블록 문자 그리기
         canvas?.drawText(text, x + width / 2f, y + height / 2f + textSize / 2f, textPaint)
 
+        // 블록 내부 아이콘, 코스트 배경, 코스트 텍스트 그리기
         innerBitmap?.let{
             canvas?.drawBitmap(it, x + 3 * padding, y + 3 * padding, paint)
         }

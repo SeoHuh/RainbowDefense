@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.test.rainbowDefense.database.MonsterEntity
 import java.util.*
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 // 몬스터 객체 매니저
 // 몬스터 데이터베이스를 가지고 와서 상황에 맞는 몬스터를 찾거나 randMonster(rank),
@@ -41,7 +43,9 @@ class MonsterManager (
     }
 
     fun monsterMove() {
-        v.monster_array.forEach { it.move() }
+        v.monster_array.forEach {
+            monsterAI(it)
+            it.move() }
     }
 
     fun checkDead() {
@@ -90,6 +94,62 @@ class MonsterManager (
             }
         )
     }
+
+    // 유닛의 AI, 가까운 몬스터 찾기, 몬스터와의 거리, 각도 측정
+    private fun monsterAI(monster: Monster) {
+        if(v.unit_array.isNotEmpty()) {      // 유닛이 있으면
+            val closeUnit = findCloseUnit(monster)
+            val closeDistance = findDistance(monster,closeUnit)
+            val closeAngle = findAngle(monster,closeUnit)
+
+            when {
+                closeDistance<=monster.attackRange -> {    // 공격 범위 내부일 경우 공격
+                    monster.stop()
+                    attack(monster,closeUnit)
+                }
+                closeDistance<=monster.viewRange -> {      // 시야 범위 내부일 경우 이동
+                    monster.setVelocity(monster.speed, closeAngle.toFloat())
+                }
+                else -> {       // 그 외 범위일 경우 전진
+                    monster.setVelocity(monster.speed,Math.PI.toFloat())
+                }
+            }
+        }
+        else{       // 유닛이 없으면 전진
+            monster.setVelocity(monster.speed,Math.PI.toFloat())
+        }
+    }
+    private fun attack(monster: Monster,unit: MyUnit){
+        unit.apply{
+            hp -= monster.attackDamage
+        }
+    }
+    private fun findCloseUnit(monster: Monster): MyUnit{
+        var closeUnit = v.unit_array[0]
+        var closeDistance = findDistance(monster,closeUnit)
+
+        v.unit_array.forEach {unit ->
+            val distance = findDistance(monster,unit)
+            if(distance <= closeDistance){
+                closeUnit = unit
+                closeDistance = distance
+            }
+        }
+        return closeUnit
+    }
+    private fun findDistance(monster: Monster,unit: MyUnit): Double{
+        val distanceX:Double = ((unit.x + unit.width / 2) - (monster.x + monster.width / 2)).toDouble()
+        val distanceY:Double = ((unit.y + unit.height / 2) - (monster.y + monster.height / 2)).toDouble()
+        val distance = sqrt(Math.pow(distanceX,2.0) + Math.pow(distanceY,2.0))
+        return distance
+    }
+    private fun findAngle(monster: Monster,unit: MyUnit): Double{
+        val distanceX:Double = ((unit.x + unit.width / 2) - (monster.x + monster.width / 2)).toDouble()
+        val distanceY:Double = ((unit.y + unit.height / 2) - (monster.y + monster.height / 2)).toDouble()
+        val angle = atan2(distanceY,distanceX)
+        return angle
+    }
+
 
     private val random = Random()
     private fun rand(from : Int, to : Int) : Int {

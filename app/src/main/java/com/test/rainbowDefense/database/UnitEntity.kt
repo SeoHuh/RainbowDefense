@@ -19,7 +19,7 @@ class UnitEntity(
     @ColumnInfo(name = "priceShop") var priceShop: Int,
     @ColumnInfo(name = "width") var width: Int,
     @ColumnInfo(name = "height") var height: Int,
-    @ColumnInfo(name = "cloud") var cloud: Int,
+    @ColumnInfo(name = "cost") var cost: Int,
     @ColumnInfo(name = "hp") var hp: Int,
     @ColumnInfo(name = "hpMag") var hpMag: Int,
     @ColumnInfo(name = "attackDamage") var attackDamage: Int,

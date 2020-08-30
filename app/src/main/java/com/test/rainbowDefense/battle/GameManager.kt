@@ -50,17 +50,19 @@ class GameManager(
     var touchX: Float = 100f
     var touchY: Float = 500f
     var isTouch: Boolean = false
+    var isTouchSkill: Boolean = false
+    var isTouchBuilding: Boolean = false
 
     // 게임관련 각종 인스턴스
     private val effectManager = EffectManager(content,v,ping)
     private val unitManager = UnitManager(content,v,effectManager,ping,unitList)
+    private val skillManager = SkillManager(content,v,effectManager,ping,unitList)
+    private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,ping,monsterList)
     val arrowManager = ArrowManager(content,v,effectManager,ping)
-    val blockMenu = BlockMenu(content,v,unitManager,0,battleHeight,displayWidth,menuHeight)
+    val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight)
     val waveManager = WaveManager(content,v,wave,monsterManager,ping,displayWidth,battleHeight)
     val background = Background(displayWidth,battleHeight,statusHeight,v,content)
-
-
 
 
     // 초기화 ( 터치 이벤트 설정 )
@@ -137,29 +139,50 @@ class GameManager(
             v.cursor?.x = x.toInt()
             v.cursor?.y = y.toInt()
         }
+        if (isTouchSkill){
+            v.skillShape!!.x = touchX.toInt() - v.skillShape!!.width/2
+            v.skillShape!!.y = touchY.toInt() - v.skillShape!!.height/2
+        }
         v.invalidate()
     }
     private fun upTouchEvent() {
         // 터치 끝날때, isTouch 변수 false 설정
         isTouch = false
+        if (isTouchSkill){
+            v.skillShape = null
+            skillManager.useSkill(touchX.toInt(),touchY.toInt())
+            isTouchSkill = false
+        }
+        if (isTouchBuilding) {
+
+            isTouchBuilding = false
+        }
     }
     private fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
-        var isClicked = false
-        var index:Int = 0
         run{
             v.block_array.forEach {  // 블록 클릭시
                 val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
                 val condition2: Boolean = touchY >= it.y && touchY <= it.y + it.height
-                if (condition1 && condition2 && it.isClickable) {
-                    isClicked = true
+                if (condition1 && condition2 && it.isClickable) {   // 클릭 위치와 버튼위치가 일치하면
+                    when(it.type) {
+                        "unit" -> it.onClick()
+                        "building" -> {
+                            if(it.onClick()){
+                                isTouchBuilding = true
+
+                            }
+                        }
+                        "skill" -> {
+                            if(it.onClick()) {
+                                isTouchSkill = true
+                                v.skillShape!!.x = touchX.toInt() - v.skillShape!!.width/2
+                                v.skillShape!!.y = touchY.toInt() - v.skillShape!!.height/2
+                            }
+                        }
+                    }
                     return@run
-//                  TODO("블록 종류에 맞춰 이벤트 실행하는 코드")
                 }
-                index ++
             }
-        }
-        if(isClicked){
-            v.block_array[index].onClick()
         }
 
         v.monster_array.forEach{    // 몬스터 클릭시
