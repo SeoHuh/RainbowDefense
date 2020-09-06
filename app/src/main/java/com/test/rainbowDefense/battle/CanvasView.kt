@@ -27,6 +27,7 @@ class CanvasView @JvmOverloads constructor(
     var block_array = arrayListOf<Block>()
     var cursor: Shape? = null
     var background: Shape? = null
+    var shadowMode: Shape? = null
 
     // 초기화 (Paint 초기설정)
     init {
@@ -45,6 +46,7 @@ class CanvasView @JvmOverloads constructor(
         unit_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
         effect_array.forEach {it.draw(canvas)}
+        shadowMode?.draw(canvas)
         skillShape?.draw(canvas)
         status?.draw(canvas)
         block_array.forEach {it.draw(canvas)}
@@ -60,5 +62,6 @@ class CanvasView @JvmOverloads constructor(
     // static 변수
     companion object {
         val TOLERANCE = 5f
+        val DRAGTOLERANCE = 10f
     }
 }

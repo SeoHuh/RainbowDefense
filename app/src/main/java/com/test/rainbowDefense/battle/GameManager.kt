@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import com.test.rainbowDefense.R
@@ -47,16 +48,24 @@ class GameManager(
     val ping = 120
 
     // 화면 좌표
+    var touchStartX:Float = 0f
+    var touchStartY:Float = 0f
     var touchX: Float = 100f
     var touchY: Float = 500f
     var isTouch: Boolean = false
-    var isTouchSkill: Boolean = false
-    var isTouchBuilding: Boolean = false
+    var isDrag: Boolean = false
+    enum class ClickState(val state:Int){
+        NORMAL(0),
+        UNIT(1),
+        SKILL(2),
+        BUILDING(3)
+    }
+    var clickState = ClickState.NORMAL
 
     // 게임관련 각종 인스턴스
     private val effectManager = EffectManager(content,v,ping)
     private val unitManager = UnitManager(content,v,effectManager,ping,unitList)
-    private val skillManager = SkillManager(content,v,effectManager,ping,unitList)
+    private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,ping,monsterList)
     val arrowManager = ArrowManager(content,v,effectManager,ping)
@@ -117,48 +126,88 @@ class GameManager(
 
     // 터치 이벤트 관련
     private fun onStartTouchEvent(x: Float, y: Float) {
-        // 터치 시작시 좌표 변경
-        // 커서의 시작 좌표 변경
-        // isTouch 변수 true 설정
-        // 터치한 곳의 이벤트 실행
+        touchStartX = x
+        touchStartY = y
         touchX = x
         touchY = y
         v.cursor?.x = x.toInt()
         v.cursor?.y = y.toInt()
         isTouch = true
-        checkTouch()
+        when(clickState) {
+            ClickState.SKILL ->
+                v.skillShape?.let {
+                    it.x = x.toInt() - it.width / 2
+                    it.y = y.toInt() - it.height / 2
+                }
+            else -> {
+
+            }
+        }
         v.invalidate()
     }
     private fun onMoveTouchEvent(x: Float, y: Float) {
         // 터치 중 이동할때 좌표 변경
+        val dxTotal = Math.abs(x - touchStartX)
         val dx = Math.abs(x - touchX)
         val dy = Math.abs(y - touchY)
+
         if (dx >= CanvasView.TOLERANCE || dy >= CanvasView.TOLERANCE) {
+            if (dxTotal >= CanvasView.DRAGTOLERANCE){   // 드래그 한계를 초과하면
+                if(!isDrag) {       // 드래그 변수 참으로 설정
+                    isDrag = true
+                    if (clickState == ClickState.NORMAL) {
+                        blockMenu.move((x - touchStartX).toInt())
+                    }
+                }
+            }
+            when(clickState) {
+                ClickState.NORMAL ->
+                    if (isDrag) {
+                        blockMenu.move((x - touchX).toInt())
+                    }
+                ClickState.SKILL ->
+                    v.skillShape?.let {
+                        it.x = x.toInt() - it.width / 2
+                        it.y = y.toInt() - it.height / 2
+                    }
+                else -> {
+
+                }
+            }
             touchX = x
             touchY = y
             v.cursor?.x = x.toInt()
             v.cursor?.y = y.toInt()
         }
-        if (isTouchSkill){
-            v.skillShape!!.x = touchX.toInt() - v.skillShape!!.width/2
-            v.skillShape!!.y = touchY.toInt() - v.skillShape!!.height/2
-        }
         v.invalidate()
     }
     private fun upTouchEvent() {
+
+        when(clickState) {
+            ClickState.SKILL -> {
+                skillManager.endSkill(touchX.toInt(), touchY.toInt())
+                background.removeShadow()
+                clickState = ClickState.NORMAL
+            }
+            ClickState.BUILDING -> {
+                background.removeShadow()
+                clickState = ClickState.NORMAL
+            }
+            ClickState.NORMAL -> {
+                if(!isDrag) {
+                    onClickEvent()
+                }
+            }
+            else -> {
+
+            }
+        }
         // 터치 끝날때, isTouch 변수 false 설정
         isTouch = false
-        if (isTouchSkill){
-            v.skillShape = null
-            skillManager.useSkill(touchX.toInt(),touchY.toInt())
-            isTouchSkill = false
-        }
-        if (isTouchBuilding) {
+        isDrag = false
 
-            isTouchBuilding = false
-        }
     }
-    private fun checkTouch() { // 터치한 부분에 맞는 이벤트 실행(블록 클릭, 유닛 클릭, 적유닛 클릭 등등)
+    private fun onClickEvent() { // 클릭 이벤트
         run{
             v.block_array.forEach {  // 블록 클릭시
                 val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
@@ -168,17 +217,17 @@ class GameManager(
                         "unit" -> it.onClick()
                         "building" -> {
                             if(it.onClick()){
-                                isTouchBuilding = true
-
+                                clickState = ClickState.BUILDING
+                                background.setShadow()
                             }
                         }
                         "skill" -> {
                             if(it.onClick()) {
-                                isTouchSkill = true
-                                v.skillShape!!.x = touchX.toInt() - v.skillShape!!.width/2
-                                v.skillShape!!.y = touchY.toInt() - v.skillShape!!.height/2
+                                clickState = ClickState.SKILL
+                                background.setShadow()
                             }
                         }
+                        "" -> it.onClick()
                     }
                     return@run
                 }

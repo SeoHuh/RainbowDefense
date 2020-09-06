@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
 import java.util.*
@@ -28,14 +29,13 @@ class BlockMenu(
     val blockClickDrawable = content.resources.getDrawable(R.drawable.block_box, content.theme)
     val cloudDrawable = content.resources.getDrawable(R.drawable.cloud, content.theme)
     val manaDrawable = content.resources.getDrawable(R.drawable.blue_circle, content.theme)
-    val skillRangeDrawable = content.resources.getDrawable(R.drawable.blue_circle,content.theme)
 
     val blockPadding = 10
     var blockX = x + blockPadding
     val blockY = y + blockPadding
     val blockWidth = 220
     val blockHeight = 220
-
+    var position = 0
 
     init {
         showMenu()
@@ -44,6 +44,36 @@ class BlockMenu(
 //        TODO("유닛 블록 클릭시 블록 전부 삭제후 유닛 블록만 보이도록 한다.")
 //        TODO("뒤로가기 버튼 블록마다 드로어블을 넣어줄 수 있도록 여러가지 비트맵을 가져온다.")
     }
+
+    fun move(x:Int) {
+        val size = v.block_array.size
+        val blockTotalWidth = (size - 1) * (blockPadding + blockWidth)
+        var limitLeft = 0
+        val limitRight = 0
+        if(blockTotalWidth >= width - blockPadding * 2){
+            limitLeft = - blockTotalWidth + width - blockPadding * 2
+        }
+        when {
+            position + x <= limitLeft -> {
+                position = limitLeft
+            }
+            position + x >= limitRight -> {
+                position = limitRight
+            }
+            else -> {
+                position += x
+            }
+        }
+        var n = 0
+        v.block_array.forEach {
+            if (it.isClickable) {
+                val positionX = blockPadding * (n + 1) + blockWidth * n + position
+                it.x = positionX
+                n++
+            }
+        }
+    }
+
     private fun clearMenu() {
         v.block_array.removeAll(v.block_array)
         blockX = x + 10
@@ -60,46 +90,46 @@ class BlockMenu(
                 isClickable = false
             }
         )
-
+        position = 0
     }
     private fun showMenu() : Boolean {    // 초기 메뉴 (유닛, 건물, 스킬 메뉴)
         clearMenu()
-        addBlock("유닛",null,null,null) {showUnit()}
-        addBlock("건물",null,null,null) {showBuilding()}
-        addBlock("스킬",null,null,null) {showSkill()}
+        addBlock("유닛","",null,null,null) {showUnit()}
+        addBlock("건물","",null,null,null) {showBuilding()}
+        addBlock("스킬","",null,null,null) {showSkill()}
         return false
     }
 
     private fun showUnit() : Boolean {
         clearMenu()
         val unitList = unitManager.unitList
-        addBlock("이전",null,null,null) {showMenu()}
+        addBlock("이전","",null,null,null) {showMenu()}
         unitList.forEach{
-            addBlock("",it.drawable,it.cost.toString(),cloudDrawable) {buyUnit(it)}
+            addBlock("","unit",it.drawable,it.cost.toString(),cloudDrawable) {buyUnit(it)}
         }
         return false
     }
     private fun showBuilding() : Boolean {
         clearMenu()
         val buildingList = buildingManager.buildingList
-        addBlock("이전",null,null,null) {showMenu()}
+        addBlock("이전", "",null,null,null) {showMenu()}
         buildingList.forEach{
-            addBlock("",it.drawable,it.cost.toString(),cloudDrawable) {buyBuilding(it)}
+            addBlock("","building",it.drawable,it.cost.toString(),cloudDrawable) {buyBuilding(it)}
         }
         return false
     }
     private fun showSkill() : Boolean {
         clearMenu()
         val skillList = skillManager.skillList
-        addBlock("이전",null,null,null) {showMenu()}
+        addBlock("이전", "",null,null,null) {showMenu()}
         skillList.forEach{
-            addBlock("",it.drawable,it.cost.toString(),manaDrawable) {useSkill(it)}
+            addBlock("", "skill",it.drawable,it.cost.toString(),manaDrawable) {useSkill(it)}
         }
         return false
     }
 
     // 블록 추가 (문자, 유닛 아이콘, 비용텍스트, 비용 배경) {실행할 함수}
-    private fun addBlock(string:String, drawable: Drawable?, cost: String?, costDrawable: Drawable?, function: () -> Boolean) {
+    private fun addBlock(string:String,_type:String, drawable: Drawable?, cost: String?, costDrawable: Drawable?, function: () -> Boolean) {
         v.block_array.add(
             Block(
                 blockX,
@@ -110,6 +140,7 @@ class BlockMenu(
                 blockClickDrawable,
                 string
             ).apply{
+                type = _type
                 drawable?.let{
                     val bitmapDrawable: BitmapDrawable = it as BitmapDrawable
                     var bitmap: Bitmap = bitmapDrawable.bitmap
@@ -150,8 +181,10 @@ class BlockMenu(
     }
     private fun useSkill(skill: UnitEntity): Boolean{
         if(skill.cost<= v.status!!.cloud) {     // 비용 충분할 시 스킬 실행
-            skillManager.selectSkill(skill)
-            v.skillShape = Shape(0,0,skill.width,skill.height,skillRangeDrawable)
+            v.status?.apply {
+                cloud -= skill.cost
+            }
+            skillManager.startSkill(skill)
             return true
         }
         return false

@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 
 // 클릭 가능한 버튼 UI
 // 유닛 블록, 스킬 블록, 건물 블록등으로 클릭 가능한 블록 클래스이다.

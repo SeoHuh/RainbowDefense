@@ -16,8 +16,8 @@ class EffectManager (
     val ping : Int) {
 
     // 이펙트(애니메이션) 리소스
-    val effectBitmaps = arrayListOf<Bitmap>();
-    val effectId = arrayListOf(
+    val arrowBitmaps = arrayListOf<Bitmap>()
+    val arrowEffect = arrayListOf(
         R.drawable.blueish_flame_0001,
         R.drawable.blueish_flame_0002,
         R.drawable.blueish_flame_0003,
@@ -49,10 +49,14 @@ class EffectManager (
         R.drawable.blueish_flame_0029,
         R.drawable.blueish_flame_0030
     )
+    val arrowEffectWidth = 200
+    val arrowEffectHeight = 200
+
+
     init {
-        effectId.forEach {
+        arrowEffect.forEach {
             val bitmap = BitmapFactory.decodeResource(v.resources, it)
-            effectBitmaps.add(Bitmap.createScaledBitmap(bitmap, 200, 200, false))
+            arrowBitmaps.add(Bitmap.createScaledBitmap(bitmap, arrowEffectWidth, arrowEffectHeight, false))
         }
     }
 
@@ -64,7 +68,7 @@ class EffectManager (
                 y - 100,
                 200,
                 200,
-                effectBitmaps,
+                arrowBitmaps,
                 30,
                 10
             )
