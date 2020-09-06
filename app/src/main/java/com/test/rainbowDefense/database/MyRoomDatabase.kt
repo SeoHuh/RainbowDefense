@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [UnitEntity::class,StateEntity::class,MonsterEntity::class,StageEntity::class,WaveEntity::class], version = 127, exportSchema = false)
+@Database(entities = [UnitEntity::class,StateEntity::class,MonsterEntity::class,StageEntity::class,WaveEntity::class], version = 1, exportSchema = false)
 abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun unitDao(): UnitDao

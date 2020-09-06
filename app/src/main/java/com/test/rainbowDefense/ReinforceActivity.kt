@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,8 @@ class ReinforceActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, LobyActivity::class.java)
+        var temp_img = findViewById<ImageView>(R.id.imageView)
+        temp_img.setImageResource(R.drawable.red_circle)
 
         btn_reinforce_back.setOnClickListener { view ->
             super.finish()
@@ -56,6 +59,10 @@ class ReinforceActivity : AppCompatActivity() {
             OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
+                val temp_text = unit.resourceId
+                val resId: Int =
+                    v.resources.getIdentifier(temp_text, "drawable", "com.test.rainbowDefense")
+                temp_img.setImageResource(resId)
                 selectUnit = unit
                 setUnit(selectUnit)
                 isSelect = true
@@ -105,6 +112,7 @@ class ReinforceActivity : AppCompatActivity() {
 
     }
     fun setUnit(unit:UnitEntity){
+
         val color = Color.parseColor(unit.color)
         unit.price = unit.priceBias + unit.priceMag * unit.level
         unit_level.setTextColor(color)

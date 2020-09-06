@@ -32,6 +32,8 @@
             android:screenOrientation="sensorLandscape" />
         <activity android:name=".BattleActivity"
             android:screenOrientation="sensorLandscape"/>
+
+
     </application>
 
 </manifest>

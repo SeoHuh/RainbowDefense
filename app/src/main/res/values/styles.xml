@@ -5,6 +5,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="buttonStyle">@style/customButtonFontStyle</item>
+        <item name="editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="radioButtonStyle">@style/customRadioButtonFontStyle</item>
+
     </style>
+
+
 
 </resources>
