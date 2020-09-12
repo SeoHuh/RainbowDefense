@@ -64,11 +64,12 @@ class GameManager(
 
     // 게임관련 각종 인스턴스
     private val effectManager = EffectManager(content,v,ping)
+    private val soundManager = SoundManager(content,v)
     private val unitManager = UnitManager(content,v,effectManager,ping,unitList)
     private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
-    private val monsterManager = MonsterManager(content,v,effectManager,ping,monsterList)
-    val arrowManager = ArrowManager(content,v,effectManager,ping)
+    private val monsterManager = MonsterManager(content,v,effectManager,soundManager,ping,monsterList)
+    val arrowManager = ArrowManager(content,v,effectManager,soundManager,ping)
     val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight)
     val waveManager = WaveManager(content,v,wave,monsterManager,ping,displayWidth,battleHeight)
     val background = Background(displayWidth,battleHeight,statusHeight,v,content)

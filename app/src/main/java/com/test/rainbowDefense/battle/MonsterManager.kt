@@ -20,6 +20,7 @@ class MonsterManager (
     val content : Context,
     val v : CanvasView,
     val effectManager: EffectManager,
+    val soundManager: SoundManager,
     ping : Int,
     val monsterList: List<MonsterEntity>) {
 
@@ -53,6 +54,7 @@ class MonsterManager (
         var n: Int = 0
         while (n < arrayList.size) {
             if (arrayList[n].hp <= 0) {
+                soundManager.makeSound("coin",0.6f)
                 arrayList.removeAt(n)
                 n--
             }

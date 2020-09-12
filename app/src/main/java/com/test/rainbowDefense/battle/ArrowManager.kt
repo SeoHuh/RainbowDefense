@@ -12,6 +12,7 @@ class ArrowManager (
     val content : Context,
     val v : CanvasView,
     val effectManager: EffectManager,
+    val soundManager: SoundManager,
     ping : Int) {
 
     // 화살 딜레이타임, 카운터
@@ -31,6 +32,7 @@ class ArrowManager (
     }
     private fun makeArrow(x:Float,y:Float) {
         val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
+        soundManager.makeSound("swing",1f)
         v.projectile_array.add(
             Projectile(
                 10,
@@ -69,6 +71,7 @@ class ArrowManager (
                 if (condition1 && condition2) {
                     effectManager.makeEffect(it.x+it.width/2,it.y+it.height/2)
                     it.hp -= projectile[n].attackDamage // 몬스터 체력 감소
+                    soundManager.makeSound("metal_small_2",0.5f)
                     projectile.removeAt(n)
                     n--
                 }
