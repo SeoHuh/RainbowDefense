@@ -62,5 +62,7 @@ dependencies {
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 }
 

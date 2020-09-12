@@ -45,7 +45,7 @@ class ReinforceActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         val intent = Intent(this, LobyActivity::class.java)
         var temp_img = findViewById<ImageView>(R.id.imageView)
-        temp_img.setImageResource(R.drawable.red_circle)
+        temp_img.setImageResource(R.drawable.firewizard)
 
         btn_reinforce_back.setOnClickListener { view ->
             super.finish()
