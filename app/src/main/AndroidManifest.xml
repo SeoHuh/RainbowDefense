@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Rounds"
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".ReinforceActivity"
             android:screenOrientation="sensorLandscape" />
@@ -24,16 +25,16 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".BattleActivity"
-            android:screenOrientation="sensorLandscape"/>
-
-
+        <activity
+            android:name=".BattleActivity"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>
