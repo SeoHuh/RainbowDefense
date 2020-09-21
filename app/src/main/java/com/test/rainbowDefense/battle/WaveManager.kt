@@ -3,6 +3,7 @@ package com.test.rainbowDefense.battle
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
+import com.test.rainbowDefense.database.StageEntity
 import com.test.rainbowDefense.database.WaveEntity
 import java.util.*
 
@@ -13,6 +14,7 @@ import java.util.*
 class WaveManager(
     val content : Context,
     val v : CanvasView,
+    val stage : StageEntity,
     wave : WaveEntity,
     private val monsterManager: MonsterManager,
     ping : Int,
@@ -24,9 +26,14 @@ class WaveManager(
     val minY = 80
     val maxY = battleHeight - 180
 
+    val waveNum = stage.waveNum + stage.bossWave
+    val stageNum = stage.stage
+    val hpMag = stage.hpMag
+    val damageMag = stage.damageMag
+    val reward = stage.reward
+
     // 처음 웨이브 대기시간
     var waveDelayTime = 2 * ping
-
     // 다음 웨이브 대기시간
     val delayTime = wave.delayTime * ping
 
@@ -36,6 +43,14 @@ class WaveManager(
     val epicMonster = wave.epicNumber
     val uniqueMonster = wave.uniqueNumber
     var Counter = 0
+
+    init{
+        v.status!!.apply{
+            waveMax = waveNum
+            stage = stageNum
+            stageReward = reward
+        }
+    }
 
     fun waveCheck() {
         when {
@@ -56,16 +71,16 @@ class WaveManager(
     private fun waveStart() {
 
         for(i in 1 until normalMonster) {
-            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),1)
+            monsterManager.makeMonster(hpMag,damageMag,rand(minX,maxX),rand(minY,maxY),1)
         }
         for(i in 1 until epicMonster) {
-            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),2)
+            monsterManager.makeMonster(hpMag,damageMag,rand(minX,maxX),rand(minY,maxY),2)
         }
         for(i in 1 until uniqueMonster) {
-            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),3)
+            monsterManager.makeMonster(hpMag,damageMag,rand(minX,maxX),rand(minY,maxY),3)
         }
         for(i in 1 until bossMonster) {
-            monsterManager.makeMonster(rand(minX,maxX),rand(minY,maxY),4)
+            monsterManager.makeMonster(hpMag,damageMag,rand(minX,maxX),rand(minY,maxY),4)
         }
 //        TODO("일반, 에픽, 유니크, 보스 등급의 몬스터 Drawable 구하고, 몬스터 데이터베이스와 연동하기")
     }

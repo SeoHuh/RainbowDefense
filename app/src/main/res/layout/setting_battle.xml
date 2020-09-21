@@ -19,8 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.6">
 
-        //exit
-
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:id="@+id/setting_exit"
@@ -28,10 +26,10 @@
             android:layout_height="56dp">
 
             <Button
-                android:id="@+id/btn_exit"
+                android:id="@+id/btn_x"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/exit"
+                android:background="@drawable/btn_exit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.98"
@@ -84,6 +82,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
+                android:id="@+id/btn_exit"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/btn_backtorounds"

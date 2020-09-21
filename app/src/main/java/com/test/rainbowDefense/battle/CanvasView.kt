@@ -25,6 +25,7 @@ class CanvasView @JvmOverloads constructor(
     var monster_array = arrayListOf<Monster>()
     var effect_array = arrayListOf<Effect>()
     var block_array = arrayListOf<Block>()
+    var pause_button: Shape? = null
     var cursor: Shape? = null
     var background: Shape? = null
     var shadowMode: Shape? = null
@@ -50,6 +51,7 @@ class CanvasView @JvmOverloads constructor(
         skillShape?.draw(canvas)
         status?.draw(canvas)
         block_array.forEach {it.draw(canvas)}
+        pause_button?.draw(canvas)
         cursor?.draw(canvas)
     }
 

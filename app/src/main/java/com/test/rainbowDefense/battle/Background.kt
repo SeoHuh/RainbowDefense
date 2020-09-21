@@ -29,9 +29,7 @@ class Background (
     val backgroundDrawable = v.resources.getDrawable(R.drawable.battleback_2, content.theme)
     val shadowDrawable = v.resources.getDrawable(R.drawable.shadow, content.theme)
 
-
-
-    val status = Status(0,0,displayWidth,statusHeight)
+    val status = Status(0,0,displayWidth,statusHeight,content,v)
 
     init {
         v.status = status

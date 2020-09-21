@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory
 import android.os.Handler
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.MonsterEntity
 import com.test.rainbowDefense.database.StageEntity
@@ -42,7 +44,7 @@ class GameManager(
     private val menuHeight = 240
 
     // 상태창 높이
-    private val statusHeight = 120
+    private val statusHeight = 80
 
     // 핑 (초당 프레임 수)
     val ping = 120
@@ -58,7 +60,8 @@ class GameManager(
         NORMAL(0),
         UNIT(1),
         SKILL(2),
-        BUILDING(3)
+        BUILDING(3),
+        PAUSE(4)
     }
     var clickState = ClickState.NORMAL
 
@@ -71,9 +74,17 @@ class GameManager(
     private val monsterManager = MonsterManager(content,v,effectManager,soundManager,ping,monsterList)
     val arrowManager = ArrowManager(content,v,effectManager,soundManager,ping)
     val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight)
-    val waveManager = WaveManager(content,v,wave,monsterManager,ping,displayWidth,battleHeight)
     val background = Background(displayWidth,battleHeight,statusHeight,v,content)
+    val waveManager = WaveManager(content,v,stage,wave,monsterManager,ping,displayWidth,battleHeight)
 
+    private var listener: PauseListener? = null
+    fun setOnlistner(listener: PauseListener) {
+        this.listener = listener
+    }
+
+    interface PauseListener {
+        fun onPause()
+    }
 
     // 초기화 ( 터치 이벤트 설정 )
     init {
@@ -101,6 +112,7 @@ class GameManager(
         if (!isRunning) {
             handler?.postDelayed(thread, 1000 / ping.toLong())
             isRunning = true
+            clickState = ClickState.NORMAL
         }
     }
     inner class ThreadClass : Thread() {
@@ -163,7 +175,7 @@ class GameManager(
             }
             when(clickState) {
                 ClickState.NORMAL ->
-                    if (isDrag) {
+                    if (isDrag && touchStartY > displayHeight - menuHeight) {
                         blockMenu.move((x - touchX).toInt())
                     }
                 ClickState.SKILL ->
@@ -234,7 +246,15 @@ class GameManager(
                 }
             }
         }
-
+        v.pause_button?.let {  // 포즈 버튼 클릭시
+            val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
+            val condition2: Boolean = touchY >= it.y && touchY <= it.y + it.height
+            if (condition1 && condition2) {   // 클릭 위치와 버튼위치가 일치하면
+                listener?.onPause()
+                clickState = ClickState.PAUSE
+                isRunning = false
+            }
+        }
         v.monster_array.forEach{    // 몬스터 클릭시
             val condition1: Boolean = touchX >= it.x && touchX <= it.x + it.width
             val condition2 : Boolean = touchY >= it.y && touchY <= it.y + it.height
@@ -249,10 +269,12 @@ class GameManager(
     private fun winCheck(){
         if(v.status?.wave == v.status?.waveMax      // 웨이브 종료
             && v.monster_array.isNullOrEmpty()) {   // 몬스터 모두 사망
+            clickState = ClickState.PAUSE
             win()
             isRunning = false
         }
         else if(v.status!!.hp<=0){      // 체력이 0 이하로 내려갔을 때
+            clickState = ClickState.PAUSE
             lose()
             isRunning = false
         }

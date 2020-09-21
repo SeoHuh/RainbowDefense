@@ -2,16 +2,22 @@ package com.test.rainbowDefense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.test.rainbowDefense.battle.GameManager
 import com.test.rainbowDefense.database.*
 import kotlinx.android.synthetic.main.activity_battle.*
+import kotlinx.android.synthetic.main.activity_loby.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BattleActivity : AppCompatActivity() {
 
+    private lateinit var stateViewModel: StateViewModel
     private lateinit var gameManager: GameManager
     private lateinit var stage : StageEntity
     private lateinit var wave: WaveEntity
@@ -32,6 +38,14 @@ class BattleActivity : AppCompatActivity() {
             monsterList = db.monsterDao().get()
             unitList = db.unitDao().getHaveList()
         }
+
+        stateViewModel = ViewModelProvider(this)[StateViewModel::class.java]
+        stateViewModel.state.observe(this, Observer { state ->
+            state?.let {
+
+            }
+            Log.d("디버깅", "State 변경확인")
+        })
     }
 
     // 화면이 뜨고 난 뒤에 게임매니저 생성, 실행
@@ -40,6 +54,12 @@ class BattleActivity : AppCompatActivity() {
         setFullScreen()
         if(!isCreated) {
             gameManager = GameManager(this, canvas, stage, wave, monsterList, unitList)
+            gameManager.setOnlistner(object:
+            GameManager.PauseListener{
+                override fun onPause() {
+                    showSetting()
+                }
+            })
             isCreated = true
         }
         if(hasFocus) {
@@ -55,6 +75,52 @@ class BattleActivity : AppCompatActivity() {
         gameManager.isRunning = false
     }
 
+    fun showSetting() {
+        val state = stateViewModel.state.value!!.get(0)
+        val newFragment = SettingBattleDetailFragment(state)
+        newFragment.show(supportFragmentManager, "mine")
+        newFragment.setOnlistner(object :
+            SettingBattleDetailFragment.NoticeDialogListener {
+            override fun onExitClick(dialog: DialogFragment) {
+                this@BattleActivity.finish()
+            }
+
+            override fun onMuteClick(view: View) {
+                stateViewModel.update(state.apply {
+                    if (this.muteState == 0) {
+                        this.muteState = 1
+                        view.setBackgroundResource(R.drawable.mute)
+                    } else {
+                        this.muteState = 0
+                        view.setBackgroundResource(R.drawable.notmute)
+                    }
+                })
+            }
+
+            override fun onVibrateClick(view: View) {
+                stateViewModel.update(state.apply {
+                    if (this.vibrateState == 0) {
+                        this.vibrateState = 1
+                        view.setBackgroundResource(R.drawable.vibration)
+                    } else {
+                        this.vibrateState = 0
+                        view.setBackgroundResource(R.drawable.novibration)
+                    }
+                })
+            }
+
+            override fun onResumeClick(dialog: DialogFragment) {
+                gameManager.run()
+            }
+            override fun musicProgressChanged(view: View, i: Int) {
+                stateViewModel.update(state.apply { musicVolume = i })
+            }
+
+            override fun effectProgressChanged(view: View, i: Int) {
+                stateViewModel.update(state.apply { effectVolume = i })
+            }
+        })
+    }
     fun setFullScreen() {
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE

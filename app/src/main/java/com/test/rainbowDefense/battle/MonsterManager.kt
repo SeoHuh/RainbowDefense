@@ -55,6 +55,9 @@ class MonsterManager (
         while (n < arrayList.size) {
             if (arrayList[n].hp <= 0) {
                 soundManager.makeSound("coin",0.6f)
+                v.status!!.apply{
+                    monsterReward += arrayList[n].reward
+                }
                 arrayList.removeAt(n)
                 n--
             }
@@ -76,7 +79,7 @@ class MonsterManager (
         }
     }
 
-    fun makeMonster(x: Int,y: Int,rank: Int) {
+    fun makeMonster(hpMag:Int, damageMag:Int, x: Int,y: Int,rank: Int) {
         val monster = randMonster(rank)
         Log.d("디버그", "makeMonster: ${monster.name}")
         v.monster_array.add(
@@ -88,10 +91,10 @@ class MonsterManager (
                 monster.drawable
             ).apply{
                 this.setVelocity(monster.moveSpeed/ping.toFloat(),Math.PI.toFloat())
-                attackDamage = monster.attackDamage
+                attackDamage = monster.attackDamage * damageMag/100
                 attackSpeed = monster.attackSpeed
                 attackRange = monster.attackRange
-                hp = monster.hp
+                hp = monster.hp * hpMag/100
                 reward = monster.reward
             }
         )

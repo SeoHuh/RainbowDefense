@@ -64,8 +64,8 @@ class SettingBattleDetailFragment(val state:StateEntity) : DialogFragment() {
             view.seekbar_music.progress = state.musicVolume
             view.seekbar_effect.progress = state.effectVolume
 
-            view.btn_exit.setOnClickListener {  // X 버튼
-                listener?.onExitClick(this)
+            view.btn_x.setOnClickListener {  // X 버튼
+                listener?.onResumeClick(this)
                 dialog?.cancel()
             }
             view.btn_mute.setOnClickListener {  // 뮤트버튼 클릭
@@ -74,8 +74,13 @@ class SettingBattleDetailFragment(val state:StateEntity) : DialogFragment() {
             view.btn_vibrate.setOnClickListener {   // 진동 버튼 클릭
                 listener?.onVibrateClick(it)
             }
-            view.btn_resume.setOnClickListener {    // 쿠폰 버튼 클릭
+            view.btn_resume.setOnClickListener {    // 리줌 버튼 클릭
                 listener?.onResumeClick(this)
+                dialog?.cancel()
+            }
+            view.btn_exit.setOnClickListener{   // 나가기 버튼 클릭
+                listener?.onExitClick(this)
+                dialog?.cancel()
             }
 
             view.seekbar_music.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {    // 소리 조절 이벤트
