@@ -23,13 +23,12 @@ class BattleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setFullScreen()
 
-        val stageNum = 1
+        val stageNum = intent.getIntExtra("Round",1)
         val db = MyRoomDatabase.getDatabase(this)
 
         CoroutineScope(Dispatchers.IO).launch {
             stage = db.stageDao().get()[stageNum - 1]
-           // wave = db.waveDao().get()[stage.waveDifficulty - 1]
-            wave = db.waveDao().get()[2]
+            wave = db.waveDao().get()[stage.waveDifficulty - 1]
             monsterList = db.monsterDao().get()
             unitList = db.unitDao().getHaveList()
         }

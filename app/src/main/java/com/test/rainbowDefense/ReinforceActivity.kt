@@ -124,10 +124,7 @@ class ReinforceActivity : AppCompatActivity() {
         unit_damage_increase.text = ("+" + unit.attackDamageMag.toString())
         unit_price.text = unit.price.toString()
     }
-    override fun finish(){
-        super.finish()
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-    }
+
     fun setFullScreen() {
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE

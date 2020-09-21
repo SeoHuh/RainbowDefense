@@ -21,7 +21,7 @@
         android:layout_height="30dp"
         android:text="text"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shop_image" />
 

@@ -27,7 +27,7 @@ class LobyActivity : AppCompatActivity() {
 
         val intent_shop = Intent(this, ShopActivity::class.java)
         val intent_reinforce = Intent(this, ReinforceActivity::class.java)
-        val intent_battlerounds = Intent(this, Rounds::class.java)
+        val intent_battlerounds = Intent(this, RoundsActivity::class.java)
 
         btn_loby_shop.setOnClickListener { view ->
             startActivity(intent_shop)
@@ -42,6 +42,7 @@ class LobyActivity : AppCompatActivity() {
         }
         btn_loby_battle.setOnClickListener {
             startActivity(intent_battlerounds)
+            overridePendingTransition(R.anim.slide_in_bottom,R.anim.slide_out_top)
         }
         stateViewModel = ViewModelProvider(this)[StateViewModel::class.java]
         stateViewModel.state.observe(this, Observer { state ->

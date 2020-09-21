@@ -176,10 +176,10 @@
         android:background="@drawable/btn_background"
         android:id="@+id/buy_button"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_margin="15dp"
         android:text="Buy"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_reinforce_back"
         app:layout_constraintEnd_toStartOf="@+id/recycler_view"
         app:layout_constraintStart_toEndOf="@+id/btn_reinforce_back"
@@ -198,6 +198,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="Stage :"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <TextView
@@ -206,6 +207,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <ImageView
@@ -220,6 +222,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1000"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
 
@@ -240,9 +243,9 @@
 
     <Button
         android:id="@+id/btn_reinforce_back"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_margin="15dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
         android:layout_marginStart="60dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/btn_back"

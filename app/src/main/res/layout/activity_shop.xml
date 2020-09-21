@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="Stage :"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
         <ImageView
@@ -42,6 +44,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:text="1000"
+            android:textColor="#ffffff"
             android:textSize="20sp" />
 
 
@@ -51,7 +54,7 @@
         android:id="@+id/shop_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +62,10 @@
 
     <Button
         android:id="@+id/btn_shop_back"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:text="뒤로가기"
-        android:textSize="15sp"
+        android:background="@drawable/btn_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

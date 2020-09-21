@@ -24,10 +24,13 @@ class LogoActivity : AppCompatActivity() {
         intent = Intent(this, IntroActivity::class.java)
 
         Handler().postDelayed({
-            overridePendingTransition(R.anim.flash ,R.anim.fade_out)
             startActivity(intent)
             this.finish()
         },3000)
+    }
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.flash, R.anim.fade_out)
     }
     fun setFullScreen() {
         window.decorView.systemUiVisibility = (
