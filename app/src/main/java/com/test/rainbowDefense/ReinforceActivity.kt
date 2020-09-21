@@ -33,16 +33,10 @@ class ReinforceActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reinforce)
-        window.decorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        setFullScreen()
+
         val intent = Intent(this, LobyActivity::class.java)
         var temp_img = findViewById<ImageView>(R.id.imageView)
         temp_img.setImageResource(R.drawable.firewizard)
@@ -111,6 +105,11 @@ class ReinforceActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        setFullScreen()
+    }
     fun setUnit(unit:UnitEntity){
 
         val color = Color.parseColor(unit.color)
@@ -128,5 +127,14 @@ class ReinforceActivity : AppCompatActivity() {
     override fun finish(){
         super.finish()
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+    fun setFullScreen() {
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 }

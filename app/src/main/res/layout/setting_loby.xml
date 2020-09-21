@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/setting_fromloby"
         android:layout_width="1152px"
-        android:layout_height="756px"
-        android:background="@drawable/sky"
+        android:layout_height="856px"
+        android:background="@drawable/shop_detail_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +68,7 @@
                 android:id="@+id/btn_coupon"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:textSize="20sp"
                 android:text="쿠폰"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -12,13 +12,7 @@ class LogoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logo)
-        window.decorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        setFullScreen()
 
         val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val fadeout = AnimationUtils.loadAnimation(this,R.anim.fade_out)
@@ -30,16 +24,18 @@ class LogoActivity : AppCompatActivity() {
         intent = Intent(this, IntroActivity::class.java)
 
         Handler().postDelayed({
-
-            startActivity(intent)
             overridePendingTransition(R.anim.flash ,R.anim.fade_out)
-
-        },3000)
-
-        Handler().postDelayed({
+            startActivity(intent)
             this.finish()
-        }, 4000)
-
-
+        },3000)
+    }
+    fun setFullScreen() {
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 }
