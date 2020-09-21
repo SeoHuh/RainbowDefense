@@ -5,10 +5,11 @@
     android:layout_width="70dp"
     android:layout_height="70dp"
     android:layout_margin="10dp"
-    android:background="@drawable/round_btn_background">
+    android:background="@drawable/btn_background">
 
     <Button
         android:text="1"
+        android:textColor="#49DF51"
         android:textSize="20sp"
         android:id="@+id/btn_rounds"
         android:layout_width="match_parent"
