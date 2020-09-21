@@ -10,7 +10,7 @@
         android:id="@+id/setting_fromloby"
         android:layout_width="1152px"
         android:layout_height="856px"
-        android:background="@drawable/shop_detail_background"
+        android:background="@drawable/settingbackground"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
 
             android:id="@+id/setting_exit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp">
 
             <Button
                 android:id="@+id/btn_exit"
@@ -59,22 +59,24 @@
                 android:background="@drawable/novibration"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_mute"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.428"
                 app:layout_constraintStart_toStartOf="@+id/btn_mute"
                 app:layout_constraintTop_toTopOf="@+id/btn_mute"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/btn_coupon"
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 android:layout_height="70dp"
+                android:background="@drawable/btn_background"
+                android:text="coupon"
                 android:textSize="20sp"
-                android:text="쿠폰"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintHorizontal_bias="0.86"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,7 +93,7 @@
                 android:id="@+id/img_music"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/boss1"
+                android:background="@drawable/musicbutton"
                 android:text="vibrate" />
 
 
@@ -115,11 +117,11 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_margin="20dp"
                 android:id="@+id/img_effectsound"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/boss1"
+                android:layout_margin="20dp"
+                android:background="@drawable/effectbutton"
                 android:text="mute" />
 
             <SeekBar
