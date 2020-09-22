@@ -16,7 +16,7 @@ import com.test.rainbowDefense.database.StateEntity
 import com.test.rainbowDefense.database.StateViewModel
 import com.test.rainbowDefense.database.UnitEntity
 import com.test.rainbowDefense.database.UnitViewModel
-import kotlinx.android.synthetic.main.activity_loby.*
+import com.test.rainbowDefense.fragment.ShopDetailFragment
 import kotlinx.android.synthetic.main.activity_shop.*
 import kotlinx.android.synthetic.main.activity_shop.gold_text
 import kotlinx.android.synthetic.main.activity_shop.stage_text
@@ -86,7 +86,8 @@ class ShopActivity : AppCompatActivity() {
     }
 
     fun showDetail(unit: UnitEntity) {
-        val newFragment = ShopDetailFragment(unit)
+        val newFragment =
+            ShopDetailFragment(unit)
         newFragment.show(supportFragmentManager, "mine")
         newFragment.setOnlistner(object :
             ShopDetailFragment.NoticeDialogListener {

@@ -180,10 +180,7 @@ class BlockMenu(
         return false
     }
     private fun useSkill(skill: UnitEntity): Boolean{
-        if(skill.cost<= v.status!!.cloud) {     // 비용 충분할 시 스킬 실행
-            v.status?.apply {
-                cloud -= skill.cost
-            }
+        if(skill.cost<= v.status!!.mana) {     // 비용 충분할 시 스킬 실행
             skillManager.startSkill(skill)
             return true
         }

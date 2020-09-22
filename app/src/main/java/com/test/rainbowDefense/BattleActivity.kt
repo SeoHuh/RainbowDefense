@@ -9,8 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.test.rainbowDefense.battle.GameManager
 import com.test.rainbowDefense.database.*
+import com.test.rainbowDefense.fragment.BattleResultFragment
+import com.test.rainbowDefense.fragment.BattleSettingFragment
 import kotlinx.android.synthetic.main.activity_battle.*
-import kotlinx.android.synthetic.main.activity_loby.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,9 +56,28 @@ class BattleActivity : AppCompatActivity() {
         if(!isCreated) {
             gameManager = GameManager(this, canvas, stage, wave, monsterList, unitList)
             gameManager.setOnlistner(object:
-            GameManager.PauseListener{
+            GameManager.GameListener{
                 override fun onPause() {
                     showSetting()
+                }
+
+                override fun onEnd(
+                    isWin: Boolean,
+                    stage: Int,
+                    stageReward: Int,
+                    monsterReward: Int,
+                    hpPercent: Int
+                ) {
+                    val state = stateViewModel.state.value!!.get(0)
+                    var total = 0
+                    if(isWin) {
+                        total = stageReward * (100 + hpPercent) / 100 + monsterReward
+                    }
+                    else{
+                        total = monsterReward
+                    }
+                    stateViewModel.update(state.apply { gold += total })
+                    showReward(isWin, stage, stageReward, monsterReward, hpPercent)
                 }
             })
             isCreated = true
@@ -77,10 +97,11 @@ class BattleActivity : AppCompatActivity() {
 
     fun showSetting() {
         val state = stateViewModel.state.value!!.get(0)
-        val newFragment = SettingBattleDetailFragment(state)
+        val newFragment =
+            BattleSettingFragment(state)
         newFragment.show(supportFragmentManager, "mine")
         newFragment.setOnlistner(object :
-            SettingBattleDetailFragment.NoticeDialogListener {
+            BattleSettingFragment.NoticeDialogListener {
             override fun onExitClick(dialog: DialogFragment) {
                 this@BattleActivity.finish()
             }
@@ -118,6 +139,18 @@ class BattleActivity : AppCompatActivity() {
 
             override fun effectProgressChanged(view: View, i: Int) {
                 stateViewModel.update(state.apply { effectVolume = i })
+            }
+        })
+    }
+    fun showReward(isWin: Boolean, stage : Int, stageReward : Int, monsterReward : Int, hpPercent : Int) {
+        val state = stateViewModel.state.value!!.get(0)
+        val newFragment =
+            BattleResultFragment(state,isWin,stage,stageReward,monsterReward,hpPercent)
+        newFragment.show(supportFragmentManager, "mine")
+        newFragment.setOnlistner(object :
+            BattleResultFragment.NoticeDialogListener {
+            override fun onExitClick(dialog: DialogFragment) {
+                this@BattleActivity.finish()
             }
         })
     }

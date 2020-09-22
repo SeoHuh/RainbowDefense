@@ -55,6 +55,9 @@ class SkillManager(
                     monster.hp -= it.attackDamage
                 }
             }
+            v.status?.apply {
+                mana -= it.cost
+            }
         }
         selectedSkill = null
         v.skillShape = null

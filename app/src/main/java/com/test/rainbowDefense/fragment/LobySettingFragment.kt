@@ -1,30 +1,20 @@
-package com.test.rainbowDefense
+package com.test.rainbowDefense.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.SeekBar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.test.rainbowDefense.adapter.OnItemClickListener
+import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.StateEntity
-import com.test.rainbowDefense.database.StateViewModel
-import com.test.rainbowDefense.database.UnitEntity
-import kotlinx.android.synthetic.main.setting_loby.*
 import kotlinx.android.synthetic.main.setting_loby.view.*
-import kotlinx.android.synthetic.main.shop_detail.view.*
 
-class SettingLobyDetailFragment(val state:StateEntity) : DialogFragment() {
+class LobySettingFragment(val state:StateEntity) : DialogFragment() {
 
     private var listener: NoticeDialogListener? = null
     fun setOnlistner(listener: NoticeDialogListener) {

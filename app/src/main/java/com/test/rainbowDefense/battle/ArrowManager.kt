@@ -11,6 +11,7 @@ import com.test.rainbowDefense.database.WaveEntity
 class ArrowManager (
     val content : Context,
     val v : CanvasView,
+    val battleHeight : Int,
     val effectManager: EffectManager,
     val soundManager: SoundManager,
     ping : Int) {
@@ -23,7 +24,7 @@ class ArrowManager (
 
     // 투사체, 웨이브 딜레이 체크
     fun checkArrow(isTouch:Boolean,x:Float,y:Float) {
-        if (isTouch && arrowCounter >= delayTime) {
+        if (isTouch && arrowCounter >= delayTime && y < battleHeight) {
             makeArrow(x,y)
             arrowCounter = 0
         } else {

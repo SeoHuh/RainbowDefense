@@ -72,18 +72,19 @@ class GameManager(
     private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,soundManager,ping,monsterList)
-    val arrowManager = ArrowManager(content,v,effectManager,soundManager,ping)
+    val arrowManager = ArrowManager(content,v,battleHeight,effectManager,soundManager,ping)
     val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight)
     val background = Background(displayWidth,battleHeight,statusHeight,v,content)
     val waveManager = WaveManager(content,v,stage,wave,monsterManager,ping,displayWidth,battleHeight)
 
-    private var listener: PauseListener? = null
-    fun setOnlistner(listener: PauseListener) {
+    private var listener: GameListener? = null
+    fun setOnlistner(listener: GameListener) {
         this.listener = listener
     }
 
-    interface PauseListener {
+    interface GameListener {
         fun onPause()
+        fun onEnd(isWin: Boolean, stage: Int, stageReward: Int, monsterReward: Int, hpPercent: Int)
     }
 
     // 초기화 ( 터치 이벤트 설정 )
@@ -281,11 +282,14 @@ class GameManager(
     }
     private fun win() {
         Toast.makeText(content,"승리!",Toast.LENGTH_SHORT).show()
-//        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
+        v.status?.let{
+            listener?.onEnd(true,it.stage,it.stageReward,it.monsterReward,100*it.hp/it.hpMax)
+        }
     }
     private fun lose() {
         Toast.makeText(content,"패배!",Toast.LENGTH_SHORT).show()
-//        TODO("보상을 계산하여, 데이터베이스에 적용, Dialog를 띄워서 결과창 출력, 버튼을 누르면 Loby 액티비티로 돌아감")
-
+        v.status?.let{
+            listener?.onEnd(false,it.stage,it.stageReward,it.monsterReward,100*it.hp/it.hpMax)
+        }
     }
 }

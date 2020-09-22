@@ -8,12 +8,9 @@ import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.test.rainbowDefense.battle.GameManager
 import com.test.rainbowDefense.database.StateEntity
 import com.test.rainbowDefense.database.StateViewModel
-import com.test.rainbowDefense.database.UnitEntity
-import com.test.rainbowDefense.database.UnitViewModel
-import kotlinx.android.synthetic.main.activity_battle.*
+import com.test.rainbowDefense.fragment.LobySettingFragment
 import kotlinx.android.synthetic.main.activity_loby.*
 
 class LobyActivity : AppCompatActivity() {
@@ -65,10 +62,11 @@ class LobyActivity : AppCompatActivity() {
 
     fun showSetting() {
         val state = stateViewModel.state.value!!.get(0)
-        val newFragment = SettingLobyDetailFragment(state)
+        val newFragment =
+            LobySettingFragment(state)
         newFragment.show(supportFragmentManager, "mine")
         newFragment.setOnlistner(object :
-            SettingLobyDetailFragment.NoticeDialogListener {
+            LobySettingFragment.NoticeDialogListener {
             override fun onExitClick(dialog: DialogFragment) {
             }
 
