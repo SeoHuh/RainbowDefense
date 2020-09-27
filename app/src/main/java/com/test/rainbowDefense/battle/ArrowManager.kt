@@ -2,6 +2,7 @@ package com.test.rainbowDefense.battle
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 
@@ -18,12 +19,27 @@ class ArrowManager (
     val soundManager: SoundManager,
     ping : Int) {
 
+    val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
+
     // 화살 딜레이타임, 카운터
     var delayTime: Int = (0.1 * ping).toInt()
     var arrowCounter: Int = 0
     var attackDamage = 30
 
 
+    fun makeProjectile(x:Int,y:Int,width:Int,height:Int,drawable: Drawable?, spd:Float, ang:Float, damage: Int, myColor: Int) {
+        drawable?.let {
+            v.projectile_array.add(
+                Projectile(
+                    x, y, width, height, drawable
+                ).apply {
+                    setVelocity(spd, ang)
+                    attackDamage = damage
+                    color = myColor
+                }
+            )
+        }
+    }
     // 투사체, 웨이브 딜레이 체크
     fun checkArrow(isTouch:Boolean,x:Float,y:Float) {
         if (isTouch && arrowCounter >= delayTime && y < battleHeight) {
@@ -34,7 +50,6 @@ class ArrowManager (
         }
     }
     private fun makeArrow(x:Float,y:Float) {
-        val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
         soundManager.makeSound("swing",1f)
         v.projectile_array.add(
             Projectile(
@@ -74,7 +89,7 @@ class ArrowManager (
                 if (condition1 && condition2) {
                     val damage = projectile[n].attackDamage
                     effectManager.makeEffect(it.x+it.width/2,it.y+it.height/2)
-                    damageManager.makeDamage(it.x+it.width/2f,it.y+10f,damage, Color.BLACK)
+                    damageManager.makeDamage(it.x+it.width/2f,it.y+10f,damage, projectile[n].color)
                     soundManager.makeSound("metal_small_2",0.5f)
                     it.hp -= damage // 몬스터 체력 감소
                     projectile.removeAt(n)

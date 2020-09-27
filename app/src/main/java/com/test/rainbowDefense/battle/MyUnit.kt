@@ -16,15 +16,17 @@ class MyUnit (
 
     override var lifetime = 1000
 
-    var viewRange = 1000
+    var viewRange = 200
     var time = 0
     var attackDelay = ping
     var attackDamage = 0
     var attackSpeed = 0
     var attackRange = 0
+    var attackType = 1
     var hp = 1
     var reward = 0
     var color = 0
+    var projectileDrawable: Drawable? = null
 
 
     init {

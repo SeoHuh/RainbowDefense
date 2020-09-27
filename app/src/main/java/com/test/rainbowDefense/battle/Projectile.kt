@@ -1,5 +1,6 @@
 package com.test.rainbowDefense.battle
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.test.rainbowDefense.battle.Shape
 
@@ -16,6 +17,7 @@ class Projectile(
 
     override var lifetime = 200
     override var vx = 1500f/ping
+    var color: Int = Color.BLACK
 
     var attackDamage = 0
     init {

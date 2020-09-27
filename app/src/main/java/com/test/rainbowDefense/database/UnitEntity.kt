@@ -26,11 +26,13 @@ class UnitEntity(
     @ColumnInfo(name = "attackDamageMag") var attackDamageMag: Int,
     @ColumnInfo(name = "attackSpeed") var attackSpeed: Int,
     @ColumnInfo(name = "attackRange") var attackRange: Int,
+    @ColumnInfo(name = "viewRange") var viewRange: Int,
+    @ColumnInfo(name = "attackType") var attackType: Int,
     @ColumnInfo(name = "moveSpeed") var moveSpeed: Int,
-    @ColumnInfo(name = "type") var type: String
-
-
+    @ColumnInfo(name = "type") var type: String,
+    @ColumnInfo(name = "projectileId") var projectileId: String
 ){
     @Ignore var price = priceBias + priceMag * level
     @Ignore var drawable: Drawable? = null
+    @Ignore var projectileDrawable: Drawable? = null
 }
