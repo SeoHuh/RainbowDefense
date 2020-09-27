@@ -24,6 +24,7 @@ class CanvasView @JvmOverloads constructor(
     var unit_array = arrayListOf<MyUnit>()
     var monster_array = arrayListOf<Monster>()
     var effect_array = arrayListOf<Effect>()
+    var damage_array = arrayListOf<Damage>()
     var block_array = arrayListOf<Block>()
     var pause_button: Shape? = null
     var cursor: Shape? = null
@@ -47,6 +48,7 @@ class CanvasView @JvmOverloads constructor(
         unit_array.forEach{it.draw(canvas)}
         projectile_array.forEach{it.draw(canvas)}
         effect_array.forEach {it.draw(canvas)}
+        damage_array.forEach {it.draw(canvas)}
         shadowMode?.draw(canvas)
         skillShape?.draw(canvas)
         status?.draw(canvas)

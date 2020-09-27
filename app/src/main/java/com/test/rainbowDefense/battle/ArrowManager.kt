@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
+import android.graphics.Color
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.WaveEntity
 
@@ -13,6 +14,7 @@ class ArrowManager (
     val v : CanvasView,
     val battleHeight : Int,
     val effectManager: EffectManager,
+    val damageManager: DamageManager,
     val soundManager: SoundManager,
     ping : Int) {
 
@@ -70,9 +72,11 @@ class ArrowManager (
                 val condition2: Boolean =
                     it.y < projectile[n].y + projectile[n].height && it.y + it.height > projectile[n].y
                 if (condition1 && condition2) {
+                    val damage = projectile[n].attackDamage
                     effectManager.makeEffect(it.x+it.width/2,it.y+it.height/2)
-                    it.hp -= projectile[n].attackDamage // 몬스터 체력 감소
+                    damageManager.makeDamage(it.x+it.width/2f,it.y+10f,damage, Color.BLACK)
                     soundManager.makeSound("metal_small_2",0.5f)
+                    it.hp -= damage // 몬스터 체력 감소
                     projectile.removeAt(n)
                     n--
                 }
@@ -84,7 +88,4 @@ class ArrowManager (
     fun arrowMove() {
         v.projectile_array.forEach {it.move()}
     }
-
-
-
 }

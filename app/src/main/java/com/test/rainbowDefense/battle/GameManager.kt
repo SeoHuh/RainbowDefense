@@ -3,6 +3,7 @@ package com.test.rainbowDefense.battle
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.os.Handler
 import android.util.Log
 import android.view.MotionEvent
@@ -66,15 +67,17 @@ class GameManager(
     var clickState = ClickState.NORMAL
 
     // 게임관련 각종 인스턴스
+    val fontTypeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
     private val effectManager = EffectManager(content,v,ping)
+    private val damageManager = DamageManager(content,v,fontTypeface,ping)
     private val soundManager = SoundManager(content,v)
-    private val unitManager = UnitManager(content,v,effectManager,ping,unitList)
-    private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,ping,unitList)
+    private val unitManager = UnitManager(content,v,effectManager,damageManager,ping,unitList)
+    private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,damageManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,soundManager,ping,monsterList)
-    val arrowManager = ArrowManager(content,v,battleHeight,effectManager,soundManager,ping)
-    val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight)
-    val background = Background(displayWidth,battleHeight,statusHeight,v,content)
+    val arrowManager = ArrowManager(content,v,battleHeight,effectManager,damageManager,soundManager,ping)
+    val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight,fontTypeface)
+    val background = Background(displayWidth,battleHeight,statusHeight,v,content,fontTypeface)
     val waveManager = WaveManager(content,v,stage,wave,monsterManager,ping,displayWidth,battleHeight)
 
     private var listener: GameListener? = null
@@ -123,9 +126,11 @@ class GameManager(
                 arrowManager.checkProjectile()                      // Projectile 수명 체크
                 arrowManager.checkCollision()                       // Projectile 충돌 체크
                 effectManager.checkEffect()                         // Effect 수명 체크
+                damageManager.checkLifetime()                       // Damage 수명 체크
                 arrowManager.arrowMove()                            // Arrow 속도만큼 1프레임 이동
                 unitManager.unitMove()                              // Unit 속도만큼 1프레임 이동
                 monsterManager.monsterMove()                        // Monster 속도만큼 1프레임 이동
+                damageManager.damageMove()                          // Damage 속도만큼 1프레임 이동
                 unitManager.checkDead()                             // Unit 사망 체크
                 monsterManager.checkDead()                          // Monster 사망 체크
                 monsterManager.checkAttack()                        // Monster 공격 체크
@@ -146,18 +151,19 @@ class GameManager(
         touchY = y
         v.cursor?.x = x.toInt()
         v.cursor?.y = y.toInt()
-        isTouch = true
         when(clickState) {
             ClickState.SKILL ->
                 v.skillShape?.let {
                     it.x = x.toInt() - it.width / 2
                     it.y = y.toInt() - it.height / 2
                 }
+            ClickState.NORMAL -> {
+                isTouch = true
+            }
             else -> {
 
             }
         }
-        v.invalidate()
     }
     private fun onMoveTouchEvent(x: Float, y: Float) {
         // 터치 중 이동할때 좌표 변경
@@ -166,7 +172,7 @@ class GameManager(
         val dy = Math.abs(y - touchY)
 
         if (dx >= CanvasView.TOLERANCE || dy >= CanvasView.TOLERANCE) {
-            if (dxTotal >= CanvasView.DRAGTOLERANCE){   // 드래그 한계를 초과하면
+            if (dxTotal >= CanvasView.DRAGTOLERANCE && touchStartY > displayHeight - menuHeight){   // 드래그 한계를 초과하면
                 if(!isDrag) {       // 드래그 변수 참으로 설정
                     isDrag = true
                     if (clickState == ClickState.NORMAL) {
@@ -176,7 +182,7 @@ class GameManager(
             }
             when(clickState) {
                 ClickState.NORMAL ->
-                    if (isDrag && touchStartY > displayHeight - menuHeight) {
+                    if (isDrag) {
                         blockMenu.move((x - touchX).toInt())
                     }
                 ClickState.SKILL ->
@@ -193,7 +199,6 @@ class GameManager(
             v.cursor?.x = x.toInt()
             v.cursor?.y = y.toInt()
         }
-        v.invalidate()
     }
     private fun upTouchEvent() {
 

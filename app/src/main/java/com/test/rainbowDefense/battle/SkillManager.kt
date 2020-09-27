@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
+import android.graphics.Color
 import com.test.rainbowDefense.R
 import com.test.rainbowDefense.database.UnitEntity
 import kotlin.math.sqrt
@@ -11,6 +12,7 @@ class SkillManager(
     val displayWidth: Int,
     val battleHeight: Int,
     val effectManager: EffectManager,
+    val damageManager: DamageManager,
     ping: Int,
     unitEntityList: List<UnitEntity>
 ) {
@@ -53,6 +55,8 @@ class SkillManager(
                 val distance = findDistance(x, y, monster)
                 if (distance <= it.attackRange) {
                     monster.hp -= it.attackDamage
+                    val myColor = Color.parseColor(it.color)
+                    damageManager.makeDamage(monster.x+monster.width/2f,monster.y + 10f, it.attackDamage, myColor)
                 }
             }
             v.status?.apply {

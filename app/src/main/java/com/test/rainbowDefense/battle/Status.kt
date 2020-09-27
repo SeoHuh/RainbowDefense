@@ -14,7 +14,8 @@ class Status (
     val width: Int,
     val height: Int,
     val content: Context,
-    val v: CanvasView){
+    val v: CanvasView,
+    val font:Typeface){
 
     val pauseButtonDrawable = v.resources.getDrawable(R.drawable.pause, content.theme)
     val cloudDrawable = v.resources.getDrawable(R.drawable.cloud,content.theme)
@@ -55,7 +56,7 @@ class Status (
         //textPaint.isAntiAlias = true
         textPaint.color = Color.rgb(0, 0, 0)
         textPaint.textSize = height /2f
-        textPaint.typeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
+        textPaint.typeface = font
         hpPaint.color = Color.rgb(235,30,30)
         hpPaint.style = Paint.Style.FILL
         hpStrokePaint.color = Color.rgb(50,50,50)

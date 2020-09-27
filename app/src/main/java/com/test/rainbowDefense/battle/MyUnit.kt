@@ -24,7 +24,7 @@ class MyUnit (
     var attackRange = 0
     var hp = 1
     var reward = 0
-
+    var color = 0
 
 
     init {

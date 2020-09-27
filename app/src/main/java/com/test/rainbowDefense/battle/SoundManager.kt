@@ -17,12 +17,13 @@ class SoundManager(
 
     }
 
-    val soundPool = SoundPool(5, AudioManager.STREAM_MUSIC, 0)
+    val soundPool = SoundPool.Builder()
+        .setMaxStreams(10)
+        .build()
     val soundArray = arrayListOf<Sound>(
         Sound(soundPool.load(content, R.raw.metal_small_2, 1), "metal_small_2"),
         Sound(soundPool.load(content, R.raw.coin, 1), "coin"),
         Sound(soundPool.load(content, R.raw.swing, 1), "swing")
-
     )
 
     fun makeSound(string: String, amp:Float) {

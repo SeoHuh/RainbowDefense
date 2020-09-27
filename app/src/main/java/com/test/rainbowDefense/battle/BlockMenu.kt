@@ -3,6 +3,7 @@ package com.test.rainbowDefense.battle
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -22,7 +23,8 @@ class BlockMenu(
     val x : Int,
     val y : Int,
     val width: Int,
-    val height: Int) {
+    val height: Int,
+    val font: Typeface) {
 
     val menuDrawable = content.resources.getDrawable(R.drawable.menu_box, content.theme)
     val blockDrawable = content.resources.getDrawable(R.drawable.block_box, content.theme)
@@ -86,7 +88,7 @@ class BlockMenu(
                 menuDrawable,
                 menuDrawable,
                 "",
-                content
+                font
             ).apply{
                 isClickable = false
             }
@@ -140,7 +142,7 @@ class BlockMenu(
                 blockDrawable,
                 blockClickDrawable,
                 string,
-                content
+                font
             ).apply{
                 type = _type
                 drawable?.let{

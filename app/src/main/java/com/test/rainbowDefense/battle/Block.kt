@@ -20,7 +20,7 @@ class Block(
     drawable: Drawable,
     clickDrawable: Drawable,
     val text: String,
-    val content: Context
+    val font: Typeface
 ) : Shape(x, y, width, height, drawable) {
 
     private var listener: BlockListener? = null
@@ -51,10 +51,10 @@ class Block(
     init {
         textPaint.textSize = textSize
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.typeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
+        textPaint.typeface = font
         costPaint.textSize = costSize
         costPaint.textAlign = Paint.Align.CENTER
-        costPaint.typeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
+        costPaint.typeface = font
         clickBitmap = Bitmap.createScaledBitmap(clickBitmap, width, height, false)
     }
 

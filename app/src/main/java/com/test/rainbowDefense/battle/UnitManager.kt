@@ -1,6 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import com.test.rainbowDefense.database.MonsterEntity
 import com.test.rainbowDefense.database.UnitEntity
@@ -13,6 +14,7 @@ class UnitManager (
     val content : Context,
     val v : CanvasView,
     val effectManager: EffectManager,
+    val damageManager: DamageManager,
     ping : Int,
     unitEntityList: List<UnitEntity>) {
 
@@ -45,6 +47,8 @@ class UnitManager (
     }
     fun attack(unit:MyUnit, monster: Monster) {     // 몬스터를 공격
         if(unit.time>=unit.attackDelay){
+            effectManager.makeEffect(monster.x + monster.width/2,monster.y + monster.height/2)
+            damageManager.makeDamage(monster.x + monster.width/2f,monster.y + 10f, unit.attackDamage, unit.color)
             monster.hp -= unit.attackDamage
             unit.time = 0
         }
@@ -63,6 +67,7 @@ class UnitManager (
                 attackDamage = unit.attackDamage
                 attackSpeed = unit.attackSpeed
                 attackRange = unit.attackRange
+                color = Color.parseColor(unit.color)
                 hp = unit.hp
             }
         )

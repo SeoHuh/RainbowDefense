@@ -1,10 +1,7 @@
 package com.test.rainbowDefense.battle
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -18,7 +15,8 @@ class Background (
     val battleHeight : Int,
     val statusHeight : Int,
     val v : CanvasView,
-    val content : Context) {
+    val content : Context,
+    val font: Typeface) {
 
     val textPaint = Paint()
     val hpPaint = Paint()
@@ -29,7 +27,7 @@ class Background (
     val backgroundDrawable = v.resources.getDrawable(R.drawable.battleback_2, content.theme)
     val shadowDrawable = v.resources.getDrawable(R.drawable.shadow, content.theme)
 
-    val status = Status(0,0,displayWidth,statusHeight,content,v)
+    val status = Status(0,0,displayWidth,statusHeight,content,v,font)
 
     init {
         v.status = status
