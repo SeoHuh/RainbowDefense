@@ -70,11 +70,11 @@ class MonsterManager (
         var n: Int = 0
         while(n < arrayList.size) {
             if(arrayList[n].x+arrayList[n].width<=0){
+                v.status?.apply{
+                    hp -= arrayList[n].attackDamage/2
+                }
                 arrayList.removeAt(n)
                 n--
-                v.status?.apply{
-                    hp -= 2
-                }
             }
             n++
         }

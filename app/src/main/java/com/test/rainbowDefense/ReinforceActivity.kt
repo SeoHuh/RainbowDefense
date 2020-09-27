@@ -30,18 +30,12 @@ class ReinforceActivity : AppCompatActivity() {
 
     private var isSelect = false
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reinforce)
         setFullScreen()
 
-        val intent = Intent(this, LobyActivity::class.java)
-        var temp_img = findViewById<ImageView>(R.id.imageView)
-        temp_img.setImageResource(R.drawable.firewizard)
-
-        btn_reinforce_back.setOnClickListener { view ->
+        btn_reinforce_back.setOnClickListener {
             super.finish()
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -53,20 +47,20 @@ class ReinforceActivity : AppCompatActivity() {
             OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 val unit: UnitEntity = unitViewModel.haveUnits.value!!.get(pos)
-                val temp_text = unit.resourceId
-                val resId: Int =
-                    v.resources.getIdentifier(temp_text, "drawable", "com.test.rainbowDefense")
-                temp_img.setImageResource(resId)
                 selectUnit = unit
                 setUnit(selectUnit)
                 isSelect = true
             }
         })
 
+        var isRun = false
         unitViewModel = ViewModelProvider(this)[UnitViewModel::class.java]
         unitViewModel.haveUnits.observe(this, Observer { units ->
             units?.let { viewAdapter.setUnits(it) }
-            Log.d("디버깅", "옵저버 실행")
+            if(!isRun) {
+                setUnit(units[0])
+                isRun = true
+            }
         })
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
@@ -103,7 +97,6 @@ class ReinforceActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -111,18 +104,73 @@ class ReinforceActivity : AppCompatActivity() {
         setFullScreen()
     }
     fun setUnit(unit:UnitEntity){
-
+        val resId: Int =
+            this.resources.getIdentifier(unit.resourceId, "drawable", "com.test.rainbowDefense")
+        unit_image.setImageResource(resId)
         val color = Color.parseColor(unit.color)
-        unit.price = unit.priceBias + unit.priceMag * unit.level
         unit_level.setTextColor(color)
-        unit_level.text = (unit.level.toString() + "Lv")
         unit_name.setTextColor(color)
+        unit.price = unit.priceBias + unit.priceMag * (unit.level - 1)
+        unit_price.text = unit.price.toString()
+        unit_level.text = (unit.level.toString() + "Lv")
         unit_name.text = unit.name
+
+        hp_string.text = "Hp: "
         unit_hp.text = unit.hp.toString()
         unit_hp_increase.text = ("+" + unit.hpMag.toString())
+        damage_string.text = "Atk: "
         unit_damage.text = unit.attackDamage.toString()
         unit_damage_increase.text = ("+" + unit.attackDamageMag.toString())
-        unit_price.text = unit.price.toString()
+        when(unit.name){
+            "Castle Hp"-> {
+                hp_string.text = "Hp: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+            "Cloud Bank"-> {
+                hp_string.text = "Gen: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+            "Mana Max"-> {
+                hp_string.text = "Max: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+            "Mana Recovery"-> {
+                hp_string.text = "Gen: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+            "Arrow Damage"-> {
+                hp_string.text = "Atk: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+            "Arrow Agility"-> {
+                hp_string.text = "Spd: "
+                unit_hp.text = unit.hp.toString()
+                unit_hp_increase.text = ("+" + unit.hpMag.toString())
+                damage_string.text = ""
+                unit_damage.text = ""
+                unit_damage_increase.text = ""
+            }
+        }
     }
 
     fun setFullScreen() {

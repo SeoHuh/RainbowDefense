@@ -66,19 +66,27 @@ class GameManager(
     }
     var clickState = ClickState.NORMAL
 
+    val castleHp = unitList.filter{it.name == "Castle Hp"}[0].hp
+    val cloudRecovery = unitList.filter{it.name == "Cloud Bank"}[0].hp
+    val manaMax = unitList.filter{it.name == "Mana Max"}[0].hp
+    val manaRecovery = unitList.filter{it.name == "Mana Recovery"}[0].hp
+    val arrowDamage = unitList.filter{it.name == "Arrow Damage"}[0].hp
+    val arrowAgility = unitList.filter{it.name == "Arrow Agility"}[0].hp
+
     // 게임관련 각종 인스턴스
     val fontTypeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
     private val effectManager = EffectManager(content,v,ping)
     private val damageManager = DamageManager(content,v,fontTypeface,ping)
     private val soundManager = SoundManager(content,v)
-    private val manaManager = ManaManager(v,ping)
-    val arrowManager = ArrowManager(content,v,battleHeight,effectManager,damageManager,soundManager,ping)
+    private val manaManager = ManaManager(v,ping,cloudRecovery,manaRecovery,manaMax)
+    val arrowManager = ArrowManager(content,v,battleHeight,effectManager,damageManager,soundManager,ping,arrowDamage,arrowAgility)
     private val unitManager = UnitManager(content,v,effectManager,damageManager,arrowManager,ping,unitList)
     private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,damageManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
     private val monsterManager = MonsterManager(content,v,effectManager,soundManager,ping,monsterList)
     val blockMenu = BlockMenu(content,v,unitManager,skillManager,buildingManager,0,battleHeight,displayWidth,menuHeight,fontTypeface)
-    val background = Background(displayWidth,battleHeight,statusHeight,v,content,fontTypeface)
+    val status = Status(0,0,displayWidth,statusHeight,content,v,fontTypeface,castleHp,manaMax)
+    val background = Background(displayWidth,battleHeight,statusHeight,v,content)
     val waveManager = WaveManager(content,v,stage,wave,monsterManager,ping,displayWidth,battleHeight)
 
     private var listener: GameListener? = null
@@ -136,6 +144,7 @@ class GameManager(
                 monsterManager.checkDead()                          // Monster 사망 체크
                 monsterManager.checkAttack()                        // Monster 맵 끝에 도달했는지 체크
                 manaManager.checkMana()                             // 마나 재생 체크
+                manaManager.checkCloud()                            // 구름 재생 체크
                 waveManager.waveCheck()                             // Wave 생성 체크
                 v.invalidate()                                      // View 그리기
                 winCheck()                                          // 승리,패배 체크

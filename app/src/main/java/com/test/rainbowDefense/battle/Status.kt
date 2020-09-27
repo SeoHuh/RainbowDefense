@@ -15,7 +15,9 @@ class Status (
     val height: Int,
     val content: Context,
     val v: CanvasView,
-    val font:Typeface){
+    font:Typeface,
+    castleHp: Int,
+    manaMax: Int){
 
     val pauseButtonDrawable = v.resources.getDrawable(R.drawable.pause, content.theme)
     val cloudDrawable = v.resources.getDrawable(R.drawable.cloud,content.theme)
@@ -41,15 +43,16 @@ class Status (
 
     var wave: Int = 0
     var waveMax = 5
-    var cloud = 200
+    var cloud = 100
     var stage = 1
-    var hpMax = 100
-    var hp = 50
+    var hpMax = castleHp
+    var hp = castleHp
     var stageReward = 0
     var monsterReward = 0
-    var mana = 100
+    var mana = manaMax
 
     init{
+        v.status = this
         manaBitmap = Bitmap.createScaledBitmap(manaBitmap,manaWidth,manaHeight,false)
         cloudBitmap = Bitmap.createScaledBitmap(cloudBitmap,cloudWidth,cloudHeight,false)
 

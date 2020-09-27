@@ -15,8 +15,7 @@ class Background (
     val battleHeight : Int,
     val statusHeight : Int,
     val v : CanvasView,
-    val content : Context,
-    val font: Typeface) {
+    val content : Context) {
 
     val textPaint = Paint()
     val hpPaint = Paint()
@@ -27,10 +26,7 @@ class Background (
     val backgroundDrawable = v.resources.getDrawable(R.drawable.battleback_2, content.theme)
     val shadowDrawable = v.resources.getDrawable(R.drawable.shadow, content.theme)
 
-    val status = Status(0,0,displayWidth,statusHeight,content,v,font)
-
     init {
-        v.status = status
         v.cursor = Shape(
             100,
             battleHeight/2,

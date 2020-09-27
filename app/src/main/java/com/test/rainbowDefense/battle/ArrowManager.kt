@@ -17,14 +17,16 @@ class ArrowManager (
     val effectManager: EffectManager,
     val damageManager: DamageManager,
     val soundManager: SoundManager,
-    ping : Int) {
+    ping : Int,
+    arrowDamage : Int,
+    arrowAgility : Int) {
 
     val arrawDrawable = v.resources.getDrawable(R.drawable.arrow, content.theme)
 
     // 화살 딜레이타임, 카운터
-    var delayTime: Int = (0.1 * ping).toInt()
+    var delayTime: Int = (2400f / arrowAgility).toInt()
     var arrowCounter: Int = 0
-    var attackDamage = 30
+    var attackDamage = arrowDamage
 
 
     fun makeProjectile(x:Int,y:Int,width:Int,height:Int,drawable: Drawable?, spd:Float, ang:Float, damage: Int, myColor: Int) {
