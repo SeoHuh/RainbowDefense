@@ -85,7 +85,8 @@ class BlockMenu(
                 height,
                 menuDrawable,
                 menuDrawable,
-                ""
+                "",
+                content
             ).apply{
                 isClickable = false
             }
@@ -138,7 +139,8 @@ class BlockMenu(
                 blockHeight,
                 blockDrawable,
                 blockClickDrawable,
-                string
+                string,
+                content
             ).apply{
                 type = _type
                 drawable?.let{

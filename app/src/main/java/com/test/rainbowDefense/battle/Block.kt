@@ -1,8 +1,10 @@
 package com.test.rainbowDefense.battle
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -17,7 +19,8 @@ class Block(
     height: Int,
     drawable: Drawable,
     clickDrawable: Drawable,
-    val text: String
+    val text: String,
+    val content: Context
 ) : Shape(x, y, width, height, drawable) {
 
     private var listener: BlockListener? = null
@@ -48,8 +51,10 @@ class Block(
     init {
         textPaint.textSize = textSize
         textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
         costPaint.textSize = costSize
         costPaint.textAlign = Paint.Align.CENTER
+        costPaint.typeface = Typeface.createFromAsset(content.assets,"jalnan.ttf")
         clickBitmap = Bitmap.createScaledBitmap(clickBitmap, width, height, false)
     }
 
