@@ -57,6 +57,7 @@ class MonsterManager (
                 soundManager.makeSound("coin",0.6f)
                 v.status!!.apply{
                     monsterReward += arrayList[n].reward
+                    cloud += arrayList[n].reward
                 }
                 arrayList.removeAt(n)
                 n--

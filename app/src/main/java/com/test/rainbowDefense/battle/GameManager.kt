@@ -71,6 +71,7 @@ class GameManager(
     private val effectManager = EffectManager(content,v,ping)
     private val damageManager = DamageManager(content,v,fontTypeface,ping)
     private val soundManager = SoundManager(content,v)
+    private val manaManager = ManaManager(v,ping)
     private val unitManager = UnitManager(content,v,effectManager,damageManager,ping,unitList)
     private val skillManager = SkillManager(content,v,displayWidth,battleHeight,effectManager,damageManager,ping,unitList)
     private val buildingManager = BuildingManager(content,v,effectManager,ping,unitList)
@@ -133,7 +134,8 @@ class GameManager(
                 damageManager.damageMove()                          // Damage 속도만큼 1프레임 이동
                 unitManager.checkDead()                             // Unit 사망 체크
                 monsterManager.checkDead()                          // Monster 사망 체크
-                monsterManager.checkAttack()                        // Monster 공격 체크
+                monsterManager.checkAttack()                        // Monster 맵 끝에 도달했는지 체크
+                manaManager.checkMana()                             // 마나 재생 체크
                 waveManager.waveCheck()                             // Wave 생성 체크
                 v.invalidate()                                      // View 그리기
                 winCheck()                                          // 승리,패배 체크
