@@ -9,7 +9,7 @@
 
     <Button
         android:text="1"
-        android:textColor="#49DF51"
+        android:textColor="#DFECE0"
         android:textSize="20sp"
         android:id="@+id/btn_rounds"
         android:layout_width="match_parent"
